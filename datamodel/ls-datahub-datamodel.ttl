@@ -35,9 +35,6 @@ lsdh-d:001 a lsdh:Dataset, oa:Annotation;
  	# OPTIONAL: original property
  	lsdh:relation <http://www.w3.org/2000/01/rdf-schema#label>;
 
- 	# MANDATORY: crypt key
- 	lsdh:token "abcdefgh";
-
  	# MANDATORY: link to original dataset (the 'annotation target' is the URI of your object)
  	oa:hasTarget <http://mydataset.info/1>;
 
