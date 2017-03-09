@@ -1,0 +1,58 @@
+@prefix lsdh: <http://labeling.link/ls-dh/vocab#> .
+@prefix lsdh-p: <http://labeling.link/api/projects/> .
+@prefix lsdh-d: <http://labeling.link/api/datasets/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+
+# a project containing datasets connected to labels
+lsdh-p:01 a lsdh:Project, void:Dataset;
+
+	# MANDATORY: metadata
+	dcterms:title "My Archaeological Dataset";
+  	dcterms:publisher <http://exampleinstitute.org>;
+  	dcterms:description "A dataset of archaeological items.";
+  	dcterms:license <http://opendatacommons.org/licenses/by/>;
+  	dcterms:identifier "01";
+
+  	# OPTIONAL: access information
+  	void:dataDump <http://myrdfdump.info>;
+  	dcat:accessURL <http://myaccessurl.info>;
+
+  	# WRITTEN
+  	lsdh:token "";
+
+ # a dataset connected to labels
+lsdh-d:001 a lsdh:Dataset, oa:Annotation;
+
+ 	# MENDATORY: id
+ 	dcterms:identifier "001".
+
+ 	# MANDATORY: link to project
+ 	lsdh:project lsdh-p:01;
+
+ 	# OPTIONAL: original property
+ 	lsdh:relation <http://www.w3.org/2000/01/rdf-schema#label>;
+
+ 	# MANDATORY: crypt key
+ 	lsdh:token "abcdefgh";
+
+ 	# MANDATORY: link to original dataset (the 'annotation target' is the URI of your object)
+ 	oa:hasTarget <http://mydataset.info/1>;
+
+ 	# MANDATORY: link to labeling system label (the 'annotation body' is the label reference)
+ 	oa:hasBody <http://143.93.114.135/item/label/bdf1ab06-f35d-4982-94f6-a91eb7d04889>.
+
+ 	# WRITTEN
+  	lsdh:token "";
+
+# metadata for the original dataset
+# MANDATORY: metadata
+<http://mydataset.info/1> dcterms:title "title".
+# OPTIONAL: metadata
+<http://mydataset.info/1> dcterms:description "desc".
+# coverage is limited to GeoNames IDs
+<http://mydataset.info/1> dcterms:coverage <http://geonamesid.info>.
+# temporal is limited to ChronOntology IDs
+<http://mydataset.info/1> dcterms:temporal <http://chronontology.info>.

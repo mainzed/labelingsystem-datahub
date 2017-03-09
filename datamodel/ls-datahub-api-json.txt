@@ -1,0 +1,89 @@
+# POST project
+{
+	"title": "",
+	"publisher": "",
+	"description": "",
+	"license": "",
+	"dump": "",
+	"sparql": "",
+	"token": ""
+}
+
+validate:
+- mendatory: title, publisher, description, license, token
+- token in list
+- publisher starts with http
+- license starts with http
+- if dump -> starts with http
+- if sparql -> starts with http
+
+sample:
+
+{
+	"title": "roman coins",
+	"publisher": "http://rgzm.de",
+	"description": "roman coins of NAVIS database",
+	"license": "http://opendatacommons.org/licenses/by/",
+	"dump": "http://mydump.com",
+	"sparql": "http://mydump.com/sparql",
+	"token": "abcdefgh"
+}
+
+# GET project
+{
+	"id": "",
+	"title": "",
+	"publisher": "",
+	"description": "",
+	"license": "",
+	"dump": "",
+	"sparql": ""
+}
+
+# POST dataset
+{
+	"project": "",
+	"relation": "",
+	"dataset": "",
+	"label": "",
+	"title": "",
+	"description": "",
+	"coverage": "",
+	"temporal": "",
+	"token": ""
+}
+
+validate:
+- mendatory: project, token, dataset, label, title
+- token in list
+- project is available
+- dataset starts with http
+- label starts with http://143.93.114.135
+- if relation -> starts with http
+
+sample:
+
+{
+	"project": "01",
+	"relation": "http://www.w3.org/2000/01/rdf-schema#label",
+	"dataset": "http://rgzm.de/navis/objects/001",
+	"label": "bdf1ab06-f35d-4982-94f6-a91eb7d04889",
+	"title": "roman coin I",
+	"description": "this is roman coin I",
+	"coverage": "8354456",
+	"temporal": "GzChH5GSZjvx",
+	"token": "abcdefgh"
+}
+
+# GET dataset
+{
+	"id": "",
+	"project": "",
+	"relation": "",
+	"dataset": "",
+	"label": "",
+	"title": "",
+	"description": "",
+	"coverage": "",
+	"temporal": ""
+}
