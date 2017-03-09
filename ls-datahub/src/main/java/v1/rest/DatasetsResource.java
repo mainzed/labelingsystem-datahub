@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import static com.hp.hpl.jena.sparql.lang.SPARQLParserRegistry.parser;
 import rdf.RDF;
 import rdf.RDF4J_20;
 import v1.utils.randomid.HashID;
@@ -41,12 +42,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import v1.utils.validatejson.ValidateJSONObject;
 
-@Path("/projects")
-public class ProjectsResource {
+@Path("/datasets")
+public class DatasetsResource {
 
 	@GET
 	@Produces({"application/json;charset=UTF-8", "application/xml;charset=UTF-8", "application/rdf+xml;charset=UTF-8", "text/turtle;charset=UTF-8", "text/n3;charset=UTF-8", "application/ld+json;charset=UTF-8", "application/rdf+json;charset=UTF-8"})
-	public Response getProjects(
+	public Response getDatasets(
 			@HeaderParam("Accept") String acceptHeader,
 			@HeaderParam("Accept-Encoding") String acceptEncoding,
 			@QueryParam("pretty") boolean pretty,
@@ -67,7 +68,7 @@ public class ProjectsResource {
 			String query = rdf.getPREFIXSPARQL();
 			query += "SELECT * WHERE { "
 					+ "?s ?p ?o . "
-					+ "?s a lsdh:Project . "
+					+ "?s a lsdh:Dataset . "
 					+ "?s dcterms:identifier ?identifier . ";
 			// FILTERING
 			/*if (draft == null) {
@@ -230,21 +231,21 @@ public class ProjectsResource {
 				JSONArray outArray = new JSONArray();
 				return Response.ok(outArray).header("Content-Type", "application/json;charset=UTF-8").build();
 			} else {
-				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.ProjectsResource"))
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.DatasetsResource"))
 						.header("Content-Type", "application/json;charset=UTF-8").build();
 			}
 		}
 	}
-	
+
 	@GET
-	@Path("/{project}")
+	@Path("/{dataset}")
 	@Produces({"application/json;charset=UTF-8", "application/xml;charset=UTF-8", "application/rdf+xml;charset=UTF-8", "text/turtle;charset=UTF-8", "text/n3;charset=UTF-8", "application/ld+json;charset=UTF-8", "application/rdf+json;charset=UTF-8"})
-	public Response getProject(@PathParam("project") String itemid, @HeaderParam("Accept") String acceptHeader, @QueryParam("statistics") String statistics, @QueryParam("creatorInfo") String creatorInfo, @QueryParam("pretty") boolean pretty, @HeaderParam("Accept-Encoding") String acceptEncoding) throws IOException, JDOMException, ParserConfigurationException, TransformerException {
+	public Response getDataset(@PathParam("dataset") String itemid, @HeaderParam("Accept") String acceptHeader, @QueryParam("statistics") String statistics, @QueryParam("creatorInfo") String creatorInfo, @QueryParam("pretty") boolean pretty, @HeaderParam("Accept-Encoding") String acceptEncoding) throws IOException, JDOMException, ParserConfigurationException, TransformerException {
 		try {
 			String OUTSTRING = "";
 			RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 			String item = "lsdh-p";
-			String query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { lsdh-p:" + itemid + " ?p ?o }";
+			String query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { lsdh-d:" + itemid + " ?p ?o }";
 			List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
 			List<String> predicates = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
 			List<String> objects = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
@@ -353,10 +354,10 @@ public class ProjectsResource {
 			}
 		} catch (Exception e) {
 			if (e.toString().contains("ResourceNotAvailableException")) {
-				return Response.status(Response.Status.NOT_FOUND).entity(Logging.getMessageJSON(e, "v1.rest.ProjectsResource"))
+				return Response.status(Response.Status.NOT_FOUND).entity(Logging.getMessageJSON(e, "v1.rest.DatasetsResource"))
 						.header("Content-Type", "application/json;charset=UTF-8").build();
 			} else {
-				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.ProjectsResource"))
+				return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.DatasetsResource"))
 						.header("Content-Type", "application/json;charset=UTF-8").build();
 			}
 		}
@@ -365,21 +366,24 @@ public class ProjectsResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-	public Response postProject(String json) throws IOException, JDOMException, ConfigException, ParserConfigurationException, TransformerException {
+	public Response postDataset(String json) throws IOException, JDOMException, ConfigException, ParserConfigurationException, TransformerException {
 		try {
+			// get dataset
+			JSONObject jsonObject = (JSONObject) new JSONParser().parse(json);
+			String datasetBody = (String) jsonObject.get("dataset");
 			// validate
-			String token = ValidateJSONObject.validateProject(json);
+			String token = ValidateJSONObject.validateDataset(json);
 			// set identifier
 			String itemID = HashID.getHASHID();
 			// create triples
-			json = Transformer.project_POST(json, itemID);
-			String triples = createProject(itemID, token);
+			json = Transformer.dataset_POST(json, itemID);
+			String triples = createDataset(itemID, token);
 			// input triples
 			RDF4J_20.inputRDFfromRDFJSONString(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), json);
 			RDF4J_20.SPARQLupdate(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), triples);
 			// get result als json
 			RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
-			String query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { lsdh-p:" + itemID + " ?p ?o }";
+			String query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { lsdh-d:" + itemID + " ?p ?o }";
 			List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
 			List<String> predicates = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
 			List<String> objects = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
@@ -387,24 +391,48 @@ public class ProjectsResource {
 				throw new ResourceNotAvailableException("resource " + itemID + " is not available");
 			}
 			for (int i = 0; i < predicates.size(); i++) {
-				rdf.setModelTriple("lsdh-p:" + itemID, predicates.get(i), objects.get(i));
+				rdf.setModelTriple("lsdh-d:" + itemID, predicates.get(i), objects.get(i));
 			}
-			String out = Transformer.project_GET(rdf.getModel("RDF/JSON"), itemID).toJSONString();
-			return Response.status(Response.Status.CREATED).entity(out).build();
+			String out = Transformer.dataset_GET(rdf.getModel("RDF/JSON"), itemID).toJSONString();
+			JSONObject outObject = (JSONObject) new JSONParser().parse(out);
+			RDF rdf2 = new RDF(ConfigProperties.getPropertyParam("host"));
+			String query2 = rdf2.getPREFIXSPARQL() + "SELECT * WHERE { <" + datasetBody + "> ?p ?o }";
+			List<BindingSet> result2 = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query2);
+			List<String> predicates2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "p");
+			List<String> objects2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "o");
+			if (result2.size() < 1) {
+				throw new ResourceNotAvailableException("resource " + itemID + " is not available");
+			}
+			for (int i = 0; i < predicates2.size(); i++) {
+				rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
+			}
+			String out2 = Transformer.datasetBody_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+			JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
+			outObject.put("title", out2Object.get("title"));
+			if (out2Object.get("description") != null) {
+				outObject.put("description", out2Object.get("description"));
+			}
+			if (out2Object.get("coverage") != null) {
+				outObject.put("coverage", out2Object.get("coverage"));
+			}
+			if (out2Object.get("temporal") != null) {
+				outObject.put("temporal", out2Object.get("temporal"));
+			}
+			return Response.status(Response.Status.CREATED).entity(outObject.toJSONString()).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.ProjectsResource"))
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.DatasetsResource"))
 					.header("Content-Type", "application/json;charset=UTF-8").build();
 		}
 	}
 
-	private static String createProject(String itemid, String token) throws ConfigException, IOException, UniqueIdentifierException {
+	private static String createDataset(String itemid, String token) throws ConfigException, IOException, UniqueIdentifierException {
 		RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 		String prefixes = rdf.getPREFIXSPARQL();
 		String triples = prefixes + "INSERT DATA { ";
-		triples += "lsdh-p:" + itemid + " a lsdh:Project . ";
-		triples += "lsdh-p:" + itemid + " a void:Dataset . ";
-		triples += "lsdh-p:" + itemid + " dcterms:identifier \"" + itemid + "\" . ";
-		triples += "lsdh-p:" + itemid + " lsdh:token \"" + token + "\" . ";
+		triples += "lsdh-d:" + itemid + " a lsdh:Dataset . ";
+		triples += "lsdh-d:" + itemid + " a oa:Annotation . ";
+		triples += "lsdh-d:" + itemid + " dcterms:identifier \"" + itemid + "\" . ";
+		triples += "lsdh-d:" + itemid + " lsdh:token \"" + token + "\" . ";
 		triples += " }";
 		return triples;
 	}

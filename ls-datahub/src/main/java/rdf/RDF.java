@@ -60,7 +60,7 @@ public class RDF {
 			return shortDesc.replace("lsdh:", PREFIX_LSDH);
 		} else if (shortDesc.startsWith("lsdh-p:")) {
 			return shortDesc.replace("lsdh-p:", PREFIX_LSDH_PROJECT);
-		} else if (shortDesc.startsWith("lsdh-d::")) {
+		} else if (shortDesc.startsWith("lsdh-d:")) {
 			return shortDesc.replace("lsdh-d:", PREFIX_LSDH_DATASET);
 		} else if (shortDesc.startsWith("void:")) {
 			return shortDesc.replace("void:", PREFIX_VOID);
