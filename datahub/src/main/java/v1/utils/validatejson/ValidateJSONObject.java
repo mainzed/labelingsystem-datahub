@@ -186,6 +186,10 @@ public class ValidateJSONObject {
 		if (!jsonObject.get("relation").toString().startsWith("http")) {
 			throw new ValidateJSONObjectException("relation do not start with HTTP");
 		}
+		// if depiction -> starts with http
+		if (!jsonObject.get("depiction").toString().startsWith("http")) {
+			throw new ValidateJSONObjectException("depiction do not start with HTTP");
+		}
 		// REMOVE ALL possible keys
 		if (jsonObject.containsKey("project")) {
 			jsonObject.remove("project");
@@ -213,6 +217,9 @@ public class ValidateJSONObject {
 		}
 		if (jsonObject.containsKey("temporal")) {
 			jsonObject.remove("temporal");
+		}
+		if (jsonObject.containsKey("depiction")) {
+			jsonObject.remove("depiction");
 		}
 		if (jsonObject.containsKey("id")) {
 			jsonObject.remove("id");

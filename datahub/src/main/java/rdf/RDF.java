@@ -29,6 +29,7 @@ public class RDF {
 	private final String PREFIX_DCAT = "http://www.w3.org/ns/dcat#";
 	private final String PREFIX_OA = "http://www.w3.org/ns/oa#";
 	private final String PREFIX_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+	private final String PREFIX_FOAF = "http://xmlns.com/foaf/0.1/";
 	private String PREFIXSPARQL = ""
 			+ "PREFIX lsdh: <" + PREFIX_LSDH + "> "
 			+ "PREFIX lsdh-p: <" + PREFIX_LSDH_PROJECT + "> "
@@ -37,7 +38,8 @@ public class RDF {
 			+ "PREFIX dcterms: <" + PREFIX_DCTERMS + "> "
 			+ "PREFIX dcat: <" + PREFIX_DCAT + "> "
 			+ "PREFIX oa: <" + PREFIX_OA + "> "
-			+ "PREFIX rdf: <" + PREFIX_RDF + "> ";
+			+ "PREFIX rdf: <" + PREFIX_RDF + "> "
+			+ "PREFIX foaf: <" + PREFIX_FOAF + "> ";
 
 	public RDF(String HOST) throws IOException {
 		model = ModelFactory.createDefaultModel();
@@ -49,6 +51,7 @@ public class RDF {
 		model.setNsPrefix("dcat", PREFIX_DCAT);
 		model.setNsPrefix("oa", PREFIX_OA);
 		model.setNsPrefix("rdf", PREFIX_RDF);
+		model.setNsPrefix("foaf", PREFIX_FOAF);
 	}
 
 	public Model getModelObject() {
@@ -72,6 +75,8 @@ public class RDF {
 			return shortDesc.replace("oa:", PREFIX_OA);
 		} else if (shortDesc.startsWith("rdf:")) {
 			return shortDesc.replace("rdf:", PREFIX_RDF);
+		} else if (shortDesc.startsWith("foaf:")) {
+			return shortDesc.replace("foaf:", PREFIX_FOAF);
 		} else {
 			return shortDesc;
 		}

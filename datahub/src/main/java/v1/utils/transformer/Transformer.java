@@ -3,7 +3,6 @@ package v1.utils.transformer;
 import v1.utils.config.ConfigProperties;
 import rdf.RDF;
 import exceptions.TransformRdfToApiJsonException;
-import exceptions.UniqueIdentifierException;
 import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,7 +11,7 @@ import org.json.simple.parser.ParseException;
 
 public class Transformer {
 
-	public static String project_POST(String json, String id) throws IOException, UniqueIdentifierException, ParseException {
+	public static String project_POST(String json, String id) throws IOException, ParseException {
 		//init
 		RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 		String item = "";
@@ -94,7 +93,7 @@ public class Transformer {
 		return rdfObject.toJSONString();
 	}
 
-	public static JSONObject project_GET(String json, String id) throws IOException, UniqueIdentifierException, ParseException, TransformRdfToApiJsonException {
+	public static JSONObject project_GET(String json, String id) throws IOException, ParseException, TransformRdfToApiJsonException {
 		JSONObject object = null;
 		try {
 			//init
@@ -199,7 +198,7 @@ public class Transformer {
 		return object;
 	}
 
-	public static String dataset_POST(String json, String id) throws IOException, UniqueIdentifierException, ParseException {
+	public static String dataset_POST(String json, String id) throws IOException, ParseException {
 		//init
 		RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 		String item = "";
@@ -271,6 +270,17 @@ public class Transformer {
 			objectDataset.put(rdf.getPrefixItem("dcterms:description"), newArray);
 			rdfObject.put(datasetString, objectDataset);
 		}
+		item = (String) object.get("depiction");
+		if (item != null) {
+			object.remove("depiction");
+			JSONArray newArray = new JSONArray();
+			JSONObject itemObject = new JSONObject();
+			itemObject.put("type", "uri");
+			itemObject.put("value", item);
+			newArray.add(itemObject);
+			objectDataset.put(rdf.getPrefixItem("foaf:depiction"), newArray);
+			rdfObject.put(datasetString, objectDataset);
+		}
 		item = (String) object.get("coverage");
 		if (item != null) {
 			object.remove("coverage");
@@ -300,6 +310,7 @@ public class Transformer {
 		object.remove("label");
 		object.remove("title");
 		object.remove("description");
+		object.remove("depiction");
 		object.remove("coverage");
 		object.remove("temporal");
 		object.remove("token");
@@ -309,7 +320,7 @@ public class Transformer {
 		return rdfObject.toJSONString();
 	}
 	
-	public static JSONObject dataset_GET(String json, String id) throws IOException, UniqueIdentifierException, ParseException, TransformRdfToApiJsonException {
+	public static JSONObject dataset_GET(String json, String id) throws IOException, ParseException, TransformRdfToApiJsonException {
 		JSONObject object = null;
 		try {
 			//init
@@ -392,7 +403,7 @@ public class Transformer {
 		return object;
 	}
 	
-	public static JSONObject datasetBody_GET(String json, String datasetBody) throws IOException, UniqueIdentifierException, ParseException, TransformRdfToApiJsonException {
+	public static JSONObject datasetBody_GET(String json, String datasetBody) throws IOException, ParseException, TransformRdfToApiJsonException {
 		JSONObject object = null;
 		try {
 			//init
@@ -423,6 +434,16 @@ public class Transformer {
 					object.put("description", value);
 				}
 			}
+			// change foaf:depiction
+			array = (JSONArray) object.get(rdf.getPrefixItem("foaf:depiction"));
+			if (array != null && !array.isEmpty()) {
+				for (Object element : array) {
+					object.remove(rdf.getPrefixItem("foaf:depiction"));
+					JSONObject obj = (JSONObject) element;
+					String value = (String) obj.get("value");
+					object.put("depiction", value);
+				}
+			}
 			// change dcterms:coverage
 			array = (JSONArray) object.get(rdf.getPrefixItem("dcterms:coverage"));
 			if (array != null && !array.isEmpty()) {
@@ -446,6 +467,7 @@ public class Transformer {
 			// delete items
 			object.remove(rdf.getPrefixItem("dcterms:title"));
 			object.remove(rdf.getPrefixItem("dcterms:description"));
+			object.remove(rdf.getPrefixItem("foaf:depiction"));
 			object.remove(rdf.getPrefixItem("dcterms:coverage"));
 			object.remove(rdf.getPrefixItem("dcterms:temporal"));
 		} catch (Exception e) {

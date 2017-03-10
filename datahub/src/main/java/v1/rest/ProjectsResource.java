@@ -10,7 +10,6 @@ import v1.utils.randomid.HashID;
 import exceptions.ConfigException;
 import exceptions.Logging;
 import exceptions.ResourceNotAvailableException;
-import exceptions.UniqueIdentifierException;
 import v1.utils.transformer.Transformer;
 import v1.utils.config.ConfigProperties;
 import java.io.IOException;
@@ -397,7 +396,7 @@ public class ProjectsResource {
 		}
 	}
 
-	private static String createProject(String itemid, String token) throws ConfigException, IOException, UniqueIdentifierException {
+	private static String createProject(String itemid, String token) throws ConfigException, IOException {
 		RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 		String prefixes = rdf.getPREFIXSPARQL();
 		String triples = prefixes + "INSERT DATA { ";

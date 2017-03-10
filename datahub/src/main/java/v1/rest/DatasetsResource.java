@@ -4,14 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import static com.hp.hpl.jena.sparql.lang.SPARQLParserRegistry.parser;
 import rdf.RDF;
 import rdf.RDF4J_20;
 import v1.utils.randomid.HashID;
 import exceptions.ConfigException;
 import exceptions.Logging;
 import exceptions.ResourceNotAvailableException;
-import exceptions.UniqueIdentifierException;
 import v1.utils.transformer.Transformer;
 import v1.utils.config.ConfigProperties;
 import java.io.IOException;
@@ -425,7 +423,7 @@ public class DatasetsResource {
 		}
 	}
 
-	private static String createDataset(String itemid, String token) throws ConfigException, IOException, UniqueIdentifierException {
+	private static String createDataset(String itemid, String token) throws ConfigException, IOException {
 		RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 		String prefixes = rdf.getPREFIXSPARQL();
 		String triples = prefixes + "INSERT DATA { ";
