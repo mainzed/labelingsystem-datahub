@@ -136,7 +136,7 @@ public class DatasetsResource {
 				}
 			}
 			JSONArray outArray = new JSONArray();
-			if (acceptHeader.contains("application/json") || acceptHeader.contains("text/html")) {
+			if (acceptHeader.contains("application/json") || acceptHeader.contains("text/html") || acceptHeader.contains("*/*")) {
 				JSONObject jsonObject = (JSONObject) new JSONParser().parse(rdf.getModel("RDF/JSON"));
 				Set keys = jsonObject.keySet();
 				Iterator a = keys.iterator();

@@ -115,7 +115,7 @@ public class ProjectsResource {
 				rdf.setModelTriple(s.get(i), p.get(i), o.get(i));
 			}
 			JSONArray outArray = new JSONArray();
-			if (acceptHeader.contains("application/json") || acceptHeader.contains("text/html")) {
+			if (acceptHeader.contains("application/json") || acceptHeader.contains("text/html") || acceptHeader.contains("*/*")) {
 				JSONObject jsonObject = (JSONObject) new JSONParser().parse(rdf.getModel("RDF/JSON"));
 				Set keys = jsonObject.keySet();
 				Iterator a = keys.iterator();
@@ -396,7 +396,8 @@ public class ProjectsResource {
 		}
 	}
 
-	private static String createProject(String itemid, String token) throws ConfigException, IOException {
+	private static String createProject(String itemid, String token) throws ConfigException, IOException
+	{
 		RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 		String prefixes = rdf.getPREFIXSPARQL();
 		String triples = prefixes + "INSERT DATA { ";
