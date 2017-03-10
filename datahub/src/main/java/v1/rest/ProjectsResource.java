@@ -50,14 +50,8 @@ public class ProjectsResource {
 			@HeaderParam("Accept-Encoding") String acceptEncoding,
 			@QueryParam("pretty") boolean pretty,
 			@QueryParam("sort") String sort,
-			@QueryParam("fields") String fields,
 			@QueryParam("offset") String offset,
-			@QueryParam("limit") String limit,
-			@QueryParam("creator") String creator,
-			@QueryParam("releaseType") String releaseType,
-			@QueryParam("draft") String draft,
-			@QueryParam("statistics") String statistics,
-			@QueryParam("creatorInfo") String creatorInfo)
+			@QueryParam("limit") String limit)
 			throws IOException, JDOMException, ConfigException, ParserConfigurationException, TransformerException {
 		try {
 			String OUTSTRING = "";
@@ -68,16 +62,6 @@ public class ProjectsResource {
 					+ "?s ?p ?o . "
 					+ "?s a lsdh:Project . "
 					+ "?s dcterms:identifier ?identifier . ";
-			// FILTERING
-			/*if (draft == null) {
-				query += "?s ls:hasReleaseType ls:Public . ";
-			}
-			if (creator != null) {
-				query += "FILTER(?creator=\"" + creator + "\") ";
-			}
-			if (releaseType != null) {
-				query += "FILTER(?releaseType=<" + rdf.getPrefixItem("ls:" + releaseType) + ">) ";
-			}*/
 			query += " } ";
 			// SORTING
 			List<String> sortList = new ArrayList<String>();
