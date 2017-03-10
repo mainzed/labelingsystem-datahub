@@ -22,8 +22,8 @@ public class RDF {
 
 	private Model model = null;
 	private final String PREFIX_LSDH = "http://labeling.link/docs/ls-dh/core#";
-	private final String PREFIX_LSDH_PROJECT = "http://143.93.114.135/ls-datahub/projects/";
-	private final String PREFIX_LSDH_DATASET = "http://143.93.114.135/ls-datahub/datasets/";
+	private final String PREFIX_LSDH_PROJECT = "http://143.93.114.135/datahub/projects/";
+	private final String PREFIX_LSDH_DATASET = "http://143.93.114.135/datahub/datasets/";
 	private final String PREFIX_VOID = "http://rdfs.org/ns/void#";
 	private final String PREFIX_DCTERMS = "http://purl.org/dc/terms/";
 	private final String PREFIX_DCAT = "http://www.w3.org/ns/dcat#";
