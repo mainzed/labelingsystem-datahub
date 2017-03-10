@@ -15,7 +15,7 @@ public class RestResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-    public Response getAPIpage() {
+    public Response getInfo() {
         try {
             JSONObject outObject = new JSONObject();
             outObject.put("title", "Labeling System Data Hub API");

@@ -13,9 +13,12 @@ public class SearchResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-    public Response getAPIpage() {
+    public Response getDatasetsBySearch() {
         try {
             JSONObject outObject = new JSONObject();
+			// get datasets for a project
+			// get datasets for a publisher
+			// get datasets for a specific concept
             return Response.ok(outObject).header("Content-Type", "application/json;charset=UTF-8").build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.SearchResource"))
