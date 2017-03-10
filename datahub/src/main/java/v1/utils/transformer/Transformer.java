@@ -244,7 +244,7 @@ public class Transformer {
 			JSONArray newArray = new JSONArray();
 			JSONObject itemObject = new JSONObject();
 			itemObject.put("type", "uri");
-			itemObject.put("value", "http://143.93.114.135/item/label/" + item);
+			itemObject.put("value", item);
 			newArray.add(itemObject);
 			object.put(rdf.getPrefixItem("oa:hasBody"), newArray);
 		}
@@ -287,7 +287,7 @@ public class Transformer {
 			JSONArray newArray = new JSONArray();
 			JSONObject itemObject = new JSONObject();
 			itemObject.put("type", "uri");
-			itemObject.put("value", "http://sws.geonames.org/" + item);
+			itemObject.put("value", item);
 			newArray.add(itemObject);
 			objectDataset.put(rdf.getPrefixItem("dcterms:coverage"), newArray);
 			rdfObject.put(datasetString, objectDataset);
@@ -298,7 +298,7 @@ public class Transformer {
 			JSONArray newArray = new JSONArray();
 			JSONObject itemObject = new JSONObject();
 			itemObject.put("type", "uri");
-			itemObject.put("value", "http://chronontology.dainst.org/period/" + item);
+			itemObject.put("value", item);
 			newArray.add(itemObject);
 			objectDataset.put(rdf.getPrefixItem("dcterms:temporal"), newArray);
 			rdfObject.put(datasetString, objectDataset);
@@ -451,7 +451,7 @@ public class Transformer {
 					object.remove(rdf.getPrefixItem("dcterms:coverage"));
 					JSONObject obj = (JSONObject) element;
 					String value = (String) obj.get("value");
-					object.put("coverage", value.replace("http://sws.geonames.org/", ""));
+					object.put("coverage", value);
 				}
 			}
 			// change dcterms:temporal
@@ -461,7 +461,7 @@ public class Transformer {
 					object.remove(rdf.getPrefixItem("dcterms:temporal"));
 					JSONObject obj = (JSONObject) element;
 					String value = (String) obj.get("value");
-					object.put("temporal", value.replace("http://chronontology.dainst.org/period/",""));
+					object.put("temporal", value);
 				}
 			}
 			// delete items
