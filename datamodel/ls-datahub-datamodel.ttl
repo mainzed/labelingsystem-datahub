@@ -5,6 +5,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
 # a project containing datasets connected to labels
 lsdh-p:01 a lsdh:Project, void:Dataset;
@@ -49,6 +50,8 @@ lsdh-d:001 a lsdh:Dataset, oa:Annotation;
 <http://mydataset.info/1> dcterms:title "title".
 # OPTIONAL: metadata
 <http://mydataset.info/1> dcterms:description "desc".
+# depiction as thumbnail
+<http://mydataset.info/1> foaf:depiction <http://myimages.org/1.jpg>.
 # coverage is limited to GeoNames IDs
 <http://mydataset.info/1> dcterms:coverage <http://geonamesid.info>.
 # temporal is limited to ChronOntology IDs
