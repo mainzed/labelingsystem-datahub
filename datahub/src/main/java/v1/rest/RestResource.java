@@ -17,7 +17,7 @@ public class RestResource {
     @Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
     public Response getInfo() {
         try {
-            JSONObject outObject = new JSONObject();
+			JSONObject outObject = new JSONObject();
             outObject.put("title", "Labeling System Data Hub API");
             outObject.put("version", "1.0");
             File file = new File(RestResource.class.getClassLoader().getResource("configLocal.properties").getFile());

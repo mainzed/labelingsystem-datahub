@@ -221,6 +221,18 @@ public class ValidateJSONObject {
 		if (jsonObject.containsKey("depiction")) {
 			jsonObject.remove("depiction");
 		}
+		if (jsonObject.containsKey("begin")) {
+			jsonObject.remove("begin");
+		}
+		if (jsonObject.containsKey("end")) {
+			jsonObject.remove("end");
+		}
+		if (jsonObject.containsKey("lat")) {
+			jsonObject.remove("lat");
+		}
+		if (jsonObject.containsKey("lng")) {
+			jsonObject.remove("lng");
+		}
 		if (jsonObject.containsKey("id")) {
 			jsonObject.remove("id");
 		}

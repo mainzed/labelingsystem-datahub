@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import v1.utils.trigger.Triggers;
 
 public class Transformer {
 
@@ -292,7 +293,30 @@ public class Transformer {
 			objectDataset.put(rdf.getPrefixItem("dcterms:coverage"), newArray);
 			rdfObject.put(datasetString, objectDataset);
 		}
+		// trigger for lat and long
+		if (item != null) {
+			if (item.contains("geonames")) {
+				JSONObject latlng = Triggers.getLatLngFromGeoNames(item);
+				if (latlng.size() > 0) {
+					JSONArray newArray = new JSONArray();
+					JSONObject itemObject = new JSONObject();
+					itemObject.put("type", "literal");
+					itemObject.put("value", latlng.get("lat"));
+					newArray.add(itemObject);
+					objectDataset.put(rdf.getPrefixItem("geo:lat"), newArray);
+					rdfObject.put(datasetString, objectDataset);
+					newArray = new JSONArray();
+					itemObject = new JSONObject();
+					itemObject.put("type", "literal");
+					itemObject.put("value", latlng.get("lng"));
+					newArray.add(itemObject);
+					objectDataset.put(rdf.getPrefixItem("geo:long"), newArray);
+					rdfObject.put(datasetString, objectDataset);
+				}
+			}
+		}
 		item = (String) object.get("temporal");
+		int z = 0;
 		if (item != null) {
 			object.remove("temporal");
 			JSONArray newArray = new JSONArray();
@@ -302,6 +326,50 @@ public class Transformer {
 			newArray.add(itemObject);
 			objectDataset.put(rdf.getPrefixItem("dcterms:temporal"), newArray);
 			rdfObject.put(datasetString, objectDataset);
+		}
+		// trigger for start and end
+		if (item != null) {
+			if (item.contains("chronontology")) {
+				JSONObject beginend = Triggers.getBeginEndFromChronOntology(item);
+				if (beginend.size() > 0) {
+					JSONArray newArray = new JSONArray();
+					JSONObject itemObject = new JSONObject();
+					itemObject.put("type", "literal");
+					itemObject.put("value", beginend.get("begin"));
+					newArray.add(itemObject);
+					objectDataset.put(rdf.getPrefixItem("prov:startedAtTime"), newArray);
+					rdfObject.put(datasetString, objectDataset);
+					newArray = new JSONArray();
+					itemObject = new JSONObject();
+					itemObject.put("type", "literal");
+					itemObject.put("value", beginend.get("end"));
+					newArray.add(itemObject);
+					objectDataset.put(rdf.getPrefixItem("prov:endedAtTime"), newArray);
+					rdfObject.put(datasetString, objectDataset);
+				}
+			}
+		}
+		if (item == null) {
+			String begin = (String) object.get("begin");
+			String end  = (String) object.get("end");
+			if (begin != null && end != null) {
+				object.remove("begin");
+				JSONArray newArray = new JSONArray();
+				JSONObject itemObject = new JSONObject();
+				itemObject.put("type", "literal");
+				itemObject.put("value", begin);
+				newArray.add(itemObject);
+				objectDataset.put(rdf.getPrefixItem("prov:startedAtTime"), newArray);
+				rdfObject.put(datasetString, objectDataset);
+				object.remove("end");
+				newArray = new JSONArray();
+				itemObject = new JSONObject();
+				itemObject.put("type", "literal");
+				itemObject.put("value", end);
+				newArray.add(itemObject);
+				objectDataset.put(rdf.getPrefixItem("prov:endedAtTime"), newArray);
+				rdfObject.put(datasetString, objectDataset);
+			}
 		}
 		// delete items
 		object.remove("project");
@@ -313,6 +381,8 @@ public class Transformer {
 		object.remove("depiction");
 		object.remove("coverage");
 		object.remove("temporal");
+		object.remove("begin");
+		object.remove("end");
 		object.remove("token");
 		object.remove("id");
 		// add object
@@ -454,6 +524,26 @@ public class Transformer {
 					object.put("coverage", value);
 				}
 			}
+			// change geo:lat
+			array = (JSONArray) object.get(rdf.getPrefixItem("geo:lat"));
+			if (array != null && !array.isEmpty()) {
+				for (Object element : array) {
+					object.remove(rdf.getPrefixItem("geo:lat"));
+					JSONObject obj = (JSONObject) element;
+					String value = (String) obj.get("value");
+					object.put("lat", value);
+				}
+			}
+			// change geo:lat
+			array = (JSONArray) object.get(rdf.getPrefixItem("geo:long"));
+			if (array != null && !array.isEmpty()) {
+				for (Object element : array) {
+					object.remove(rdf.getPrefixItem("geo:long"));
+					JSONObject obj = (JSONObject) element;
+					String value = (String) obj.get("value");
+					object.put("lng", value);
+				}
+			}
 			// change dcterms:temporal
 			array = (JSONArray) object.get(rdf.getPrefixItem("dcterms:temporal"));
 			if (array != null && !array.isEmpty()) {
@@ -464,12 +554,36 @@ public class Transformer {
 					object.put("temporal", value);
 				}
 			}
+			// change prov:startedAtTime
+			array = (JSONArray) object.get(rdf.getPrefixItem("prov:startedAtTime"));
+			if (array != null && !array.isEmpty()) {
+				for (Object element : array) {
+					object.remove(rdf.getPrefixItem("prov:startedAtTime"));
+					JSONObject obj = (JSONObject) element;
+					String value = (String) obj.get("value");
+					object.put("begin", value);
+				}
+			}
+			// change prov:endedAtTime 
+			array = (JSONArray) object.get(rdf.getPrefixItem("prov:endedAtTime"));
+			if (array != null && !array.isEmpty()) {
+				for (Object element : array) {
+					object.remove(rdf.getPrefixItem("prov:endedAtTime"));
+					JSONObject obj = (JSONObject) element;
+					String value = (String) obj.get("value");
+					object.put("end", value);
+				}
+			}
 			// delete items
 			object.remove(rdf.getPrefixItem("dcterms:title"));
 			object.remove(rdf.getPrefixItem("dcterms:description"));
 			object.remove(rdf.getPrefixItem("foaf:depiction"));
 			object.remove(rdf.getPrefixItem("dcterms:coverage"));
+			object.remove(rdf.getPrefixItem("geo:lat"));
+			object.remove(rdf.getPrefixItem("geo:long"));
 			object.remove(rdf.getPrefixItem("dcterms:temporal"));
+			object.remove(rdf.getPrefixItem("prov:startedAtTime"));
+			object.remove(rdf.getPrefixItem("prov:endedAtTime"));
 		} catch (Exception e) {
 			int errorLine = -1;
 			for (StackTraceElement element : e.getStackTrace()) {

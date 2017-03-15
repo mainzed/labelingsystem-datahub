@@ -159,8 +159,20 @@ public class DatasetsResource {
 					if (out2Object.get("coverage") != null) {
 						tmp.put("coverage", out2Object.get("coverage"));
 					}
+					if (out2Object.get("lat") != null) {
+						tmp.put("lat", out2Object.get("lat"));
+					}
+					if (out2Object.get("lng") != null) {
+						tmp.put("lng", out2Object.get("lng"));
+					}
 					if (out2Object.get("temporal") != null) {
 						tmp.put("temporal", out2Object.get("temporal"));
+					}
+					if (out2Object.get("begin") != null) {
+						tmp.put("begin", out2Object.get("begin"));
+					}
+					if (out2Object.get("end") != null) {
+						tmp.put("end", out2Object.get("end"));
 					}
 					outArray.add(tmp);
 				}
@@ -318,8 +330,20 @@ public class DatasetsResource {
 				if (out2Object.get("coverage") != null) {
 					outObject.put("coverage", out2Object.get("coverage"));
 				}
+				if (out2Object.get("lat") != null) {
+					outObject.put("lat", out2Object.get("lat"));
+				}
+				if (out2Object.get("lng") != null) {
+					outObject.put("lng", out2Object.get("lng"));
+				}
 				if (out2Object.get("temporal") != null) {
 					outObject.put("temporal", out2Object.get("temporal"));
+				}
+				if (out2Object.get("begin") != null) {
+					outObject.put("begin", out2Object.get("begin"));
+				}
+				if (out2Object.get("end") != null) {
+					outObject.put("end", out2Object.get("end"));
 				}
 				if (pretty) {
 					JsonParser parser = new JsonParser();
@@ -385,8 +409,20 @@ public class DatasetsResource {
 				if (out2Object.get("coverage") != null) {
 					outObject.put("coverage", out2Object.get("coverage"));
 				}
+				if (out2Object.get("lat") != null) {
+					outObject.put("lat", out2Object.get("lat"));
+				}
+				if (out2Object.get("lng") != null) {
+					outObject.put("lng", out2Object.get("lng"));
+				}
 				if (out2Object.get("temporal") != null) {
 					outObject.put("temporal", out2Object.get("temporal"));
+				}
+				if (out2Object.get("begin") != null) {
+					outObject.put("begin", out2Object.get("begin"));
+				}
+				if (out2Object.get("end") != null) {
+					outObject.put("end", out2Object.get("end"));
 				}
 				if (pretty) {
 					JsonParser parser = new JsonParser();
@@ -500,8 +536,20 @@ public class DatasetsResource {
 				if (out2Object.get("coverage") != null) {
 					outObject.put("coverage", out2Object.get("coverage"));
 				}
+				if (out2Object.get("lat") != null) {
+					outObject.put("lat", out2Object.get("lat"));
+				}
+				if (out2Object.get("lng") != null) {
+					outObject.put("lng", out2Object.get("lng"));
+				}
 				if (out2Object.get("temporal") != null) {
 					outObject.put("temporal", out2Object.get("temporal"));
+				}
+				if (out2Object.get("begin") != null) {
+					outObject.put("begin", out2Object.get("begin"));
+				}
+				if (out2Object.get("end") != null) {
+					outObject.put("end", out2Object.get("end"));
 				}
 				if (pretty) {
 					JsonParser parser = new JsonParser();
@@ -596,8 +644,20 @@ public class DatasetsResource {
 			if (out2Object.get("coverage") != null) {
 				outObject.put("coverage", out2Object.get("coverage"));
 			}
+			if (out2Object.get("lat") != null) {
+				outObject.put("lat", out2Object.get("lat"));
+			}
+			if (out2Object.get("lng") != null) {
+				outObject.put("lng", out2Object.get("lng"));
+			}
 			if (out2Object.get("temporal") != null) {
 				outObject.put("temporal", out2Object.get("temporal"));
+			}
+			if (out2Object.get("begin") != null) {
+				outObject.put("begin", out2Object.get("begin"));
+			}
+			if (out2Object.get("end") != null) {
+				outObject.put("end", out2Object.get("end"));
 			}
 			return Response.status(Response.Status.CREATED).entity(outObject.toJSONString()).build();
 		} catch (Exception e) {
