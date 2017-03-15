@@ -6,6 +6,8 @@
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix oa: <http://www.w3.org/ns/oa#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 
 # a project containing datasets connected to labels
 lsdh-p:01 a lsdh:Project, void:Dataset;
@@ -54,5 +56,9 @@ lsdh-d:001 a lsdh:Dataset, oa:Annotation;
 <http://mydataset.info/1> foaf:depiction <http://myimages.org/1.jpg>.
 # coverage is limited to GeoNames IDs
 <http://mydataset.info/1> dcterms:coverage <http://geonamesid.info>.
+<http://mydataset.info/1> geo:lat "0".
+<http://mydataset.info/1> geo:long "0".
 # temporal is limited to ChronOntology IDs
 <http://mydataset.info/1> dcterms:temporal <http://chronontology.info>.
+<http://mydataset.info/1> prov:startedAtTime "-100".
+<http://mydataset.info/1> prov:endedAtTime "100".
