@@ -24,13 +24,13 @@ lsdh-p:01 a lsdh:Project, void:Dataset;
   	dcat:accessURL <http://myaccessurl.info>;
 
   	# WRITTEN
-  	lsdh:token "";
+  	lsdh:token "".
 
  # a dataset connected to labels
 lsdh-d:001 a lsdh:Dataset, oa:Annotation;
 
  	# MENDATORY: id
- 	dcterms:identifier "001".
+ 	dcterms:identifier "001";
 
  	# MANDATORY: link to project
  	lsdh:project lsdh-p:01;
@@ -42,23 +42,25 @@ lsdh-d:001 a lsdh:Dataset, oa:Annotation;
  	oa:hasTarget <http://mydataset.info/1>;
 
  	# MANDATORY: link to labeling system label (the 'annotation body' is the label reference)
- 	oa:hasBody <http://143.93.114.135/item/label/bdf1ab06-f35d-4982-94f6-a91eb7d04889>.
+ 	oa:hasBody <http://143.93.114.135/item/label/bdf1ab06-f35d-4982-94f6-a91eb7d04889>;
 
  	# WRITTEN
-  	lsdh:token "";
+  	lsdh:token "".
 
-# metadata for the original dataset
+# metadata for the target dataset
+<http://mydataset.info/1> a lsdh:Target;
+
 # MANDATORY: metadata
-<http://mydataset.info/1> dcterms:title "title".
+dcterms:title "title";
 # OPTIONAL: metadata
-<http://mydataset.info/1> dcterms:description "desc".
+dcterms:description "desc";
 # depiction as thumbnail
-<http://mydataset.info/1> foaf:depiction <http://myimages.org/1.jpg>.
+foaf:depiction <http://myimages.org/1.jpg>;
 # coverage is limited to GeoNames IDs
-<http://mydataset.info/1> dcterms:coverage <http://geonamesid.info>.
-<http://mydataset.info/1> geo:lat "0".
-<http://mydataset.info/1> geo:long "0".
+dcterms:coverage <http://geonamesid.info>;
+geo:lat "0";
+geo:long "0";
 # temporal is limited to ChronOntology IDs
-<http://mydataset.info/1> dcterms:temporal <http://chronontology.info>.
-<http://mydataset.info/1> prov:startedAtTime "-100".
-<http://mydataset.info/1> prov:endedAtTime "100".
+dcterms:temporal <http://chronontology.info>;
+prov:startedAtTime "-100";
+prov:endedAtTime "100".
