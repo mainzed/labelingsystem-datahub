@@ -1,4 +1,4 @@
-# JSON
+# API POST and GET examples
 
 ## POST project
 
