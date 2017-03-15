@@ -32,6 +32,7 @@ public class RDF {
 	private final String PREFIX_FOAF = "http://xmlns.com/foaf/0.1/";
 	private final String PREFIX_PROV = "http://www.w3.org/ns/prov#";
 	private final String PREFIX_GEO = "http://www.w3.org/2003/01/geo/wgs84_pos#";
+	private final String PREFIX_XSD = "http://www.w3.org/2001/XMLSchema#";
 	private String PREFIXSPARQL = ""
 			+ "PREFIX lsdh: <" + PREFIX_LSDH + "> "
 			+ "PREFIX lsdh-p: <" + PREFIX_LSDH_PROJECT + "> "
@@ -43,7 +44,8 @@ public class RDF {
 			+ "PREFIX rdf: <" + PREFIX_RDF + "> "
 			+ "PREFIX foaf: <" + PREFIX_FOAF + "> "
 			+ "PREFIX prov: <" + PREFIX_PROV + "> "
-			+ "PREFIX geo: <" + PREFIX_GEO + "> ";
+			+ "PREFIX geo: <" + PREFIX_GEO + "> "
+			+ "PREFIX xsd: <" + PREFIX_XSD + "> ";
 
 	public RDF(String HOST) throws IOException {
 		model = ModelFactory.createDefaultModel();
@@ -58,6 +60,7 @@ public class RDF {
 		model.setNsPrefix("foaf", PREFIX_FOAF);
 		model.setNsPrefix("prov", PREFIX_PROV);
 		model.setNsPrefix("geo", PREFIX_GEO);
+		model.setNsPrefix("xsd", PREFIX_XSD);
 	}
 
 	public Model getModelObject() {
@@ -87,6 +90,8 @@ public class RDF {
 			return shortDesc.replace("prov:", PREFIX_PROV);
 		} else if (shortDesc.startsWith("geo:")) {
 			return shortDesc.replace("geo:", PREFIX_GEO);
+		} else if (shortDesc.startsWith("xsd:")) {
+			return shortDesc.replace("xsd:", PREFIX_XSD);
 		} else {
 			return shortDesc;
 		}
