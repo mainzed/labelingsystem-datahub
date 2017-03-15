@@ -97,9 +97,7 @@ public class DatasetsResource {
 				throw new ResourceNotAvailableException("resource is not available");
 			}
 			for (int i = 0; i < s.size(); i++) {
-				if (s.get(i).contains("datasets")) {
-					rdf.setModelTriple(s.get(i), p.get(i), o.get(i));
-				}
+				rdf.setModelTriple(s.get(i), p.get(i), o.get(i));
 			}
 			if (acceptHeader.contains("application/rdf+json")
 					|| acceptHeader.contains("application/xml")
