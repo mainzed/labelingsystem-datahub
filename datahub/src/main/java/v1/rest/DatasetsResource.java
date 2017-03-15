@@ -97,7 +97,9 @@ public class DatasetsResource {
 				throw new ResourceNotAvailableException("resource is not available");
 			}
 			for (int i = 0; i < s.size(); i++) {
-				rdf.setModelTriple(s.get(i), p.get(i), o.get(i));
+				if (s.get(i).contains("datasets")) {
+					rdf.setModelTriple(s.get(i), p.get(i), o.get(i));
+				}
 			}
 			if (acceptHeader.contains("application/rdf+json")
 					|| acceptHeader.contains("application/xml")
@@ -105,17 +107,19 @@ public class DatasetsResource {
 					|| acceptHeader.contains("text/turtle")
 					|| acceptHeader.contains("text/n3")
 					|| acceptHeader.contains("application/ld+json")) {
-				for (int i = 0; i < s.size(); i++) {
-					if (p.get(i).contains("hasTarget")) {
-						query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { <" + o.get(i) + "> ?p ?o }";
-						result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
-						List<String> predicates = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
-						List<String> objects = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
-						if (result.size() < 1) {
-							throw new ResourceNotAvailableException("resource " + o.get(i) + " is not available");
-						}
-						for (int ii = 0; ii < predicates.size(); ii++) {
-							rdf.setModelTriple(o.get(i), predicates.get(ii), objects.get(ii));
+				if (!acceptHeader.contains("text/html,application/xhtml+xml")) { // browser
+					for (int i = 0; i < s.size(); i++) {
+						if (p.get(i).contains("hasTarget")) {
+							query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { <" + o.get(i) + "> ?p ?o }";
+							result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+							List<String> predicates = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
+							List<String> objects = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
+							if (result.size() < 1) {
+								throw new ResourceNotAvailableException("resource " + o.get(i) + " is not available");
+							}
+							for (int ii = 0; ii < predicates.size(); ii++) {
+								rdf.setModelTriple(o.get(i), predicates.get(ii), objects.get(ii));
+							}
 						}
 					}
 				}
