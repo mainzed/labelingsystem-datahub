@@ -1,8 +1,6 @@
 package v1.rest;
 
 import com.esri.core.geometry.Envelope;
-import com.esri.core.geometry.Geometry;
-import com.esri.core.geometry.OperatorBuffer;
 import com.esri.core.geometry.OperatorWithin;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.SpatialReference;
