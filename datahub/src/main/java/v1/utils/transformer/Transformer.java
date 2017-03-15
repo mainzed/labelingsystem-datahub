@@ -228,17 +228,6 @@ public class Transformer {
 			newArray.add(itemObject);
 			object.put(rdf.getPrefixItem("lsdh:relation"), newArray);
 		}
-		item = (String) object.get("dataset");
-		String datasetString = item;
-		if (item != null) {
-			object.remove("dataset");
-			JSONArray newArray = new JSONArray();
-			JSONObject itemObject = new JSONObject();
-			itemObject.put("type", "uri");
-			itemObject.put("value", item);
-			newArray.add(itemObject);
-			object.put(rdf.getPrefixItem("oa:hasTarget"), newArray);
-		}
 		item = (String) object.get("label");
 		if (item != null) {
 			object.remove("label");
@@ -249,6 +238,26 @@ public class Transformer {
 			newArray.add(itemObject);
 			object.put(rdf.getPrefixItem("oa:hasBody"), newArray);
 		}
+		item = (String) object.get("dataset");
+		String targetString = item;
+		if (item != null) {
+			object.remove("dataset");
+			JSONArray newArray = new JSONArray();
+			JSONObject itemObject = new JSONObject();
+			itemObject.put("type", "uri");
+			itemObject.put("value", item);
+			newArray.add(itemObject);
+			object.put(rdf.getPrefixItem("oa:hasTarget"), newArray);
+			// set target class
+			newArray = new JSONArray();
+			itemObject = new JSONObject();
+			itemObject.put("type", "uri");
+			itemObject.put("value", rdf.getPrefixItem("lsdh:Target"));
+			newArray.add(itemObject);
+			objectDataset.put(rdf.getPrefixItem("rdf:type"), newArray);
+			rdfObject.put(targetString, objectDataset);
+		}
+		// target properties
 		item = (String) object.get("title");
 		if (item != null) {
 			object.remove("title");
@@ -258,7 +267,7 @@ public class Transformer {
 			itemObject.put("value", item);
 			newArray.add(itemObject);
 			objectDataset.put(rdf.getPrefixItem("dcterms:title"), newArray);
-			rdfObject.put(datasetString, objectDataset);
+			rdfObject.put(targetString, objectDataset);
 		}
 		item = (String) object.get("description");
 		if (item != null) {
@@ -269,7 +278,7 @@ public class Transformer {
 			itemObject.put("value", item);
 			newArray.add(itemObject);
 			objectDataset.put(rdf.getPrefixItem("dcterms:description"), newArray);
-			rdfObject.put(datasetString, objectDataset);
+			rdfObject.put(targetString, objectDataset);
 		}
 		item = (String) object.get("depiction");
 		if (item != null) {
@@ -280,7 +289,7 @@ public class Transformer {
 			itemObject.put("value", item);
 			newArray.add(itemObject);
 			objectDataset.put(rdf.getPrefixItem("foaf:depiction"), newArray);
-			rdfObject.put(datasetString, objectDataset);
+			rdfObject.put(targetString, objectDataset);
 		}
 		item = (String) object.get("coverage");
 		if (item != null) {
@@ -291,7 +300,7 @@ public class Transformer {
 			itemObject.put("value", item);
 			newArray.add(itemObject);
 			objectDataset.put(rdf.getPrefixItem("dcterms:coverage"), newArray);
-			rdfObject.put(datasetString, objectDataset);
+			rdfObject.put(targetString, objectDataset);
 		}
 		// trigger for lat and long
 		if (item != null) {
@@ -304,14 +313,14 @@ public class Transformer {
 					itemObject.put("value", latlng.get("lat"));
 					newArray.add(itemObject);
 					objectDataset.put(rdf.getPrefixItem("geo:lat"), newArray);
-					rdfObject.put(datasetString, objectDataset);
+					rdfObject.put(targetString, objectDataset);
 					newArray = new JSONArray();
 					itemObject = new JSONObject();
 					itemObject.put("type", "literal");
 					itemObject.put("value", latlng.get("lng"));
 					newArray.add(itemObject);
 					objectDataset.put(rdf.getPrefixItem("geo:long"), newArray);
-					rdfObject.put(datasetString, objectDataset);
+					rdfObject.put(targetString, objectDataset);
 				}
 			}
 		}
@@ -325,7 +334,7 @@ public class Transformer {
 			itemObject.put("value", item);
 			newArray.add(itemObject);
 			objectDataset.put(rdf.getPrefixItem("dcterms:temporal"), newArray);
-			rdfObject.put(datasetString, objectDataset);
+			rdfObject.put(targetString, objectDataset);
 		}
 		// trigger for start and end
 		if (item != null) {
@@ -338,20 +347,20 @@ public class Transformer {
 					itemObject.put("value", beginend.get("begin"));
 					newArray.add(itemObject);
 					objectDataset.put(rdf.getPrefixItem("prov:startedAtTime"), newArray);
-					rdfObject.put(datasetString, objectDataset);
+					rdfObject.put(targetString, objectDataset);
 					newArray = new JSONArray();
 					itemObject = new JSONObject();
 					itemObject.put("type", "literal");
 					itemObject.put("value", beginend.get("end"));
 					newArray.add(itemObject);
 					objectDataset.put(rdf.getPrefixItem("prov:endedAtTime"), newArray);
-					rdfObject.put(datasetString, objectDataset);
+					rdfObject.put(targetString, objectDataset);
 				}
 			}
 		}
 		if (item == null) {
 			String begin = (String) object.get("begin");
-			String end  = (String) object.get("end");
+			String end = (String) object.get("end");
 			if (begin != null && end != null) {
 				object.remove("begin");
 				JSONArray newArray = new JSONArray();
@@ -360,7 +369,7 @@ public class Transformer {
 				itemObject.put("value", begin);
 				newArray.add(itemObject);
 				objectDataset.put(rdf.getPrefixItem("prov:startedAtTime"), newArray);
-				rdfObject.put(datasetString, objectDataset);
+				rdfObject.put(targetString, objectDataset);
 				object.remove("end");
 				newArray = new JSONArray();
 				itemObject = new JSONObject();
@@ -368,7 +377,7 @@ public class Transformer {
 				itemObject.put("value", end);
 				newArray.add(itemObject);
 				objectDataset.put(rdf.getPrefixItem("prov:endedAtTime"), newArray);
-				rdfObject.put(datasetString, objectDataset);
+				rdfObject.put(targetString, objectDataset);
 			}
 		}
 		// delete items
@@ -389,7 +398,7 @@ public class Transformer {
 		rdfObject.put(rdf.getPrefixItem("lsdh-d:" + id), object);
 		return rdfObject.toJSONString();
 	}
-	
+
 	public static JSONObject dataset_GET(String json, String id) throws IOException, ParseException, TransformRdfToApiJsonException {
 		JSONObject object = null;
 		try {
@@ -472,8 +481,8 @@ public class Transformer {
 		// return
 		return object;
 	}
-	
-	public static JSONObject datasetBody_GET(String json, String datasetBody) throws IOException, ParseException, TransformRdfToApiJsonException {
+
+	public static JSONObject target_GET(String json, String datasetBody) throws IOException, ParseException, TransformRdfToApiJsonException {
 		JSONObject object = null;
 		try {
 			//init
@@ -575,6 +584,7 @@ public class Transformer {
 				}
 			}
 			// delete items
+			object.remove(rdf.getPrefixItem("rdf:type"));
 			object.remove(rdf.getPrefixItem("dcterms:title"));
 			object.remove(rdf.getPrefixItem("dcterms:description"));
 			object.remove(rdf.getPrefixItem("foaf:depiction"));

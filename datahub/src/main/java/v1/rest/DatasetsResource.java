@@ -149,7 +149,7 @@ public class DatasetsResource {
 					for (int i = 0; i < predicates2.size(); i++) {
 						rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
 					}
-					String out2 = Transformer.datasetBody_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+					String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
 					JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
 					tmp.put("title", out2Object.get("title"));
 					if (out2Object.get("description") != null) {
@@ -320,7 +320,7 @@ public class DatasetsResource {
 				for (int i = 0; i < predicates2.size(); i++) {
 					rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
 				}
-				String out2 = Transformer.datasetBody_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+				String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
 				JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
 				outObject.put("title", out2Object.get("title"));
 				if (out2Object.get("description") != null) {
@@ -399,7 +399,7 @@ public class DatasetsResource {
 				for (int i = 0; i < predicates2.size(); i++) {
 					rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
 				}
-				String out2 = Transformer.datasetBody_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+				String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
 				JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
 				outObject.put("title", out2Object.get("title"));
 				if (out2Object.get("description") != null) {
@@ -526,7 +526,7 @@ public class DatasetsResource {
 				for (int i = 0; i < predicates2.size(); i++) {
 					rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
 				}
-				String out2 = Transformer.datasetBody_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+				String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
 				JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
 				outObject.put("title", out2Object.get("title"));
 				if (out2Object.get("description") != null) {
@@ -634,7 +634,7 @@ public class DatasetsResource {
 			for (int i = 0; i < predicates2.size(); i++) {
 				rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
 			}
-			String out2 = Transformer.datasetBody_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+			String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
 			JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
 			outObject.put("title", out2Object.get("title"));
 			if (out2Object.get("description") != null) {
