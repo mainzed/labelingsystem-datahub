@@ -112,6 +112,9 @@ public class ValidateJSONObject {
 		if (jsonObject.containsKey("id")) {
 			jsonObject.remove("id");
 		}
+		if (jsonObject.containsKey("datasets")) {
+			jsonObject.remove("datasets");
+		}
 		if (!jsonObject.isEmpty()) {
 			throw new ValidateJSONObjectException("found unsupported key");
 		}

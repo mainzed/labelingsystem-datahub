@@ -4,10 +4,13 @@ import v1.utils.config.ConfigProperties;
 import rdf.RDF;
 import exceptions.TransformRdfToApiJsonException;
 import java.io.IOException;
+import java.util.List;
+import org.eclipse.rdf4j.query.BindingSet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import rdf.RDF4J_20;
 import v1.utils.trigger.Triggers;
 
 public class Transformer {
@@ -89,6 +92,7 @@ public class Transformer {
 		object.remove("sparql");
 		object.remove("token");
 		object.remove("id");
+		object.remove("datasets");
 		// add object
 		rdfObject.put(rdf.getPrefixItem("lsdh-p" + ":" + id), object);
 		return rdfObject.toJSONString();
@@ -175,6 +179,11 @@ public class Transformer {
 					object.put("sparql", value);
 				}
 			}
+			// get dataset count
+			String query = rdf.getPREFIXSPARQL() + "SELECT (count(?d) as ?count) WHERE { ?d lsdh:project ?p. FILTER (?p = lsdh-p:" + id + ") }";
+			List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+			List<String> count = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "count");
+			object.put("datasets", Integer.parseInt(count.get(0)));
 			// delete items
 			object.remove(rdf.getPrefixItem("rdf:type"));
 			object.remove(rdf.getPrefixItem("dcterms:title"));
