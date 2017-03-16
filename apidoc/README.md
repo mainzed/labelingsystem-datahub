@@ -8,9 +8,9 @@
     3. [POST project](#POST-project)
 
 2. [Datasets](#Datasets)
-    2. [GET datasets](#GET-datasets)
-    3. [GET dataset](#GET-dataset)
-    4. [POST dataset](#POST-dataset)
+    1. [GET datasets](#GET-datasets)
+    2. [GET dataset](#GET-dataset)
+    3. [POST dataset](#POST-dataset)
 
 3. [Search](#Search)
     1. [metadata](#metadata)
