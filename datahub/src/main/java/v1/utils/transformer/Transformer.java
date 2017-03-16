@@ -43,6 +43,16 @@ public class Transformer {
 			newArray.add(itemObject);
 			object.put(rdf.getPrefixItem("dcterms:publisher"), newArray);
 		}
+		item = (String) object.get("creator");
+		if (item != null) {
+			object.remove("creator");
+			JSONArray newArray = new JSONArray();
+			JSONObject itemObject = new JSONObject();
+			itemObject.put("type", "literal");
+			itemObject.put("value", item);
+			newArray.add(itemObject);
+			object.put(rdf.getPrefixItem("dcelements:creator"), newArray);
+		}
 		item = (String) object.get("description");
 		if (item != null) {
 			object.remove("description");
@@ -86,6 +96,7 @@ public class Transformer {
 		// delete items
 		object.remove("title");
 		object.remove("publisher");
+		object.remove("creator");
 		object.remove("description");
 		object.remove("license");
 		object.remove("dump");
@@ -139,6 +150,16 @@ public class Transformer {
 					object.put("publisher", value);
 				}
 			}
+			// change dcelements:creator
+			array = (JSONArray) object.get(rdf.getPrefixItem("dcelements:creator"));
+			if (array != null && !array.isEmpty()) {
+				for (Object element : array) {
+					object.remove(rdf.getPrefixItem("dcelements:creator"));
+					JSONObject obj = (JSONObject) element;
+					String value = (String) obj.get("value");
+					object.put("creator", value);
+				}
+			}
 			// change dcterms:description
 			array = (JSONArray) object.get(rdf.getPrefixItem("dcterms:description"));
 			if (array != null && !array.isEmpty()) {
@@ -188,6 +209,7 @@ public class Transformer {
 			object.remove(rdf.getPrefixItem("rdf:type"));
 			object.remove(rdf.getPrefixItem("dcterms:title"));
 			object.remove(rdf.getPrefixItem("dcterms:publisher"));
+			object.remove(rdf.getPrefixItem("dcelements:creator"));
 			object.remove(rdf.getPrefixItem("dcterms:description"));
 			object.remove(rdf.getPrefixItem("dcterms:license"));
 			object.remove(rdf.getPrefixItem("dcterms:identifier"));

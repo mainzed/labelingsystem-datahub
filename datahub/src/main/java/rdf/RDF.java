@@ -26,6 +26,7 @@ public class RDF {
 	private final String PREFIX_LSDH_DATASET = "http://143.93.114.135/datahub/datasets/";
 	private final String PREFIX_VOID = "http://rdfs.org/ns/void#";
 	private final String PREFIX_DCTERMS = "http://purl.org/dc/terms/";
+	private final String PREFIX_DCELEMENTS = "http://purl.org/dc/elements/1.1/";
 	private final String PREFIX_DCAT = "http://www.w3.org/ns/dcat#";
 	private final String PREFIX_OA = "http://www.w3.org/ns/oa#";
 	private final String PREFIX_RDF = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -39,6 +40,7 @@ public class RDF {
 			+ "PREFIX lsdh-d: <" + PREFIX_LSDH_DATASET + "> "
 			+ "PREFIX void: <" + PREFIX_VOID + "> "
 			+ "PREFIX dcterms: <" + PREFIX_DCTERMS + "> "
+			+ "PREFIX dcelements: <" + PREFIX_DCELEMENTS + "> "
 			+ "PREFIX dcat: <" + PREFIX_DCAT + "> "
 			+ "PREFIX oa: <" + PREFIX_OA + "> "
 			+ "PREFIX rdf: <" + PREFIX_RDF + "> "
@@ -54,6 +56,7 @@ public class RDF {
 		model.setNsPrefix("lsdh-d", PREFIX_LSDH_DATASET);
 		model.setNsPrefix("void", PREFIX_VOID);
 		model.setNsPrefix("dcterms", PREFIX_DCTERMS);
+		model.setNsPrefix("dcelements", PREFIX_DCELEMENTS);
 		model.setNsPrefix("dcat", PREFIX_DCAT);
 		model.setNsPrefix("oa", PREFIX_OA);
 		model.setNsPrefix("rdf", PREFIX_RDF);
@@ -78,6 +81,8 @@ public class RDF {
 			return shortDesc.replace("void:", PREFIX_VOID);
 		} else if (shortDesc.startsWith("dcterms:")) {
 			return shortDesc.replace("dcterms:", PREFIX_DCTERMS);
+		} else if (shortDesc.startsWith("dcelements:")) {
+			return shortDesc.replace("dcelements:", PREFIX_DCELEMENTS);
 		} else if (shortDesc.startsWith("dcat:")) {
 			return shortDesc.replace("dcat:", PREFIX_DCAT);
 		} else if (shortDesc.startsWith("oa:")) {

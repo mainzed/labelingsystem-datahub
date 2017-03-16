@@ -36,6 +36,9 @@ public class ValidateJSONObject {
 		if (!jsonObject.containsKey("publisher")) {
 			throw new ValidateJSONObjectException("publisher missing");
 		}
+		if (!jsonObject.containsKey("creator")) {
+			throw new ValidateJSONObjectException("creator missing");
+		}
 		if (!jsonObject.containsKey("description")) {
 			throw new ValidateJSONObjectException("description missing");
 		}
@@ -93,6 +96,9 @@ public class ValidateJSONObject {
 		}
 		if (jsonObject.containsKey("publisher")) {
 			jsonObject.remove("publisher");
+		}
+		if (jsonObject.containsKey("creator")) {
+			jsonObject.remove("creator");
 		}
 		if (jsonObject.containsKey("description")) {
 			jsonObject.remove("description");
