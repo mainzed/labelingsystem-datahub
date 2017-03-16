@@ -1,5 +1,7 @@
 # Labelingsystem Data Hub
 
+The Labeling System Data Hub consists of two components: The `API` and the `Explorer`.
+
 ## Why a Data Hub for the Labeling System?
 
 Labeling System concepts can be used in your own database or Linked Data application. We as owner of the Labeling System may not know, that you have connected your data to a Labeling System concept. The Labeling System Data Hub offers the possibility to send easyly datasets of a project, including metadata, a thumbnail, spatial and temporal references via POST request to the Data Hub triplestore. Enable people of the scientific community to explore your data using Labeling System concepts!
@@ -19,6 +21,11 @@ Enjoy!
 ## The Labeling System Data Hub Model
 
 ![datamodel](../../raw/master/img/datamodel-simple.png)
+
+## Demo
+
+* [API Demo Server](http://ls-dev.i3mainz.hs-mainz.de/datahub/)
+* Explorer is under construction
 
 ## License
 
