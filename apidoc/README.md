@@ -1,5 +1,7 @@
 # API Documentation
 
+[Projects](#metadata)
+
 ## Projects
 
 ### GET projects
