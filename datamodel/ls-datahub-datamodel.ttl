@@ -47,7 +47,7 @@ lsdh-d:001 a lsdh:Dataset, oa:Annotation;
  	oa:hasBody <http://143.93.114.135/item/label/bdf1ab06-f35d-4982-94f6-a91eb7d04889>;
 
  	# WRITTEN
-  lsdh:token "".
+        lsdh:token "".
 
 # metadata for the target dataset
 <http://mydataset.info/1> a lsdh:Target;
