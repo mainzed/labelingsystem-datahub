@@ -20,6 +20,8 @@ Last but not least, create datasets via POST request.
 
 Enjoy!
 
+![datamodel](../../raw/master/img/contribute.png)
+
 ## The Labeling System Data Hub Model
 
 ![datamodel](../../raw/master/img/datamodel-simple.png)
