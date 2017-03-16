@@ -20,6 +20,12 @@
 
 ` GET http://localhost:8084/datahub/projects`
 
+```json
+[
+	{ project }, { project }, { ... }
+]
+```
+
 ### GET project
 
 `Accept: application/json`
