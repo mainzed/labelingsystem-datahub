@@ -32,4 +32,4 @@
 
 ## Scheme
 
-![datamodel](../../../raw/master/img/datamodel.jpg)
+![datamodel](../../../raw/master/img/datamodel.png)
