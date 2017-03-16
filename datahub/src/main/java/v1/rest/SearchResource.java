@@ -33,6 +33,7 @@ public class SearchResource {
 			@QueryParam("project") String project,
 			@QueryParam("publisher") String publisher,
 			@QueryParam("concept") String concept,
+			@QueryParam("resource") String resource,
 			@QueryParam("start") String start,
 			@QueryParam("end") String end,
 			@QueryParam("lat_min") String lat_min,
@@ -256,6 +257,88 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 			}
+			// get datasets for a specific resource related to a concept
+			if (resource != null) {
+				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
+				// query labeling system of concepts related to this resource
+				String query = rdf.getPREFIXSPARQL() + "SELECT ?concept WHERE { ?concept ?p <" + resource + "> }";
+				List<BindingSet> result = RDF4J_20.SPARQLquery("labelingsystem", ConfigProperties.getPropertyParam("ts_server"), query);
+				List<String> conceptsForResource = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "concept");
+				// query for datasets with this concepts
+				query = rdf.getPREFIXSPARQL();
+				query += "SELECT ?s ?p ?o WHERE { "
+						+ "?s ?p ?o . "
+						+ "?s a lsdh:Dataset . "
+						+ "?s oa:hasBody ?uri . "
+						+ "FILTER ( ";
+				for (String item : conceptsForResource) {
+					query += "?uri=<" + item + "> || ";
+				}
+				query = query.substring(0, query.length() - 3);
+				query += ") ";
+				query += "}";
+				result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+				List<String> s = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "s");
+				List<String> p = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
+				List<String> o = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
+				for (int i = 0; i < s.size(); i++) {
+					rdf.setModelTriple(s.get(i), p.get(i), o.get(i));
+				}
+				JSONObject jsonObject = (JSONObject) new JSONParser().parse(rdf.getModel("RDF/JSON"));
+				Set keys = jsonObject.keySet();
+				Iterator a = keys.iterator();
+				while (a.hasNext()) {
+					String key = (String) a.next();
+					JSONObject tmpObject = (JSONObject) jsonObject.get(key);
+					JSONArray idArray = (JSONArray) tmpObject.get(rdf.getPrefixItem("dcterms:identifier"));
+					JSONObject idObject = (JSONObject) idArray.get(0);
+					String h = (String) idObject.get("value");
+					JSONObject tmpObject2 = new JSONObject();
+					tmpObject2.put(key, tmpObject);
+					String hh = tmpObject2.toString();
+					JSONObject tmp = Transformer.dataset_GET(hh, h);
+					String datasetBody = (String) tmp.get("dataset");
+					RDF rdf2 = new RDF(ConfigProperties.getPropertyParam("host"));
+					String query2 = rdf2.getPREFIXSPARQL() + "SELECT * WHERE { <" + datasetBody + "> ?p ?o }";
+					List<BindingSet> result2 = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query2);
+					List<String> predicates2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "p");
+					List<String> objects2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "o");
+					if (result2.size() < 1) {
+						throw new ResourceNotAvailableException("resource " + h + " is not available");
+					}
+					for (int i = 0; i < predicates2.size(); i++) {
+						rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
+					}
+					String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+					JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
+					tmp.put("title", out2Object.get("title"));
+					if (out2Object.get("description") != null) {
+						tmp.put("description", out2Object.get("description"));
+					}
+					if (out2Object.get("depiction") != null) {
+						tmp.put("depiction", out2Object.get("depiction"));
+					}
+					if (out2Object.get("coverage") != null) {
+						tmp.put("coverage", out2Object.get("coverage"));
+					}
+					if (out2Object.get("lat") != null) {
+						tmp.put("lat", out2Object.get("lat"));
+					}
+					if (out2Object.get("lng") != null) {
+						tmp.put("lng", out2Object.get("lng"));
+					}
+					if (out2Object.get("temporal") != null) {
+						tmp.put("temporal", out2Object.get("temporal"));
+					}
+					if (out2Object.get("begin") != null) {
+						tmp.put("begin", out2Object.get("begin"));
+					}
+					if (out2Object.get("end") != null) {
+						tmp.put("end", out2Object.get("end"));
+					}
+					outArray.add(tmp);
+				}
+			}
 			// get datasets for a timespan
 			if (start != null && end != null) {
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
@@ -411,7 +494,7 @@ public class SearchResource {
 						/* Another way to create an envelope is to specify the X and Y extents.
 						*  xmin: Minimum X-coordinate, ymin: Minimum Y-coordinate,
 						*  xmax: Maximum X-coordinate and ymax: Maximum Y-coordinate
-						*/
+						 */
 						//Envelope env1 = new Envelope(xmin, ymin, xmax, ymax);
 						// x = lat - y = lng
 						//Envelope env1 = new Envelope(0, 0, 30.5, 30.5);
@@ -424,7 +507,7 @@ public class SearchResource {
 					}
 				}
 			}
-			return Response.ok(outArray2).header("Content-Type", "application/json;charset=UTF-8").build();
+			return Response.ok(outArray).header("Content-Type", "application/json;charset=UTF-8").build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.SearchResource"))
 					.header("Content-Type", "application/json;charset=UTF-8").build();
