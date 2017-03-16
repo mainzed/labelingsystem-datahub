@@ -1,6 +1,6 @@
 # API Documentation
 
-# Projects
+## Projects
 
 **GET projects**
 
@@ -38,13 +38,37 @@
 
 ` GET http://localhost:8084/datahub/projects/:id`
 
+```json
+{
+	"id": "", --MENDATORY
+	"title": "", --MENDATORY
+	"publisher": "", --MENDATORY
+	"description": "", --MENDATORY
+	"license": "", --OPTIONAL
+	"dump": "", --OPTIONAL
+	"sparql": "" --MENDATORY
+}
+```
+
 **POST project**
 
 `Content-Type: application/json`
 
 ` POST http://localhost:8084/datahub/projects`
 
-# Datasets
+```json
+{
+	"title": "", --MENDATORY
+	"publisher": "",--MENDATORY
+	"description": "", --MENDATORY
+	"license": "", --MENDATORY
+	"dump": "", --OPTIONAL
+	"sparql": "", --OPTIONAL
+	"token": "" --MENDATORY
+}
+```
+
+## Datasets
 
 **GET datasets**
 
@@ -82,11 +106,47 @@
 
 ` GET http://localhost:8084/datahub/datasets/:id`
 
+```json
+{
+  "id": "", --MENDATORY
+  "project": "", --MENDATORY
+	"relation": "", --OPTIONAL
+	"dataset": "", --MENDATORY
+	"label": "", --MENDATORY
+	"title": "", --MENDATORY
+	"description": "", --OPTIONAL
+	"depiction": "", --OPTIONAL
+	"coverage": "", --OPTIONAL
+  "lat": "", --OPTIONAL
+  "lng": "", --OPTIONAL
+	"temporal": "", --OPTIONAL
+  "begin": "", --OPTIONAL
+  "end": "" --OPTIONAL
+}
+```
+
 **POST dataset**
 
 `Content-Type: application/json`
 
 ` POST http://localhost:8084/datahub/datasets`
+
+```json
+{
+	"project": "", --MENDATORY
+	"relation": "", --OPTIONAL
+	"dataset": "", --MENDATORY
+	"label": "", --MENDATORY
+	"title": "", --MENDATORY
+	"description": "", --OPTIONAL
+	"depiction": "", --OPTIONAL
+	"coverage": "", --OPTIONAL
+	"temporal": "", --OPTIONAL
+  "begin": "", --OPTIONAL
+  "end": "", --OPTIONAL
+	"token": "" --MENDATORY
+}
+```
 
 ## Search
 
@@ -136,95 +196,12 @@
 
 ## labels used in the data hub
 
+**get all labels used in the data hub**
+
 ` GET http://localhost:8084/datahub/labels`
+
+**get all labels used in the data hub filtered by language**
 
 `param: lang [String]`
 
 ` GET http://localhost:8084/datahub/labels&lang=de`
-
-
-# API POST and GET examples
-
-## POST project
-
-`POST /datahub/projects`
-
-`Content-Type: application/json`
-
-```json
-{
-	"title": "", --MENDATORY
-	"publisher": "",--MENDATORY
-	"description": "", --MENDATORY
-	"license": "", --MENDATORY
-	"dump": "", --OPTIONAL
-	"sparql": "", --OPTIONAL
-	"token": "" --MENDATORY
-}
-```
-
-## GET project
-
-`GET /datahub/projects/:id`
-
-`Accept: application/json`
-
-```json
-{
-	"id": "", --MENDATORY
-	"title": "", --MENDATORY
-	"publisher": "", --MENDATORY
-	"description": "", --MENDATORY
-	"license": "", --OPTIONAL
-	"dump": "", --OPTIONAL
-	"sparql": "" --MENDATORY
-}
-```
-
-## POST dataset
-
-`POST /datahub/datasets`
-
-`Content-Type: application/json`
-
-```json
-{
-	"project": "", --MENDATORY
-	"relation": "", --OPTIONAL
-	"dataset": "", --MENDATORY
-	"label": "", --MENDATORY
-	"title": "", --MENDATORY
-	"description": "", --OPTIONAL
-	"depiction": "", --OPTIONAL
-	"coverage": "", --OPTIONAL
-	"temporal": "", --OPTIONAL
-  "begin": "", --OPTIONAL
-  "end": "", --OPTIONAL
-	"token": "" --MENDATORY
-}
-```
-
-## GET dataset
-
-`GET /datahub/datasets/:id`
-
-`Accept: application/json`
-
-```json
-{
-  "id": "", --MENDATORY
-  "project": "", --MENDATORY
-	"relation": "", --OPTIONAL
-	"dataset": "", --MENDATORY
-	"label": "", --MENDATORY
-	"title": "", --MENDATORY
-	"description": "", --OPTIONAL
-	"depiction": "", --OPTIONAL
-	"coverage": "", --OPTIONAL
-  "lat": "", --OPTIONAL
-  "lng": "", --OPTIONAL
-	"temporal": "", --OPTIONAL
-  "begin": "", --OPTIONAL
-  "end": "" --OPTIONAL
-}
-```
