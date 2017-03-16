@@ -98,22 +98,37 @@
 
 ```json
 {
-  "id": "", --MENDATORY
-  "project": "", --MENDATORY
-	"relation": "", --OPTIONAL
-	"dataset": "", --MENDATORY
-	"label": "", --MENDATORY
-	"title": "", --MENDATORY
-	"description": "", --OPTIONAL
-	"depiction": "", --OPTIONAL
-	"coverage": "", --OPTIONAL
-  "lat": "", --OPTIONAL
-  "lng": "", --OPTIONAL
-	"temporal": "", --OPTIONAL
-  "begin": "", --OPTIONAL
-  "end": "" --OPTIONAL
+	"id": "wvKm5EJOwmGg",
+	"project": "4MDrEzxgG82v",
+	"title": "O12102",
+	"dataset": "http://rgzm.de/navis/objects/001",
+	"label": "http://143.93.114.135/item/label/412caba6-cd99-47fc-8465-9ee63eaee705",
+	"description": "Ruderschiff mit Vorsegel, nach links",
+	"relation": "http://www.w3.org/2000/01/rdf-schema#label",
+	"depiction": "http://rgzm.de/Navis3/Middle/12102R00M.gif",
+	"coverage": "http://sws.geonames.org/3169070",
+	"lat": "41.89193",
+	"lng": "12.51133",
+	"temporal": "http://chronontology.dainst.org/period/rjqJUoIToI7L",
+	"begin": "117",
+	"end": "138",
 }
 ```
+
+* id: unique identifier `DEFAULT`
+* project: id to the related project `MENDATORY`
+* title: short dataset title `MENDATORY`
+* dataset: link to your dataset URI `MENDATORY`
+* label: link to the labelink.link concept `MENDATORY`
+* description: short dataset description `OPTIONAL`
+* relation: property that described the relation in your dataset `OPTIONAL`
+* depiction: link to a depiction `OPTIONAL`
+* coverage: link to GeoNames for spatial reference `OPTIONAL`
+* lat: latitude by GeoNames `OPTIONAL`
+* lng: longitude by GeoNames `OPTIONAL`
+* temporal: link to ChronOntology for temporal reference `OPTIONAL`
+* begin: year timespan start (manually or by ChronOntology) `OPTIONAL`
+* end: year timespan end (manually or by ChronOntology) `OPTIONAL`
 
 ### POST dataset
 
@@ -123,20 +138,33 @@
 
 ```json
 {
-	"project": "", --MENDATORY
-	"relation": "", --OPTIONAL
-	"dataset": "", --MENDATORY
-	"label": "", --MENDATORY
-	"title": "", --MENDATORY
-	"description": "", --OPTIONAL
-	"depiction": "", --OPTIONAL
-	"coverage": "", --OPTIONAL
-	"temporal": "", --OPTIONAL
-  "begin": "", --OPTIONAL
-  "end": "", --OPTIONAL
-	"token": "" --MENDATORY
+	"project": "4MDrEzxgG82v",
+	"title": "O12102",
+	"dataset": "http://rgzm.de/navis/objects/001",
+	"label": "http://143.93.114.135/item/label/412caba6-cd99-47fc-8465-9ee63eaee705",
+	"description": "Ruderschiff mit Vorsegel, nach links",
+	"relation": "http://www.w3.org/2000/01/rdf-schema#label",
+	"depiction": "http://rgzm.de/Navis3/Middle/12102R00M.gif",
+	"coverage": "http://sws.geonames.org/3169070",
+	"temporal": "http://chronontology.dainst.org/period/rjqJUoIToI7L",
+	"begin": "117",
+	"end": "138",
+	"token": "591c6a45-a26d-4564-81a8-a41da9d733f7"
 }
 ```
+
+* project: id to the related project `MENDATORY`
+* title: short dataset title `MENDATORY`
+* dataset: link to your dataset URI `MENDATORY`
+* label: link to the labelink.link concept `MENDATORY`
+* description: short dataset description `OPTIONAL`
+* relation: property that described the relation in your dataset `OPTIONAL`
+* depiction: link to a depiction `OPTIONAL`
+* coverage: link to GeoNames for spatial reference (http://sws.geonames.org/:id) `OPTIONAL`
+* temporal: link to ChronOntology for temporal reference (http://chronontology.dainst.org/period/:id) `OPTIONAL`
+* begin: if no starting date for termporal reference available in ChronOntology use this attribute `OPTIONAL`
+* end: if no ending date for termporal reference available in ChronOntology use this attribute `OPTIONAL`
+* token: token to authentificate `MENDATORY`
 
 ## Search
 
