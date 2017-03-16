@@ -13,7 +13,7 @@
 3. [Search](#search)
     1. [metadata](#metadata)
         1. [get datasets by project ID](#get-datasets-by-project-id)
-        2. [get datasets by publisher URL](get-datasets-by-publisher-url)
+        2. [get datasets by publisher URL](#get-datasets-by-publisher-url)
     2. [spatial and temporal attributes](#spatial-and-temporal-attributes)
         1. [get datasets by envelope (WGS84)](#get-datasets-by-envelope-wgs84)
         2. [get datasets by publisher timespan (minus=BC)](#get-datasets-by-publisher-timespan-minusbc)
