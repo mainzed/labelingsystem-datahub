@@ -94,6 +94,12 @@
 
 ` GET http://localhost:8084/datahub/datasets`
 
+```json
+[
+	{ dataset }, { dataset }, { ... }
+]
+```
+
 ### GET dataset
 
 `Accept: application/json`
@@ -164,11 +170,23 @@
 
 ` GET http://localhost:8084/datahub/search?project=4MDrEzxgG82v`
 
+```json
+[
+	{ dataset }, { dataset }, { ... }
+]
+```
+
 #### get datasets by publisher URL
 
 `param: publisher [URI]`
 
 ` GET http://localhost:8084/datahub/search?publisher=http://rgzm.de`
+
+```json
+[
+	{ dataset }, { dataset }, { ... }
+]
+```
 
 ### spatial and temporal attributes
 
@@ -178,11 +196,23 @@
 
 ` GET http://localhost:8084/datahub/search?lat_min=0&lng_min=0&lat_max=55&lng_max=55`
 
+```json
+[
+	{ dataset }, { dataset }, { ... }
+]
+```
+
 #### get datasets by publisher timespan (minus=BC)
 
 `param: start [Integer] end [Integer]`
 
 ` GET http://localhost:8084/datahub/search?start=-100&end=250`
+
+```json
+[
+	{ dataset }, { dataset }, { ... }
+]
+```
 
 ### description with concepts and resources
 
@@ -190,9 +220,13 @@
 
 `param: concept [URI]`
 
-` GET http://localhost:8084/datahub/search?concept=http://143.93.114.135/item/label/804a0433-0b71-41a2-a003-d75dc53cad70`
-
 ` GET http://localhost:8084/datahub/search?concept=http://143.93.114.135/item/label/ca1883f5-5e58-491e-8de5-ddb3a8d973a9`
+
+```json
+[
+	{ dataset }, { dataset }, { ... }
+]
+```
 
 #### get datasets by any resource as URI related to a concept
 
@@ -200,14 +234,50 @@
 
 ` GET http://localhost:8084/datahub/search?resource=http://vocab.getty.edu/aat/300213080`
 
+```json
+[
+	{ dataset }, { dataset }, { ... }
+]
+```
+
 ## labels used in the data hub
 
 ### get all labels used in the data hub
 
 ` GET http://localhost:8084/datahub/labels`
 
+**example**
+
+```json
+[
+	{
+		"datasets":1,
+		"lang":"de",
+		"uri":"http://143.93.114.135/item/label/ca1883f5-5e58-491e-8de5-ddb3a8d973a9",
+		"value":"Paddel"
+	},
+	{ label},
+	{ ... }
+]
+```
+
 ### get all labels used in the data hub filtered by language
 
 `param: lang [String]`
 
 ` GET http://localhost:8084/datahub/labels&lang=de`
+
+**example**
+
+```json
+[
+	{
+		"datasets":1,
+		"lang":"de",
+		"uri":"http://143.93.114.135/item/label/ca1883f5-5e58-491e-8de5-ddb3a8d973a9",
+		"value":"Paddel"
+	},
+	{ label},
+	{ ... }
+]
+```
