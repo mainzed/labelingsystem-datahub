@@ -16,7 +16,7 @@ Last but not least, create datasets via POST request.
 
 Enjoy!
 
-## Model
+## The Labeling System Data Hub Model
 
 ![datamodel](../../raw/master/img/datamodel-simple.png)
 
