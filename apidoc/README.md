@@ -52,17 +52,29 @@
 
 ` POST http://localhost:8084/datahub/projects`
 
+**example**
+
 ```json
 {
-	"title": "", --MENDATORY
-	"publisher": "",--MENDATORY
-	"description": "", --MENDATORY
-	"license": "", --MENDATORY
-	"dump": "", --OPTIONAL
-	"sparql": "", --OPTIONAL
-	"token": "" --MENDATORY
+	"title": "Roman Coins of NAVIS",
+	"description": "Roman coins of NAVIS database.",
+	"publisher": "http://rgzm.de",
+	"creator": "Römisch-Germanisches Zentralmuseum Mainz",
+	"license": "http://creativecommons.org/licenses/by/4.0/",
+	"dump": "http://rgzm.de/navis/dump.rdf",
+	"sparql": "http://rgzm.de/navis/sparql",
+	"token": "63ca991b-8def-4155-b0db-519e27cb07ea"
 }
 ```
+
+* title: short project title `MENDATORY`
+* description: short project description `MENDATORY`
+* publisher: publisher URL `MENDATORY`
+* creator: creator as String `MENDATORY`
+* license: link to a license `MENDATORY`
+* dump: link to a RDF dump of the datasets `OPTIONAL`
+* sparql: link to the SPARQL endpoint `OPTIONAL`
+* token: token to authentificate `MENDATORY`
 
 ## Datasets
 
