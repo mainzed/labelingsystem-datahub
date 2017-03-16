@@ -4,7 +4,7 @@ The Data Hub for connected Labeling System Labels.
 
 ## Model
 
-![datamodel](../../../raw/master/img/datamodel-simple.png)
+![datamodel](../../raw/master/img/datamodel-simple.png)
 
 ## License
 
