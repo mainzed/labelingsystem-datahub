@@ -8,10 +8,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.eclipse.rdf4j.query.BindingSet;
@@ -27,7 +31,7 @@ public class LabelsResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-	public Response getUsedLabels() {
+	public Response getUsedLabels(@QueryParam("lang") String lang) {
 		try {
 			// get all concept URIs in the data hub and its thumbnails and translations
 			RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
@@ -35,16 +39,24 @@ public class LabelsResource {
 			String query = rdf.getPREFIXSPARQL() + "SELECT DISTINCT ?concept WHERE { ?s oa:hasBody ?concept . }";
 			List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
 			List<String> conceptURIs = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "concept");
+			query = rdf.getPREFIXSPARQL() + "SELECT ?concept WHERE { ?s oa:hasBody ?concept . }";
+			result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+			List<String> conceptURIsAll = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "concept");
+			// get labels from labeling system
 			String url = "http://" + ConfigProperties.getPropertyParam("host") + "/api/v1/sparql";
 			String sparql = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
 					+ "SELECT ?uri ?pl WHERE { "
 					+ "?uri skos:prefLabel ?pl . "
 					+ "FILTER ( ";
 			for (String item : conceptURIs) {
-				sparql += " ?uri=<"+item+"> || ";
+				sparql += " ?uri=<" + item + "> || ";
 			}
-			sparql = sparql.substring(0, sparql.length()-3);
-			sparql += ") } ORDER BY ASC(?pl)";
+			sparql = sparql.substring(0, sparql.length() - 3);
+			sparql += ") ";
+			if (lang != null) {
+				sparql += "FILTER(LANGMATCHES(LANG(?pl), \"" + lang + "\")) ";
+			}
+			sparql += "}";
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 			con.setRequestMethod("GET");
@@ -74,11 +86,43 @@ public class LabelsResource {
 				JSONObject uriObject = (JSONObject) bindingObject.get("uri");
 				JSONObject plObject = (JSONObject) bindingObject.get("pl");
 				JSONObject labelObj = new JSONObject();
-				labelObj.put("key", uriObject.get("value"));
-				labelObj.put("value", plObject.get("value")+"@"+plObject.get("xml:lang"));
+				labelObj.put("uri", uriObject.get("value"));
+				labelObj.put("value", plObject.get("value"));
+				labelObj.put("lang", plObject.get("xml:lang"));
+				// count appearance of uri in datahub
+				int count = 0;
+				for (String conceptURI : conceptURIsAll) {
+					if (conceptURI.equals(uriObject.get("value"))) {
+						count++;
+					}
+				}
+				labelObj.put("datasets", count);
+				// output
 				outArray.add(labelObj);
 			}
-			return Response.ok(outArray).header("Content-Type", "application/json;charset=UTF-8").build();
+			// sort array
+			JSONArray sortedJsonArray = new JSONArray();
+			List<JSONObject> jsonValues = new ArrayList();
+			for (int i = 0; i < outArray.size(); i++) {
+				jsonValues.add((JSONObject) outArray.get(i));
+			}
+			Collections.sort(jsonValues, new Comparator<JSONObject>() {
+				private static final String KEY_NAME = "value";
+
+				@Override
+				public int compare(JSONObject a, JSONObject b) {
+					String valA = new String();
+					String valB = new String();
+					valA = (String) a.get(KEY_NAME);
+					valB = (String) b.get(KEY_NAME);
+					return valA.compareTo(valB);
+				}
+			});
+			for (int i = 0; i < outArray.size(); i++) {
+				sortedJsonArray.add(jsonValues.get(i));
+			}
+			// output
+			return Response.ok(sortedJsonArray).header("Content-Type", "application/json;charset=UTF-8").build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.LabelsResource"))
 					.header("Content-Type", "application/json;charset=UTF-8").build();
