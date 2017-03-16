@@ -256,7 +256,7 @@
 		"uri":"http://143.93.114.135/item/label/ca1883f5-5e58-491e-8de5-ddb3a8d973a9",
 		"value":"Paddel"
 	},
-	{ label},
+	{ label },
 	{ ... }
 ]
 ```
@@ -277,7 +277,7 @@
 		"uri":"http://143.93.114.135/item/label/ca1883f5-5e58-491e-8de5-ddb3a8d973a9",
 		"value":"Paddel"
 	},
-	{ label},
+	{ label },
 	{ ... }
 ]
 ```
