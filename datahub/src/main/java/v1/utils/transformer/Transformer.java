@@ -458,7 +458,7 @@ public class Transformer {
 					object.remove(rdf.getPrefixItem("lsdh:project"));
 					JSONObject obj = (JSONObject) element;
 					String value = (String) obj.get("value");
-					object.put("project", value);
+					object.put("project", value.replace(rdf.getPrefixItem("lsdh-p:"), ""));
 				}
 			}
 			// change lsdh:relation
