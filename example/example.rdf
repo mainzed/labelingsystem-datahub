@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:void="http://rdfs.org/ns/void#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:oa="http://www.w3.org/ns/oa#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:lsdh="http://labeling.link/docs/ls-dh/core#"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:sesame="http://www.openrdf.org/schema/sesame#"
+	xmlns:dcat="http://www.w3.org/ns/dcat#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:lsdh-d="http://143.93.114.135/datahub/datasets/"
+	xmlns:lsdh-p="http://143.93.114.135/datahub/projects/"
+	xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+	xmlns:prov="http://www.w3.org/ns/prov#"
+	xmlns:dcelements="http://purl.org/dc/elements/1.1/">
+
+<rdf:Description rdf:about="http://rgzm.de/navis/objects/001">
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Target"/>
+	<dcterms:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ruderschiff mit Vorsegel, nach links</dcterms:description>
+	<dcterms:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">O12102</dcterms:title>
+	<dcterms:coverage rdf:resource="http://sws.geonames.org/3169070"/>
+	<dcterms:temporal rdf:resource="http://chronontology.dainst.org/period/rjqJUoIToI7L"/>
+	<foaf:depiction rdf:resource="http://rgzm.de/Navis3/Middle/12102R00M.gif"/>
+	<geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#string">41.89193</geo:lat>
+	<geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#string">12.51133</geo:long>
+	<prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">138</prov:endedAtTime>
+	<prov:startedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">117</prov:startedAtTime>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://rgzm.de/navis/objects/002">
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Target"/>
+	<dcterms:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Segelschiff mit Rudern, nach rechts</dcterms:description>
+	<dcterms:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">O41652</dcterms:title>
+	<dcterms:coverage rdf:resource="http://sws.geonames.org/734699"/>
+	<dcterms:temporal rdf:resource="http://chronontology.dainst.org/period/1c5O1RHoC9Wq"/>
+	<foaf:depiction rdf:resource="http://rgzm.de/Navis3/Middle/41652R00M.gif"/>
+	<geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#string">40.87984</geo:lat>
+	<geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#string">22.86202</geo:long>
+	<prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">244</prov:endedAtTime>
+	<prov:startedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">238</prov:startedAtTime>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://rgzm.de/navis/objects/003">
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Target"/>
+	<dcterms:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ruderschiff, nach links, Dahinter Zweig mit Grantäpfeln</dcterms:description>
+	<dcterms:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">O41477</dcterms:title>
+	<dcterms:coverage rdf:resource="http://sws.geonames.org/301238"/>
+	<dcterms:temporal rdf:resource="http://chronontology.dainst.org/period/aYHpzkhhHp4a"/>
+	<foaf:depiction rdf:resource="http://rgzm.de/Navis3/Middle/41477R00M.gif"/>
+	<geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#string">36.76667</geo:lat>
+	<geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#string">31.38889</geo:long>
+	<prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">268</prov:endedAtTime>
+	<prov:startedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">253</prov:startedAtTime>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://rgzm.de/navis/objects/004">
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Target"/>
+	<dcterms:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RRuderschiff mit sitzendem Kaiser, nach links. Stehende Stadtgöttin mit Dionysosknaben auf Burg.</dcterms:description>
+	<dcterms:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">O42511</dcterms:title>
+	<dcterms:coverage rdf:resource="http://sws.geonames.org/8478257"/>
+	<dcterms:temporal rdf:resource="http://chronontology.dainst.org/period/HZXpDfFoImTp"/>
+	<foaf:depiction rdf:resource="http://rgzm.de/Navis3/Middle/42511R00M.gif"/>
+	<geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#string">37.96491</geo:lat>
+	<geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#string">23.66511</geo:long>
+	<prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">235</prov:endedAtTime>
+	<prov:startedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">193</prov:startedAtTime>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://143.93.114.135/datahub/projects/4MDrEzxgG82v">
+	<void:dataDump rdf:resource="http://rgzm.de/navis/dump.rdf"/>
+	<dcat:accessURL rdf:resource="http://rgzm.de/navis/sparql"/>
+	<dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">4MDrEzxgG82v</dcterms:identifier>
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Project"/>
+	<rdf:type rdf:resource="http://rdfs.org/ns/void#Dataset"/>
+	<lsdh:token rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5593d325b296d07e6287e3def21dbb7916e7cdf03344eb2e0d21d61d354332391</lsdh:token>
+	<dcterms:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roman coins of NAVIS database.</dcterms:description>
+	<dcterms:license rdf:resource="http://creativecommons.org/licenses/by/4.0/"/>
+	<dcterms:publisher rdf:resource="http://rgzm.de"/>
+	<dcterms:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roman Coins of NAVIS</dcterms:title>
+	<dcelements:creator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Römisch-Germanisches Zentralmuseum Mainz</dcelements:creator>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://143.93.114.135/datahub/datasets/wvKm5EJOwmGg">
+	<dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wvKm5EJOwmGg</dcterms:identifier>
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Dataset"/>
+	<rdf:type rdf:resource="http://www.w3.org/ns/oa#Annotation"/>
+	<lsdh:token rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5593d325b296d07e6287e3def21dbb7916e7cdf03344eb2e0d21d61d354332391</lsdh:token>
+	<lsdh:project rdf:resource="http://143.93.114.135/datahub/projects/4MDrEzxgG82v"/>
+	<lsdh:relation rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+	<oa:hasBody rdf:resource="http://143.93.114.135/item/label/412caba6-cd99-47fc-8465-9ee63eaee705"/>
+	<oa:hasTarget rdf:resource="http://rgzm.de/navis/objects/001"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://143.93.114.135/datahub/datasets/JOmXDaR59ydg">
+	<dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">JOmXDaR59ydg</dcterms:identifier>
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Dataset"/>
+	<rdf:type rdf:resource="http://www.w3.org/ns/oa#Annotation"/>
+	<lsdh:token rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5593d325b296d07e6287e3def21dbb7916e7cdf03344eb2e0d21d61d354332391</lsdh:token>
+	<lsdh:project rdf:resource="http://143.93.114.135/datahub/projects/4MDrEzxgG82v"/>
+	<lsdh:relation rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+	<oa:hasBody rdf:resource="http://143.93.114.135/item/label/a5741b25-1c64-470e-9263-93dccc19553f"/>
+	<oa:hasTarget rdf:resource="http://rgzm.de/navis/objects/002"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://143.93.114.135/datahub/datasets/j2aNLwpZ6rM7">
+	<dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">j2aNLwpZ6rM7</dcterms:identifier>
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Dataset"/>
+	<rdf:type rdf:resource="http://www.w3.org/ns/oa#Annotation"/>
+	<lsdh:token rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5593d325b296d07e6287e3def21dbb7916e7cdf03344eb2e0d21d61d354332391</lsdh:token>
+	<lsdh:project rdf:resource="http://143.93.114.135/datahub/projects/4MDrEzxgG82v"/>
+	<lsdh:relation rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+	<oa:hasBody rdf:resource="http://143.93.114.135/item/label/ca1883f5-5e58-491e-8de5-ddb3a8d973a9"/>
+	<oa:hasTarget rdf:resource="http://rgzm.de/navis/objects/003"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://143.93.114.135/datahub/datasets/xGyOekv67na6">
+	<dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">xGyOekv67na6</dcterms:identifier>
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Dataset"/>
+	<rdf:type rdf:resource="http://www.w3.org/ns/oa#Annotation"/>
+	<lsdh:token rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5593d325b296d07e6287e3def21dbb7916e7cdf03344eb2e0d21d61d354332391</lsdh:token>
+	<lsdh:project rdf:resource="http://143.93.114.135/datahub/projects/4MDrEzxgG82v"/>
+	<lsdh:relation rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+	<oa:hasBody rdf:resource="http://143.93.114.135/item/label/f6aa5777-afd2-4540-8673-00fe17d444e9"/>
+	<oa:hasTarget rdf:resource="http://rgzm.de/navis/objects/003"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://143.93.114.135/datahub/datasets/oNpLbEPmQVQE">
+	<dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">oNpLbEPmQVQE</dcterms:identifier>
+	<rdf:type rdf:resource="http://labeling.link/docs/ls-dh/core#Dataset"/>
+	<rdf:type rdf:resource="http://www.w3.org/ns/oa#Annotation"/>
+	<lsdh:token rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5593d325b296d07e6287e3def21dbb7916e7cdf03344eb2e0d21d61d354332391</lsdh:token>
+	<lsdh:project rdf:resource="http://143.93.114.135/datahub/projects/4MDrEzxgG82v"/>
+	<lsdh:relation rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+	<oa:hasBody rdf:resource="http://143.93.114.135/item/label/412caba6-cd99-47fc-8465-9ee63eaee705"/>
+	<oa:hasTarget rdf:resource="http://rgzm.de/navis/objects/004"/>
+</rdf:Description>
+
+</rdf:RDF>

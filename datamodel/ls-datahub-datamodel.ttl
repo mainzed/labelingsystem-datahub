@@ -3,6 +3,7 @@
 @prefix lsdh-d: <http://labeling.link/api/datasets/> .
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dcelements: <http://purl.org/dc/elements/1.1/> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix oa: <http://www.w3.org/ns/oa#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -15,6 +16,7 @@ lsdh-p:01 a lsdh:Project, void:Dataset;
 	# MANDATORY: metadata
 	dcterms:title "My Archaeological Dataset";
   	dcterms:publisher <http://exampleinstitute.org>;
+		dcelements:creator "Example Institute Name";
   	dcterms:description "A dataset of archaeological items.";
   	dcterms:license <http://opendatacommons.org/licenses/by/>;
   	dcterms:identifier "01";

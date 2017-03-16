@@ -1,0 +1,10 @@
+{
+	"title": "Roman Coins of NAVIS",
+	"publisher": "http://rgzm.de",
+	"creator": "Römisch-Germanisches Zentralmuseum Mainz",
+	"description": "Roman coins of NAVIS database.",
+	"license": "http://creativecommons.org/licenses/by/4.0/",
+	"dump": "http://rgzm.de/navis/dump.rdf",
+	"sparql": "http://rgzm.de/navis/sparql",
+	"token": "06a09f63-65c9-4d54-91ce-90cbd9ee554d"
+}
