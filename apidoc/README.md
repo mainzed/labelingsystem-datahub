@@ -6,12 +6,10 @@
     1. [GET projects](#GET-projects)
     2. [GET project](#GET-project)
     3. [POST project](#POST-project)
-
 2. [Datasets](#Datasets)
     1. [GET datasets](#GET-datasets)
     2. [GET dataset](#GET-dataset)
     3. [POST dataset](#POST-dataset)
-
 3. [Search](#Search)
     1. [metadata](#metadata)
         1. [get datasets by project ID](#get-datasets-by-project-ID)
@@ -22,7 +20,6 @@
     3. [description with concepts and resources](#description-with-concepts-and-resources)
         1. [get datasets by concept URI](#get-datasets-by-concept-URI)
         2. [get datasets by any resource as URI related to a concept](#get-datasets-by-any-resource-as-URI-related-to-a-concept)
-
 4. [labels used in the data hub](#labels-used-in-the-data-hub)
     1. [get all labels used in the data hub](#get-all-labels-used-in-the-data-hub)
     2. [get all labels used in the data hub filtered by language](#get-all-labels-used-in-the-data-hub-filtered-by-language)
