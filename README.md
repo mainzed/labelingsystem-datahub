@@ -1,6 +1,20 @@
-# Labelingsystem Datahub
+# Labelingsystem Data Hub
 
-The Data Hub for connected Labeling System Labels.
+## Why a Data Hub for the Labeling System?
+
+Labeling System concepts can be used in your own database or Linked Data application. We as owner of the Labeling System may not know, that you have connected your data to a Labeling System concept. The Labeling System Data Hub offers the possibility to send easyly datasets of a project, including metadata, a thumbnail, spatial and temporal references via POST request to the Data Hub triplestore. Enable people of the scientific community to explore your data using Labeling System concepts!
+
+## How to contribute?
+
+First, use Labeling System concepts in your database or application for describing items. Your item / object / dataset must have an URI and have to be open accessible.
+
+Second, send an email to `labeling@mainzed.org` and get a authentification key.
+
+Third, create a new project via POST request.
+
+Last but not least, create datasets via POST request.
+
+Enjoy!
 
 ## Model
 
@@ -8,9 +22,13 @@ The Data Hub for connected Labeling System Labels.
 
 ## License
 
+### non code
+
 This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 
-**CC BY [Florian Thiery M.Sc.](http://orcid.org/0000-0002-3246-3531), i3mainz, RGZM**
+CC BY [Florian Thiery M.Sc.](http://orcid.org/0000-0002-3246-3531), i3mainz, RGZM
+
+### sourcecode
 
 MIT License
 
