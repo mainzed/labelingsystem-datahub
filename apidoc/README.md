@@ -4,7 +4,7 @@
 
 ### GET projects
 
-`Accept: {application/json;application/xml;application/rdf+xml;text/turtle;text/n3;application/ld+json;application/rdf+json}`
+`Accept: {application/json; application/xml; application/rdf+xml; text/turtle; text/n3; application/ld+json; application/rdf+json}`
 
 ` GET http://localhost:8084/datahub/projects`
 
@@ -16,7 +16,7 @@
 
 ### GET project
 
-`Accept: {application/json;application/xml;application/rdf+xml;text/turtle;text/n3;application/ld+json;application/rdf+json}`
+`Accept: {application/json; application/xml; application/rdf+xml; text/turtle; text/n3; application/ld+json; application/rdf+json}`
 
 ` GET http://localhost:8084/datahub/projects/:id`
 
@@ -68,7 +68,7 @@
 
 ### GET datasets
 
-`Accept: {application/json;application/xml;application/rdf+xml;text/turtle;text/n3;application/ld+json;application/rdf+json}`
+`Accept: {application/json; application/xml; application/rdf+xml; text/turtle; text/n3; application/ld+json; application/rdf+json}`
 
 ` GET http://localhost:8084/datahub/datasets`
 
@@ -80,7 +80,7 @@
 
 ### GET dataset
 
-`Accept: {application/json;application/xml;application/rdf+xml;text/turtle;text/n3;application/ld+json;application/rdf+json}`
+`Accept: {application/json; application/xml; application/rdf+xml; text/turtle; text/n3; application/ld+json; application/rdf+json}`
 
 ` GET http://localhost:8084/datahub/datasets/:id`
 
