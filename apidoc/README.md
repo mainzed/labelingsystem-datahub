@@ -1,6 +1,32 @@
 # API Documentation
 
-[Projects](#metadata)
+## Table of Contents
+
+1. [Projects](#projects)
+    1. [GET projects](#GET-projects)
+    2. [GET project](#GET-project)
+    3. [POST project](#POST-project)
+2. [Datasets](#Datasets)
+    2. [GET datasets](#GET-datasets)
+    3. [GET dataset](#GET-dataset)
+    4. [POST dataset](#POST-dataset)
+3. [Search](#Search)
+    1. [metadata](#metadata)
+        1. [get datasets by project ID](#get-datasets-by-project-ID)
+        2. [get datasets by publisher URL](get-datasets-by-publisher-URL)
+    2. [spatial and temporal attributes](#spatial-and-temporal-attributes)
+        1. [get datasets by envelope (WGS84)](#get-datasets-by-envelope-wgs84)
+        2. [get datasets by publisher timespan (minus=BC)](#get-datasets-by-publisher-timespan-minusbc)
+    3. [description with concepts and resources](#description-with-concepts-and-resources)
+        1. [get datasets by concept URI](#get-datasets-by-concept-URI)
+        2. [get datasets by any resource as URI related to a concept](#get-datasets-by-any-resource-as-URI-related-to-a-concept)
+4. [labels used in the data hub](#labels-used-in-the-data-hub)
+    1. [get all labels used in the data hub](#get-all-labels-used-in-the-data-hub)
+    2. [get all labels used in the data hub filtered by language](#get-all-labels-used-in-the-data-hub-filtered-by-language)
+
+
+---------------------------------------
+
 
 ## Projects
 
