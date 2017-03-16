@@ -4,7 +4,9 @@ The Labeling System Data Hub consists of two components: The `API` and the `Expl
 
 ## Why a Data Hub for the Labeling System?
 
-Labeling System concepts can be used in your own database or Linked Data application. We as owner of the Labeling System may not know, that you have connected your data to a Labeling System concept. The Labeling System Data Hub offers the possibility to send easyly datasets of a project, including metadata, a thumbnail, spatial and temporal references via POST request to the Data Hub triplestore. Enable people of the scientific community to explore your data using Labeling System concepts!
+Labeling System concepts can be used in your own database or Linked Data application. We as owner of the Labeling System may not know, that you have connected your data to a Labeling System concept. The Labeling System Data Hub offers the possibility to send easyly datasets of a project, including metadata, a thumbnail, spatial and temporal references via POST request to the Data Hub triplestore. Enable people of the scientific community to explore your data using Labeling System concepts! The Data Hub serves as exploring portal for concept connections created in the "Concept-Gezetteer" Labeling System.
+
+The Data Hub is following the example of [Pelagios](http://commons.pelagios.org) / [Pleiades](http://pleiades.stoa.org) / [Pelagios Cookbook](https://github.com/pelagios/pelagios-cookbook/wiki/Joining-Pelagios) and [Nomisma](http://nomisma.org).
 
 ## How to contribute?
 
