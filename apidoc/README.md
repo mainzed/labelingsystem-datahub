@@ -4,19 +4,7 @@
 
 ### GET projects
 
-`Accept: application/json`
-
-`Accept: application/xml`
-
-`Accept: application/rdf+xml`
-
-`Accept: text/turtle`
-
-`Accept: text/n3`
-
-`Accept: application/ld+json`
-
-`Accept: application/rdf+json`
+`Accept: {application/json;application/xml;application/rdf+xml;text/turtle;text/n3;application/ld+json;application/rdf+json}`
 
 ` GET http://localhost:8084/datahub/projects`
 
@@ -28,33 +16,35 @@
 
 ### GET project
 
-`Accept: application/json`
-
-`Accept: application/xml`
-
-`Accept: application/rdf+xml`
-
-`Accept: text/turtle`
-
-`Accept: text/n3`
-
-`Accept: application/ld+json`
-
-`Accept: application/rdf+json`
+`Accept: {application/json;application/xml;application/rdf+xml;text/turtle;text/n3;application/ld+json;application/rdf+json}`
 
 ` GET http://localhost:8084/datahub/projects/:id`
 
+**example**
+
 ```json
 {
-	"id": "", --MENDATORY
-	"title": "", --MENDATORY
-	"publisher": "", --MENDATORY
-	"description": "", --MENDATORY
-	"license": "", --OPTIONAL
-	"dump": "", --OPTIONAL
-	"sparql": "" --MENDATORY
+	"id": "4MDrEzxgG82v",
+	"title": "Roman Coins of NAVIS",
+	"description": "Roman coins of NAVIS database.",
+	"publisher": "http://rgzm.de",
+	"creator": "Römisch-Germanisches Zentralmuseum Mainz",
+	"license": "http://creativecommons.org/licenses/by/4.0/",
+	"datasets": "5",
+	"dump": "http://rgzm.de/navis/dump.rdf",
+	"sparql": "http://rgzm.de/navis/sparql"
 }
 ```
+
+* id: unique identifier `DEFAULT`
+* title: short project title `DEFAULT`
+* description: short project description `DEFAULT`
+* publisher: publisher URL `DEFAULT`
+* creator: creator as String `DEFAULT`
+* license: link to a license `DEFAULT`
+* datasets: count of related datasets `DEFAULT`
+* dump: link to a RDF dump of the datasets `OPTIONAL`
+* sparql: link to the SPARQL endpoint `OPTIONAL`
 
 ### POST project
 
@@ -78,19 +68,7 @@
 
 ### GET datasets
 
-`Accept: application/json`
-
-`Accept: application/xml`
-
-`Accept: application/rdf+xml`
-
-`Accept: text/turtle`
-
-`Accept: text/n3`
-
-`Accept: application/ld+json`
-
-`Accept: application/rdf+json`
+`Accept: {application/json;application/xml;application/rdf+xml;text/turtle;text/n3;application/ld+json;application/rdf+json}`
 
 ` GET http://localhost:8084/datahub/datasets`
 
@@ -102,19 +80,7 @@
 
 ### GET dataset
 
-`Accept: application/json`
-
-`Accept: application/xml`
-
-`Accept: application/rdf+xml`
-
-`Accept: text/turtle`
-
-`Accept: text/n3`
-
-`Accept: application/ld+json`
-
-`Accept: application/rdf+json`
+`Accept: {application/json;application/xml;application/rdf+xml;text/turtle;text/n3;application/ld+json;application/rdf+json}`
 
 ` GET http://localhost:8084/datahub/datasets/:id`
 
