@@ -33,7 +33,7 @@ Enjoy!
 
 ## Config
 
-* modify `config.properties` and mkdir for dumping
+* modify `config.properties` and mkdir for dumping `/opt/tomcat/webapps/dump-dh/` with `chmod 777 -R <directory>`
 
 ## License
 
