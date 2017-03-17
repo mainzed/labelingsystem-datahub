@@ -31,6 +31,10 @@ Enjoy!
 * [API Demo Server](http://ls-dev.i3mainz.hs-mainz.de/datahub/)
 * Explorer is under construction
 
+## Config
+
+* modify `config.properties` and mkdir for dumping
+
 ## License
 
 ### non code
