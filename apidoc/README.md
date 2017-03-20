@@ -20,9 +20,7 @@
     3. [description with concepts and resources](#description-with-concepts-and-resources)
         1. [get datasets by concept URI](#get-datasets-by-concept-uri)
         2. [get datasets by any resource as URI related to a concept](#get-datasets-by-any-resource-as-uri-related-to-a-concept)
-4. [labels used in the data hub](#labels-used-in-the-data-hub)
-    1. [get all labels used in the data hub](#get-all-labels-used-in-the-data-hub)
-    2. [get all labels used in the data hub filtered by language](#get-all-labels-used-in-the-data-hub-filtered-by-language)
+    4. [show labels not objects](#show_labels_not_objects)
 
 
 ---------------------------------------
@@ -274,34 +272,11 @@
 ]
 ```
 
-## labels used in the data hub
+### show labels not objects
 
-### get all labels used in the data hub
+`param: labels [boolean] lang [String]` in combination with all other params
 
-` GET http://localhost:8084/datahub/labels`
-
-**example**
-
-```json
-[
-	{
-		"datasets":1,
-		"lang":"de",
-		"uri":"http://143.93.114.135/item/label/ca1883f5-5e58-491e-8de5-ddb3a8d973a9",
-		"value":"Paddel"
-	},
-	{ label },
-	{ ... }
-]
-```
-
-### get all labels used in the data hub filtered by language
-
-`param: lang [String]`
-
-` GET http://localhost:8084/datahub/labels&lang=de`
-
-**example**
+` GET http://localhost:8084/datahub/search?labels=true&lang=de`
 
 ```json
 [
