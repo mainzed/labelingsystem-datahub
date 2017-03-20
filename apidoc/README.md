@@ -130,6 +130,7 @@
 	"dataset": "http://rgzm.de/navis/objects/001",
 	"label": "http://143.93.114.135/item/label/412caba6-cd99-47fc-8465-9ee63eaee705",
 	"description": "Ruderschiff mit Vorsegel, nach links",
+  "type": "lsdh:Object",
 	"relation": "http://www.w3.org/2000/01/rdf-schema#label",
 	"depiction": "http://rgzm.de/Navis3/Middle/12102R00M.gif",
 	"coverage": "http://sws.geonames.org/3169070",
@@ -147,6 +148,7 @@
 * dataset: link to your dataset URI `MENDATORY`
 * label: link to the labelink.link concept `MENDATORY`
 * description: short dataset description `OPTIONAL`
+* type: type of the dataset {lsdh:Object;lsdh:Document;lsdh:Video} `MENDATORY`
 * relation: property that described the relation in your dataset `OPTIONAL`
 * depiction: link to a depiction `OPTIONAL`
 * coverage: link to GeoNames for spatial reference `OPTIONAL`
@@ -169,6 +171,7 @@
 	"dataset": "http://rgzm.de/navis/objects/001",
 	"label": "http://143.93.114.135/item/label/412caba6-cd99-47fc-8465-9ee63eaee705",
 	"description": "Ruderschiff mit Vorsegel, nach links",
+  "type": "lsdh:Object",
 	"relation": "http://www.w3.org/2000/01/rdf-schema#label",
 	"depiction": "http://rgzm.de/Navis3/Middle/12102R00M.gif",
 	"coverage": "http://sws.geonames.org/3169070",
@@ -184,6 +187,7 @@
 * dataset: link to your dataset URI `MENDATORY`
 * label: link to the labelink.link concept `MENDATORY`
 * description: short dataset description `OPTIONAL`
+* type: type of the dataset {lsdh:Object;lsdh:Document;lsdh:Video} `MENDATORY`
 * relation: property that described the relation in your dataset `OPTIONAL`
 * depiction: link to a depiction `OPTIONAL`
 * coverage: link to GeoNames for spatial reference (http://sws.geonames.org/:id) `OPTIONAL`
