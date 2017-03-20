@@ -5,20 +5,52 @@
 <title>Labeling System DataHub Explorer</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-<script src="script.js"></script>
+<script src="config.js"></script>
+<script src="buttons.js"></script>
+<script src="load.js"></script>
+<script src="init.js"></script>
 </head>
 
 <body>
-<div id="header">Labeling System DataHub Explorer
-    <select id="langswitch">
-        <option value="">all languages</option>
-        <option value="de">deutsch</option>
-        <option value="en">english</option>
-        <option value="fr">francais</option>
-    </select>
-    <button type="button" id="butswitch">change mode</button>
+<!-- http://www.farb-tabelle.de/de/farbtabelle.htm -->
+<div id="header">
+    <div id="header-title" style="float:left;">
+        <p style="font-size:24px;font-weight:700;">LabelingSystem+ Explorer</p>
+    </div>
+    <div id="filterwrapper" style="float:left;clear:both;margin-top:10px;">
+        <div style="float:left;clear:both;margin-top:10px;">
+            projects:
+            <select id="projects"></select>
+        </div>
+        <div style="float:left;clear:both;margin-top:10px;">
+            publisher:
+            <select id="publisher"></select>
+        </div>
+        <div style="float:left;clear:both;margin-top:10px;">
+            timespan [start,end]:
+            <input type="text" id="start" value="-100" size=3></input>
+            <input type="text" id="end" value="250" size=3></input>
+        </div>
+        <div style="float:left;clear:both;margin-top:10px;">
+            envelope [latmin, lngmin, latmax, lgnmax]:
+            <input type="text" id="lat_min" value="0" size=1></input>
+            <input type="text" id="lng_min" value="0" size=1></input>
+            <input type="text" id="lat_max" value="40" size=1></input>
+            <input type="text" id="lng_max" value="40" size=1></input>
+        </div>
+        <div id="load" style="float:left;clear:both;margin-top:10px;">
+            <button type="button" id="b-home">HOME</button>
+            <button type="button" id="b-all">load all</button>
+            <button type="button" id="b-project">load project</button>
+            <button type="button" id="b-publisher">load publisher</button>
+            <button type="button" id="b-timespan">load timespan</button>
+            <button type="button" id="b-envelope">load envelope</button>
+            <button type="button" id="b-butswitch"></button>
+            <select id="langswitch"></select>
+        </div>
+    </div>
 </div>
-<div id="labelsection"></div>
+<div id="content"></div>
 </body>
 
 </html>
