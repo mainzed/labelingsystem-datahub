@@ -146,6 +146,9 @@ public class ValidateJSONObject {
 		if (!jsonObject.containsKey("title")) {
 			throw new ValidateJSONObjectException("title missing");
 		}
+		if (!jsonObject.containsKey("type")) {
+			throw new ValidateJSONObjectException("type missing");
+		}
 		// special behavoir
 		// token in list?
 		String token = (String) jsonObject.get("token");
@@ -190,6 +193,14 @@ public class ValidateJSONObject {
 		// label starts with http://143.93.114.135
 		if (!jsonObject.get("label").toString().startsWith("http://143.93.114.135")) {
 			throw new ValidateJSONObjectException("label do not start with http://143.93.114.135");
+		}
+		// type starts with lsdh:
+		if (!jsonObject.get("type").toString().startsWith("lsdh:")) {
+			throw new ValidateJSONObjectException("type do not start with lsdh:");
+		}
+		if (jsonObject.get("type").toString().contains("Object:") || jsonObject.get("type").toString().contains("Document:") || jsonObject.get("type").toString().contains("Video:")) {
+		} else {
+			throw new ValidateJSONObjectException("wrong type");
 		}
 		// if relation -> starts with http
 		if (!jsonObject.get("relation").toString().startsWith("http")) {

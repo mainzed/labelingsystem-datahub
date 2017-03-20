@@ -322,6 +322,17 @@ public class Transformer {
 			objectDataset.put(rdf.getPrefixItem("foaf:depiction"), newArray);
 			rdfObject.put(targetString, objectDataset);
 		}
+		item = (String) object.get("type");
+		if (item != null) {
+			object.remove("type");
+			JSONArray newArray = new JSONArray();
+			JSONObject itemObject = new JSONObject();
+			itemObject.put("type", "uri");
+			itemObject.put("value", rdf.getPrefixItem(item));
+			newArray.add(itemObject);
+			objectDataset.put(rdf.getPrefixItem("lsdh:type"), newArray);
+			rdfObject.put(targetString, objectDataset);
+		}
 		item = (String) object.get("coverage");
 		if (item != null) {
 			object.remove("coverage");
@@ -356,7 +367,6 @@ public class Transformer {
 			}
 		}
 		item = (String) object.get("temporal");
-		int z = 0;
 		if (item != null) {
 			object.remove("temporal");
 			JSONArray newArray = new JSONArray();
@@ -425,6 +435,7 @@ public class Transformer {
 		object.remove("end");
 		object.remove("token");
 		object.remove("id");
+		object.remove("type");
 		// add object
 		rdfObject.put(rdf.getPrefixItem("lsdh-d:" + id), object);
 		return rdfObject.toJSONString();
@@ -554,6 +565,16 @@ public class Transformer {
 					object.put("depiction", value);
 				}
 			}
+			// change lsdh:type
+			array = (JSONArray) object.get(rdf.getPrefixItem("lsdh:type"));
+			if (array != null && !array.isEmpty()) {
+				for (Object element : array) {
+					object.remove(rdf.getPrefixItem("lsdh:type"));
+					JSONObject obj = (JSONObject) element;
+					String value = (String) obj.get("value");
+					object.put("type", value.replace(rdf.getPrefixItem("lsdh:"), "lsdh:"));
+				}
+			}
 			// change dcterms:coverage
 			array = (JSONArray) object.get(rdf.getPrefixItem("dcterms:coverage"));
 			if (array != null && !array.isEmpty()) {
@@ -625,6 +646,7 @@ public class Transformer {
 			object.remove(rdf.getPrefixItem("dcterms:temporal"));
 			object.remove(rdf.getPrefixItem("prov:startedAtTime"));
 			object.remove(rdf.getPrefixItem("prov:endedAtTime"));
+			object.remove(rdf.getPrefixItem("lsdh:type"));
 		} catch (Exception e) {
 			int errorLine = -1;
 			for (StackTraceElement element : e.getStackTrace()) {
