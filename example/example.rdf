@@ -25,6 +25,7 @@
 	<dcterms:coverage rdf:resource="http://sws.geonames.org/3169070"/>
 	<dcterms:temporal rdf:resource="http://chronontology.dainst.org/period/rjqJUoIToI7L"/>
 	<foaf:depiction rdf:resource="http://rgzm.de/Navis3/Middle/12102R00M.gif"/>
+	<lsdh:type rdf:resource="http://labeling.link/docs/ls-dh/core#Object"/>
 	<geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#string">41.89193</geo:lat>
 	<geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#string">12.51133</geo:long>
 	<prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">138</prov:endedAtTime>
@@ -38,6 +39,7 @@
 	<dcterms:coverage rdf:resource="http://sws.geonames.org/734699"/>
 	<dcterms:temporal rdf:resource="http://chronontology.dainst.org/period/1c5O1RHoC9Wq"/>
 	<foaf:depiction rdf:resource="http://rgzm.de/Navis3/Middle/41652R00M.gif"/>
+	<lsdh:type rdf:resource="http://labeling.link/docs/ls-dh/core#Object"/>
 	<geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#string">40.87984</geo:lat>
 	<geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#string">22.86202</geo:long>
 	<prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">244</prov:endedAtTime>
@@ -51,6 +53,7 @@
 	<dcterms:coverage rdf:resource="http://sws.geonames.org/301238"/>
 	<dcterms:temporal rdf:resource="http://chronontology.dainst.org/period/aYHpzkhhHp4a"/>
 	<foaf:depiction rdf:resource="http://rgzm.de/Navis3/Middle/41477R00M.gif"/>
+	<lsdh:type rdf:resource="http://labeling.link/docs/ls-dh/core#Object"/>
 	<geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#string">36.76667</geo:lat>
 	<geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#string">31.38889</geo:long>
 	<prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">268</prov:endedAtTime>
@@ -64,6 +67,7 @@
 	<dcterms:coverage rdf:resource="http://sws.geonames.org/8478257"/>
 	<dcterms:temporal rdf:resource="http://chronontology.dainst.org/period/HZXpDfFoImTp"/>
 	<foaf:depiction rdf:resource="http://rgzm.de/Navis3/Middle/42511R00M.gif"/>
+	<lsdh:type rdf:resource="http://labeling.link/docs/ls-dh/core#Object"/>
 	<geo:lat rdf:datatype="http://www.w3.org/2001/XMLSchema#string">37.96491</geo:lat>
 	<geo:long rdf:datatype="http://www.w3.org/2001/XMLSchema#string">23.66511</geo:long>
 	<prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#string">235</prov:endedAtTime>
