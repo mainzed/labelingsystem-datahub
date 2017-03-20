@@ -6,6 +6,12 @@ import com.esri.core.geometry.Point;
 import com.esri.core.geometry.SpatialReference;
 import exceptions.Logging;
 import exceptions.ResourceNotAvailableException;
+import exceptions.SparqlParseException;
+import exceptions.SparqlQueryException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +22,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.eclipse.rdf4j.query.BindingSet;
+import org.eclipse.rdf4j.query.MalformedQueryException;
+import org.eclipse.rdf4j.query.QueryEvaluationException;
+import org.eclipse.rdf4j.repository.RepositoryException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,6 +39,8 @@ public class SearchResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 	public Response getDatasetsBySearch(
+			@QueryParam("labels") boolean labels,
+			@QueryParam("lang") String lang,
 			@QueryParam("project") String project,
 			@QueryParam("publisher") String publisher,
 			@QueryParam("concept") String concept,
@@ -113,6 +124,8 @@ public class SearchResource {
 					}
 					outArray.add(tmp);
 				}
+				// labels output if requested
+				outArray = getLabels(labels,lang,outArray);
 			} else if (publisher != null) { // get datasets for a publisher
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -183,6 +196,8 @@ public class SearchResource {
 					}
 					outArray.add(tmp);
 				}
+				// labels output if requested
+				outArray = getLabels(labels,lang,outArray);
 			} else if (concept != null) { // get datasets for a specific concept
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -252,6 +267,8 @@ public class SearchResource {
 					}
 					outArray.add(tmp);
 				}
+				// labels output if requested
+				outArray = getLabels(labels,lang,outArray);
 			} else if (resource != null) { // get datasets for a specific resource related to a concept
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				// query labeling system of concepts related to this resource
@@ -332,6 +349,8 @@ public class SearchResource {
 					}
 					outArray.add(tmp);
 				}
+				// labels output if requested
+				outArray = getLabels(labels,lang,outArray);
 			} else if (start != null && end != null) { // get datasets for a timespan
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -404,6 +423,8 @@ public class SearchResource {
 					}
 					outArray.add(tmp);
 				}
+				// labels output if requested
+				outArray = getLabels(labels,lang,outArray);
 			} else if (lat_min != null && lng_min != null && lat_max != null && lng_max != null) { // get datasets for envelope
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -496,6 +517,8 @@ public class SearchResource {
 						}
 					}
 				}
+				// labels output if requested
+				outArray = getLabels(labels,lang,outArray2);
 			} else {
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -564,12 +587,81 @@ public class SearchResource {
 					}
 					outArray.add(tmp);
 				}
+				// labels output if requested
+				outArray = getLabels(labels,lang,outArray);
 			}
 			return Response.ok(outArray).header("Content-Type", "application/json;charset=UTF-8").build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.SearchResource"))
 					.header("Content-Type", "application/json;charset=UTF-8").build();
 		}
+	}
+
+	private static JSONArray getLabels(boolean labels, String lang, JSONArray outArray) throws IOException, RepositoryException, MalformedQueryException, QueryEvaluationException, SparqlQueryException, SparqlParseException {
+		if (labels) {
+			List<String> concepts = new ArrayList();
+			for (Object tmp : outArray) {
+				JSONObject outObj = (JSONObject) tmp;
+				concepts.add((String) outObj.get("label"));
+			}
+			// get labels from labeling system
+			outArray.clear();
+			String sparql = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
+					+ "SELECT DISTINCT ?uri ?pl WHERE { "
+					+ "?uri skos:prefLabel ?pl . "
+					+ "FILTER ( ";
+			for (String item : concepts) {
+				sparql += " ?uri=<" + item + "> || ";
+			}
+			sparql = sparql.substring(0, sparql.length() - 3);
+			sparql += ") ";
+			if (lang != null) {
+				sparql += "FILTER(LANGMATCHES(LANG(?pl), \"" + lang + "\")) ";
+			}
+			sparql += "}";
+			List<BindingSet> result = RDF4J_20.SPARQLquery("labelingsystem", ConfigProperties.getPropertyParam("ts_server"), sparql);
+			List<String> uris = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "uri");
+			List<String> pls = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "pl");
+			for (int i = 0; i < uris.size(); i++) {
+				JSONObject labelObj = new JSONObject();
+				labelObj.put("uri", uris.get(i));
+				labelObj.put("value", pls.get(i).split("@")[0].replace("\"", ""));
+				labelObj.put("lang", pls.get(i).split("@")[1]);
+				// count appearance of uri in datahub
+				int count = 0;
+				for (String conceptURI : concepts) {
+					int z = 0;
+					if (conceptURI.equals(uris.get(i))) {
+						count++;
+					}
+				}
+				labelObj.put("datasets", count);
+				outArray.add(labelObj);
+			}
+			// sort array
+			JSONArray sortedJsonArray = new JSONArray();
+			List<JSONObject> jsonValues = new ArrayList();
+			for (int i = 0; i < outArray.size(); i++) {
+				jsonValues.add((JSONObject) outArray.get(i));
+			}
+			Collections.sort(jsonValues, new Comparator<JSONObject>() {
+				private static final String KEY_NAME = "value";
+
+				@Override
+				public int compare(JSONObject a, JSONObject b) {
+					String valA = new String();
+					String valB = new String();
+					valA = (String) a.get(KEY_NAME);
+					valB = (String) b.get(KEY_NAME);
+					return valA.compareTo(valB);
+				}
+			});
+			for (int i = 0; i < outArray.size(); i++) {
+				sortedJsonArray.add(jsonValues.get(i));
+			}
+			outArray = sortedJsonArray;
+		}
+		return outArray;
 	}
 
 }
