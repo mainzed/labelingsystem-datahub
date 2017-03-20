@@ -20,7 +20,7 @@
     3. [description with concepts and resources](#description-with-concepts-and-resources)
         1. [get datasets by concept URI](#get-datasets-by-concept-uri)
         2. [get datasets by any resource as URI related to a concept](#get-datasets-by-any-resource-as-uri-related-to-a-concept)
-    4. [show labels not objects](#show_labels_not_objects)
+    4. [show labels not objects](#show-labels-not-objects)
 
 
 ---------------------------------------
