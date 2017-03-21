@@ -27,14 +27,15 @@
                 // create divs
                 $("#b-butswitch").show();
                 $("#b-butswitch").html("datasets view");
-                $("#content").empty();
+                $("#contentcontent").empty();
                 for (var obj in response) {
                     var div = "<div id='"+response[obj].uri+"' class='label'>";
                     div += "<span class='labelvalue' v='"+response[obj].uri+"'>"+response[obj].value+"</span>";
                     div += "<span class='labellang'>"+response[obj].lang+"</span>";
                     div += "</div>";
-                    $("#content").append(div);
+                    $("#contentcontent").append(div);
                 }
+                $(".nano").nanoScroller();
             }
         });
     }
@@ -58,15 +59,16 @@
                 // create divs
                 $("#b-butswitch").show();
                 $("#b-butswitch").html("label view");
-                $("#content").empty();
+                $("#contentcontent").empty();
                 for (var obj in response) {
                     var div = "<div id='"+response[obj].id+"' class='object'>";
                     div += "<div class='objtitle'>"+response[obj].title+"</div>";
                     div += "<div class='objdesc'>"+response[obj].description+"</div>";
                     div += "<div class='objdepiction'><img src='"+response[obj].depiction+"' class='objdepictionimg'></div>";
                     div += "</div>";
-                    $("#content").append(div);
+                    $("#contentcontent").append(div);
                 }
+                $(".nano").nanoScroller();
             }
         });
     }

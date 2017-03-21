@@ -1,10 +1,10 @@
 var loadLandingPage = function() {
-    console.log("ads");
     $("#contentcontent").empty();
     var div = "<div id='landingpage'>";
     div += "<p style='font-size:30px;font-weight: 700;color:black;'>This is the landing page.</p>";
     div += "</div>";
     $("#contentcontent").append(div);
+    $(".nano").nanoScroller();
 }
 
 var loadFooter = function() {
@@ -22,7 +22,6 @@ $(document).ready(function() {
         loadLanguages();
         loadLandingPage();
         loadFooter();
-        $(".nano").nanoScroller({ alwaysVisible: true });
     }
 
     var loadProjects = function() {

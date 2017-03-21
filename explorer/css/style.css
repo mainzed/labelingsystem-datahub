@@ -150,19 +150,19 @@ h6 {
 }
 
 #sidebar {
-  background-color: yellow;
+  background-color: #ffffff;
   float: left;
   /*position: relative;*/
   font-size: 30px;
   font-weight: 700;
   color: black;
   width:calc(100%);
-  height: auto;
+  height: calc(100% - 100px);
   /* width: 100% - 2*padding - border */
 }
 
 #navigation {
-  background-color: green;
+  background-color: #aaaaaa;
   float: left;
   /*position: relative;*/
   font-size: 30px;
@@ -176,9 +176,6 @@ h6 {
 #header {
   background-color: #eeeeee;
   float: left;
-  font-size: 30px;
-  font-weight: normal;
-  color: darkblue;
   padding: 5px;
   width:calc(100% - 2*5px);
   height:80px;
@@ -187,7 +184,7 @@ h6 {
 #content {
   background: #cccccc;
   float:left;
-  overflow-y:auto;
+  /*overflow-y:auto;*/
   width:calc(100%);
   height:calc(100% - 100px - 2*5px - 2*10px);
   /* width: 100% - 2*padding - border */
@@ -195,7 +192,7 @@ h6 {
 #contentcontent {
   float:left;
   width:calc(100%);
-  height:calc(100% -10px);
+  height:calc(100% - 10px);
   /* width: 100% - 2*padding - border */
 }
 #footer {
@@ -217,7 +214,3 @@ h6 {
   width: calc(100% - 2*20px);
   /* width: 100% - 2*padding - border */
 }
-
-/* nano slider details */
-.nano > .nano-pane   { background: yellow; }
-.nano > .nano-pane > .nano-slider { background: blue; }
