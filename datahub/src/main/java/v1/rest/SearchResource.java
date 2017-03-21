@@ -8,10 +8,14 @@ import exceptions.Logging;
 import exceptions.ResourceNotAvailableException;
 import exceptions.SparqlParseException;
 import exceptions.SparqlQueryException;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +46,7 @@ public class SearchResource {
 			@QueryParam("labels") boolean labels,
 			@QueryParam("lang") String lang,
 			@QueryParam("project") String project,
-			@QueryParam("publisher") String publisher,
+			@QueryParam("creator") String creator,
 			@QueryParam("concept") String concept,
 			@QueryParam("resource") String resource,
 			@QueryParam("start") String start,
@@ -50,7 +54,8 @@ public class SearchResource {
 			@QueryParam("lat_min") String lat_min,
 			@QueryParam("lng_min") String lng_min,
 			@QueryParam("lat_max") String lat_max,
-			@QueryParam("lng_max") String lng_max) {
+			@QueryParam("lng_max") String lng_max,
+			@QueryParam("languages") boolean languages) {
 		try {
 			JSONArray outArray = new JSONArray();
 			JSONArray outArray2 = new JSONArray();
@@ -125,15 +130,15 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels,lang,outArray);
-			} else if (publisher != null) { // get datasets for a publisher
+				outArray = getLabels(labels, lang, outArray);
+			} else if (creator != null) { // get datasets for a publisher
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
 				query += "SELECT ?s ?p ?o WHERE { "
 						+ "?s ?p ?o . "
 						+ "?s a lsdh:Dataset . "
 						+ "?s lsdh:project ?pro . "
-						+ "?pro dcterms:publisher <" + publisher + "> . "
+						+ "?pro dcelements:creator \"" + creator + "\" . "
 						+ " } ";
 				List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
 				List<String> s = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "s");
@@ -197,7 +202,7 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels,lang,outArray);
+				outArray = getLabels(labels, lang, outArray);
 			} else if (concept != null) { // get datasets for a specific concept
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -268,7 +273,7 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels,lang,outArray);
+				outArray = getLabels(labels, lang, outArray);
 			} else if (resource != null) { // get datasets for a specific resource related to a concept
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				// query labeling system of concepts related to this resource
@@ -350,7 +355,7 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels,lang,outArray);
+				outArray = getLabels(labels, lang, outArray);
 			} else if (start != null && end != null) { // get datasets for a timespan
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -424,7 +429,7 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels,lang,outArray);
+				outArray = getLabels(labels, lang, outArray);
 			} else if (lat_min != null && lng_min != null && lat_max != null && lng_max != null) { // get datasets for envelope
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -518,7 +523,124 @@ public class SearchResource {
 					}
 				}
 				// labels output if requested
-				outArray = getLabels(labels,lang,outArray2);
+				outArray = getLabels(labels, lang, outArray2);
+			} else if (languages) {
+				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
+				String query = rdf.getPREFIXSPARQL();
+				query += "SELECT ?s ?p ?o WHERE { "
+						+ "?s ?p ?o . "
+						+ "?s a lsdh:Dataset . "
+						+ " } ";
+				List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+				List<String> s = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "s");
+				List<String> p = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
+				List<String> o = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
+				for (int i = 0; i < s.size(); i++) {
+					rdf.setModelTriple(s.get(i), p.get(i), o.get(i));
+				}
+				JSONObject jsonObject = (JSONObject) new JSONParser().parse(rdf.getModel("RDF/JSON"));
+				Set keys = jsonObject.keySet();
+				Iterator a = keys.iterator();
+				while (a.hasNext()) {
+					String key = (String) a.next();
+					JSONObject tmpObject = (JSONObject) jsonObject.get(key);
+					JSONArray idArray = (JSONArray) tmpObject.get(rdf.getPrefixItem("dcterms:identifier"));
+					JSONObject idObject = (JSONObject) idArray.get(0);
+					String h = (String) idObject.get("value");
+					JSONObject tmpObject2 = new JSONObject();
+					tmpObject2.put(key, tmpObject);
+					String hh = tmpObject2.toString();
+					JSONObject tmp = Transformer.dataset_GET(hh, h);
+					String datasetBody = (String) tmp.get("dataset");
+					RDF rdf2 = new RDF(ConfigProperties.getPropertyParam("host"));
+					String query2 = rdf2.getPREFIXSPARQL() + "SELECT * WHERE { <" + datasetBody + "> ?p ?o }";
+					List<BindingSet> result2 = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query2);
+					List<String> predicates2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "p");
+					List<String> objects2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "o");
+					if (result2.size() < 1) {
+						throw new ResourceNotAvailableException("resource " + h + " is not available");
+					}
+					for (int i = 0; i < predicates2.size(); i++) {
+						rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
+					}
+					String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+					JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
+					tmp.put("title", out2Object.get("title"));
+					if (out2Object.get("description") != null) {
+						tmp.put("description", out2Object.get("description"));
+					}
+					if (out2Object.get("depiction") != null) {
+						tmp.put("depiction", out2Object.get("depiction"));
+					}
+					if (out2Object.get("coverage") != null) {
+						tmp.put("coverage", out2Object.get("coverage"));
+					}
+					if (out2Object.get("lat") != null) {
+						tmp.put("lat", out2Object.get("lat"));
+					}
+					if (out2Object.get("lng") != null) {
+						tmp.put("lng", out2Object.get("lng"));
+					}
+					if (out2Object.get("temporal") != null) {
+						tmp.put("temporal", out2Object.get("temporal"));
+					}
+					if (out2Object.get("begin") != null) {
+						tmp.put("begin", out2Object.get("begin"));
+					}
+					if (out2Object.get("end") != null) {
+						tmp.put("end", out2Object.get("end"));
+					}
+					outArray.add(tmp);
+				}
+				// labels output if requested
+				outArray = getLabels(true, null, outArray);
+				// get set with used languages
+				HashSet<String> uniqueLanguages = new HashSet();
+				for (Object item : outArray) {
+					JSONObject tmp = (JSONObject) item;
+					uniqueLanguages.add((String) tmp.get("lang"));
+				}
+				// load languages json
+				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(SearchResource.class.getClassLoader().getResource("languages.json").getFile()), "UTF8"));
+				String inputLine;
+				StringBuilder response = new StringBuilder();
+				while ((inputLine = br.readLine()) != null) {
+					response.append(inputLine);
+				}
+				br.close();
+				JSONArray languagesArray = (JSONArray) new JSONParser().parse(response.toString());
+				// get long version for language
+				outArray.clear();
+				for (String tmpLang : uniqueLanguages) {
+					for (Object tmpLangObj : languagesArray) {
+						JSONObject tmp = (JSONObject) tmpLangObj;
+						if (tmpLang.equals(tmp.get("value"))) {
+							outArray.add(tmpLangObj);
+						}
+					}
+				}
+				// sort array
+				JSONArray sortedJsonArray = new JSONArray();
+				List<JSONObject> jsonValues = new ArrayList();
+				for (int i = 0; i < outArray.size(); i++) {
+					jsonValues.add((JSONObject) outArray.get(i));
+				}
+				Collections.sort(jsonValues, new Comparator<JSONObject>() {
+					private static final String KEY_NAME = "name";
+
+					@Override
+					public int compare(JSONObject a, JSONObject b) {
+						String valA = new String();
+						String valB = new String();
+						valA = (String) a.get(KEY_NAME);
+						valB = (String) b.get(KEY_NAME);
+						return valA.compareTo(valB);
+					}
+				});
+				for (int i = 0; i < outArray.size(); i++) {
+					sortedJsonArray.add(jsonValues.get(i));
+				}
+				outArray = sortedJsonArray;
 			} else {
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -588,7 +710,7 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels,lang,outArray);
+				outArray = getLabels(labels, lang, outArray);
 			}
 			return Response.ok(outArray).header("Content-Type", "application/json;charset=UTF-8").build();
 		} catch (Exception e) {
