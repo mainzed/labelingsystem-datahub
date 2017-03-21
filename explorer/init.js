@@ -1,9 +1,16 @@
 var loadLandingPage = function() {
-    $("#content").empty();
+    console.log("ads");
+    $("#contentcontent").empty();
     var div = "<div id='landingpage'>";
-    div += "<p>This is the landing page.</p>";
+    div += "<p style='font-size:30px;font-weight: 700;color:black;'>This is the landing page.</p>";
     div += "</div>";
-    $("#content").append(div);
+    $("#contentcontent").append(div);
+}
+
+var loadFooter = function() {
+    $("#footer").empty();
+    var div = "<p>Labeling System+ Lucy Edition</p>";
+    $("#footer").append(div);
 }
 
 $(document).ready(function() {
@@ -14,6 +21,8 @@ $(document).ready(function() {
         loadPublisher();
         loadLanguages();
         loadLandingPage();
+        loadFooter();
+        $(".nano").nanoScroller({ alwaysVisible: true });
     }
 
     var loadProjects = function() {
@@ -48,7 +57,7 @@ $(document).ready(function() {
                     response = JSON.parse(response);
                 } catch (e) {}
                 for (var project in response) {
-                    $("#publisher").append($("<option />").val(response[project].publisher).text(response[project].creator));
+                    $("#creator").append($("<option />").val(response[project].creator).text(response[project].creator));
                 }
             }
         });
@@ -59,7 +68,7 @@ $(document).ready(function() {
             async: false,
             type: 'GET',
             url: searchURL,
-            data: {"labels":true},
+            data: {"languages":true},
             error: function(jqXHR, textStatus, errorThrown) {
                 console.info(textStatus);
             },
@@ -67,8 +76,9 @@ $(document).ready(function() {
                 try {
                     response = JSON.parse(response);
                 } catch (e) {}
-                for (var label in response) {
-                    $("#langswitch").append($("<option />").val(response[label].lang).text(response[label].lang));
+                $("#langswitch").append($("<option />").val("").text("all languages"));
+                for (var lang in response) {
+                    $("#langswitch").append($("<option />").val(response[lang].value).text(response[lang].name));
                 }
             }
         });

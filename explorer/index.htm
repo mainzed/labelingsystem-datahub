@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Labeling System DataHub Explorer</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
 <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+<!-- https://github.com/jamesflorentino/nanoScrollerJS
+https://jamesflorentino.github.io/nanoScrollerJS/-->
+<script src="vendor/js/jquery.nanoscroller.min.js"></script>
+<link rel="stylesheet" href="vendor/css/nanoscroller.css">
 <script src="config.js"></script>
 <script src="buttons.js"></script>
 <script src="load.js"></script>
@@ -13,44 +18,56 @@
 
 <body>
 <!-- http://www.farb-tabelle.de/de/farbtabelle.htm -->
-<div id="header">
-    <div id="header-title" style="float:left;">
-        <p style="font-size:24px;font-weight:700;">LabelingSystem+ Explorer</p>
+<div id="page">
+    <div id="right">
+        <div id="sidebar">
+            <div id="filterwrapper" style="float:left;clear:both;">
+                <div style="float:left;clear:both;margin-top:10px;">
+                    projects:
+                    <select id="projects"></select>
+                </div>
+                <div style="float:left;clear:both;margin-top:10px;">
+                    publisher:
+                    <select id="creator"></select>
+                </div>
+                <div style="float:left;clear:both;margin-top:10px;">
+                    timespan [start,end]:
+                    <input type="text" id="start" value="-100" size=3></input>
+                    <input type="text" id="end" value="250" size=3></input>
+                </div>
+                <div style="float:left;clear:both;margin-top:10px;">
+                    envelope [latmin, lngmin, latmax, lgnmax]:
+                    <input type="text" id="lat_min" value="0" size=1></input>
+                    <input type="text" id="lng_min" value="0" size=1></input>
+                    <input type="text" id="lat_max" value="40" size=1></input>
+                    <input type="text" id="lng_max" value="40" size=1></input>
+                </div>
+                <div id="load" style="float:left;clear:both;margin-top:10px;">
+                    <button type="button" id="b-home">HOME</button>
+                    <button type="button" id="b-all">load all</button>
+                    <button type="button" id="b-project">load project</button>
+                    <button type="button" id="b-creator">load creator</button>
+                    <button type="button" id="b-timespan">load timespan</button>
+                    <button type="button" id="b-envelope">load envelope</button>
+                    <button type="button" id="b-butswitch"></button>
+                    <select id="langswitch"></select>
+                </div>
+            </div>
+        </div>
+        <div id="navigation">navigation</div>
     </div>
-    <div id="filterwrapper" style="float:left;clear:both;margin-top:10px;">
-        <div style="float:left;clear:both;margin-top:10px;">
-            projects:
-            <select id="projects"></select>
+    <div id="left">
+        <div id="header">
+            <div id="header-title" style="float:left;">
+                <p style="font-size:24px;font-weight:700;">LabelingSystem+ Explorer</p>
+            </div>
         </div>
-        <div style="float:left;clear:both;margin-top:10px;">
-            publisher:
-            <select id="publisher"></select>
+        <div id="content" class="nano">
+            <div id="contentcontent" class="nano-content"></div>
         </div>
-        <div style="float:left;clear:both;margin-top:10px;">
-            timespan [start,end]:
-            <input type="text" id="start" value="-100" size=3></input>
-            <input type="text" id="end" value="250" size=3></input>
-        </div>
-        <div style="float:left;clear:both;margin-top:10px;">
-            envelope [latmin, lngmin, latmax, lgnmax]:
-            <input type="text" id="lat_min" value="0" size=1></input>
-            <input type="text" id="lng_min" value="0" size=1></input>
-            <input type="text" id="lat_max" value="40" size=1></input>
-            <input type="text" id="lng_max" value="40" size=1></input>
-        </div>
-        <div id="load" style="float:left;clear:both;margin-top:10px;">
-            <button type="button" id="b-home">HOME</button>
-            <button type="button" id="b-all">load all</button>
-            <button type="button" id="b-project">load project</button>
-            <button type="button" id="b-publisher">load publisher</button>
-            <button type="button" id="b-timespan">load timespan</button>
-            <button type="button" id="b-envelope">load envelope</button>
-            <button type="button" id="b-butswitch"></button>
-            <select id="langswitch"></select>
-        </div>
+        <div id="footer"></div>
     </div>
 </div>
-<div id="content"></div>
 </body>
 
 </html>

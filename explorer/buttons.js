@@ -57,9 +57,9 @@ $(document).ready(function() {
         }
     });
 
-    $('#b-publisher').on('click', function() {
+    $('#b-creator').on('click', function() {
         filter = {};
-        filter.project = $("#publisher option:selected").val();
+        filter.creator = $("#creator option:selected").val();
         if (mode==="labels") {
             getLabels();
         } else {
