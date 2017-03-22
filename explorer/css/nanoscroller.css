@@ -14,13 +14,19 @@
   left          : 0;
 }
 .nano > .nano-content:focus {
-  outline: thin dotted;
+  /*outline: thin dotted;*/
 }
 .nano > .nano-content::-webkit-scrollbar {
   display: none;
 }
 .has-scrollbar > .nano-content::-webkit-scrollbar {
   display: block;
+}
+.nano .content::-webkit-scrollbar {
+  visibility: hidden;
+}
+.has-scrollbar .content::-webkit-scrollbar {
+  visibility: visible;
 }
 .nano > .nano-pane {
   /*background : #888;*/
