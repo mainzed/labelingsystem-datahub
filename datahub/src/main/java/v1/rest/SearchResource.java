@@ -55,10 +55,11 @@ public class SearchResource {
 			@QueryParam("lng_min") String lng_min,
 			@QueryParam("lat_max") String lat_max,
 			@QueryParam("lng_max") String lng_max,
-			@QueryParam("languages") boolean languages) {
+			@QueryParam("languages") boolean languages,
+			@QueryParam("geojson") boolean geojson) {
 		try {
 			JSONArray outArray = new JSONArray();
-			JSONArray outArray2 = new JSONArray();
+			JSONObject geoJSON = new JSONObject();
 			// get datasets for a project
 			if (project != null) {
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
@@ -498,6 +499,7 @@ public class SearchResource {
 					}
 					outArray.add(tmp);
 				}
+				JSONArray outArray2 = new JSONArray();
 				for (Object item : outArray) {
 					JSONObject tmp = (JSONObject) item;
 					// https://github.com/Esri/geometry-api-java/wiki
@@ -641,6 +643,39 @@ public class SearchResource {
 					sortedJsonArray.add(jsonValues.get(i));
 				}
 				outArray = sortedJsonArray;
+			} else if (geojson) {
+				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
+				String query = rdf.getPREFIXSPARQL();
+				query += "SELECT DISTINCT ?lat ?lng WHERE { "
+						+ "?s ?p ?o . "
+						+ "?s a lsdh:Dataset . "
+						+ "?s oa:hasTarget ?t . "
+						+ "?t geo:lat ?lat . "
+						+ "?t geo:long ?lng . "
+						+ " } ";
+				List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+				List<String> lat = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "lat");
+				List<String> lng = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "lng");
+				// cretae geojson
+				geoJSON.put("type", "FeatureCollection");
+				JSONArray features = new JSONArray();
+				for (int i=0; i<lat.size(); i++) {
+					JSONObject feature = new JSONObject();
+					feature.put("type", "Feature");
+					JSONObject geometry = new JSONObject();
+					geometry.put("type", "Point");
+					JSONArray point = new JSONArray();
+					Double latDbl = Double.parseDouble(lat.get(i));
+					Double lngDbl = Double.parseDouble(lng.get(i));
+					point.add(latDbl);
+					point.add(lngDbl);
+					geometry.put("coordinates", point);
+					feature.put("geometry", geometry);
+					JSONObject properties = new JSONObject();
+					feature.put("properties", properties);
+					features.add(feature);
+				}
+				geoJSON.put("features", features);
 			} else {
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -712,7 +747,11 @@ public class SearchResource {
 				// labels output if requested
 				outArray = getLabels(labels, lang, outArray);
 			}
-			return Response.ok(outArray).header("Content-Type", "application/json;charset=UTF-8").build();
+			if (!geoJSON.isEmpty()) {
+				return Response.ok(geoJSON).header("Content-Type", "application/json;charset=UTF-8").build();
+			} else {
+				return Response.ok(outArray).header("Content-Type", "application/json;charset=UTF-8").build();
+			}
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.SearchResource"))
 					.header("Content-Type", "application/json;charset=UTF-8").build();
@@ -720,7 +759,7 @@ public class SearchResource {
 	}
 
 	private static JSONArray getLabels(boolean labels, String lang, JSONArray outArray) throws IOException, RepositoryException, MalformedQueryException, QueryEvaluationException, SparqlQueryException, SparqlParseException {
-		if (labels) {
+		if (labels && !outArray.isEmpty()) {
 			List<String> concepts = new ArrayList();
 			for (Object tmp : outArray) {
 				JSONObject outObj = (JSONObject) tmp;
