@@ -1,6 +1,6 @@
 /* desktop size */
 @media all and (min-width: 1400px) {
-    .label {width: calc(100% / 4 - 2*10px);}
+    .label {width: calc(100% / 4 - 2*5px);}
     .object {width: calc(100% / 4 - 2*10px);}
     #left {width:75% !important;}
     #right {width:25% !important;}
@@ -8,7 +8,7 @@
 
 /* laptop size */
 @media not all and (min-width: 1400px) {
-    .label {width: calc(100% / 3 - 2*10px);}
+    .label {width: calc(100% / 3 - 2*5px);}
     .object {width: calc(100% / 3 - 2*10px);}
     #left {width:70% !important;}
     #right {width:30% !important;}

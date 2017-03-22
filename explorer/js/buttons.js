@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
     $('#b-home').on('click', function() {
+        $("#b-butswitch").hide();
+        $("#langswitch").hide();
         loadLandingPage();
     });
 
