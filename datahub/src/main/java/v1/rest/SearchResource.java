@@ -665,8 +665,8 @@ public class SearchResource {
 					JSONObject geometry = new JSONObject();
 					geometry.put("type", "Point");
 					JSONArray point = new JSONArray();
-					Double latDbl = Double.parseDouble(lat.get(i));
-					Double lngDbl = Double.parseDouble(lng.get(i));
+					Double latDbl = Double.parseDouble(lng.get(i));
+					Double lngDbl = Double.parseDouble(lat.get(i));
 					point.add(latDbl);
 					point.add(lngDbl);
 					geometry.put("coordinates", point);
