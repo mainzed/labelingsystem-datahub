@@ -6,9 +6,11 @@ $(document).ready(function() {
 
     $('#b-butswitch').on('click', function() {
         if (mode==="labels") { // get objects
+            $("#langswitch").hide();
             mode = "objects";
             getDatasets();
         } else if (mode==="objects") { // get labels
+            $("#langswitch").show();
             mode = "labels";
             getLabels();
         }
@@ -25,8 +27,8 @@ $(document).ready(function() {
 
     $('#b-timespan').on('click', function() {
         filter = {};
-        filter.start = $("#start").val();
-        filter.end = $("#end").val();
+        filter.start = $("#slider-time-range").slider("values", 0);
+        filter.end = $("#slider-time-range").slider("values", 1);
         if (mode==="labels") {
             getLabels();
         } else {
@@ -67,9 +69,13 @@ $(document).ready(function() {
         }
     });
 
-    // fill language dropdown
+    // on language change
     $('#langswitch').on('change', function() {
-        filter.lang = $("#langswitch").val();
+        if ($("#langswitch").val().length !== 0) {
+            filter.lang = $("#langswitch").val();
+        } else {
+            delete filter["lang"];
+        }
         if (mode==="labels") {
             getLabels();
         } else {

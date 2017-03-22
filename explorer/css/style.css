@@ -9,7 +9,6 @@
   letter-spacing: 0.02em;
 }
 a {
-  color: inherit;
   text-decoration: none;
   cursor: pointer;
 }
@@ -19,49 +18,9 @@ html {
 body {
   height: 100%;
 }
-h1 {
-  font-size: 30px;
-  font-weight: normal;
-}
-h2 {
-  font-size: 30px;
-  font-weight: normal;
-  margin-bottom: 50px;
-  margin-top: 20px;
-  margin-left: 20px;
-  display: block;
-}
-@media screen and (max-width: 1600px) {
-  h2 {
-    font-size: 26px;
-  }
-}
 h3 {
-  font-size: 19px;
-  margin-bottom: 5px;
-  margin-top: 20px;
-  margin-left: 20px;
-  display: block;
-  float: left;
-}
-@media screen and (max-width: 1600px) {
-  h3 {
     font-size: 20px;
-  }
-}
-h4 {
-  font-size: 16px;
-  margin-left: 20px;
-  display: block;
-  margin-bottom: 14px;
-}
-h5 {
-  float: left;
-  font-weight: bold;
-  font-style: italic;
-}
-h6 {
-  margin-bottom: 20px;
+    font-weight: 700;
 }
 .label {
   float:left;
@@ -152,9 +111,6 @@ h6 {
 #sidebar {
   background-color: #ffffff;
   float: left;
-  /*position: relative;*/
-  font-size: 30px;
-  font-weight: 700;
   color: black;
   width:calc(100%);
   height: calc(100% - 100px);
@@ -199,7 +155,8 @@ h6 {
   background-color: #eeeeee;
   float: left;
   font-size: 30px;
-  font-weight: 700;
+  font-style: italic;
+  font-weight: 300;
   color: black;
   padding: 10px;
   width:calc(100% - 2*10px);
@@ -214,3 +171,6 @@ h6 {
   width: calc(100% - 2*20px);
   /* width: 100% - 2*padding - border */
 }
+
+#map { height: 400px; width:100%; }
+#map2 { height: 280px; width:100%; }

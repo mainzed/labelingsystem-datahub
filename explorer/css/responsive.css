@@ -2,8 +2,8 @@
 @media all and (min-width: 1400px) {
     .label {width: calc(100% / 4 - 2*10px);}
     .object {width: calc(100% / 4 - 2*10px);}
-    #left {width:80% !important;}
-    #right {width:20% !important;}
+    #left {width:75% !important;}
+    #right {width:25% !important;}
 }
 
 /* laptop size */

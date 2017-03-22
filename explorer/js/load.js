@@ -27,6 +27,7 @@
                 // create divs
                 $("#b-butswitch").show();
                 $("#b-butswitch").html("datasets view");
+                $("#langswitch").show();
                 $("#contentcontent").empty();
                 for (var obj in response) {
                     var div = "<div id='"+response[obj].uri+"' class='label'>";
@@ -35,6 +36,19 @@
                     div += "</div>";
                     $("#contentcontent").append(div);
                 }
+                // output in header
+                var filterCopy = filter;
+                delete filterCopy["labels"];
+                var filters = "";
+                for (var item in filterCopy) {
+                    filters += " " + item + ":" + filterCopy[item];
+                }
+                if (filters!=="") {
+                    $("#header-info").html("labels for " + filters);
+                } else {
+                    $("#header-info").html("all labels");
+                }
+                // init nanoscroller
                 $(".nano").nanoScroller();
             }
         });
@@ -68,6 +82,19 @@
                     div += "</div>";
                     $("#contentcontent").append(div);
                 }
+                // output in header
+                var filterCopy = filter;
+                delete filterCopy["labels"];
+                var filters = "";
+                for (var item in filterCopy) {
+                    filters += " " + item + ":" + filterCopy[item];
+                }
+                if (filters!=="") {
+                    $("#header-info").html("datasets for " + filters);
+                } else {
+                    $("#header-info").html("all datasets");
+                }
+                // init nanoscroller
                 $(".nano").nanoScroller();
             }
         });

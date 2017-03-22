@@ -9,7 +9,42 @@
 <!-- https://github.com/jamesflorentino/nanoScrollerJS
 https://jamesflorentino.github.io/nanoScrollerJS/-->
 <script src="vendor/js/jquery.nanoscroller.min.js"></script>
-<link rel="stylesheet" href="vendor/css/nanoscroller.css">
+<link rel="stylesheet" href="css/nanoscroller.css">
+<!-- https://jqueryui.com/ -->
+<script src="vendor/js/jquery-ui-1.12.1.min.js"></script>
+<link rel="stylesheet" href="css/jquery-ui.css">
+<!-- leafletjs -->
+<script src="vendor/js/leaflet-1.0.3.js"></script>
+<link rel="stylesheet" href="css/leaflet.css">
+<!--https://github.com/Leaflet/Leaflet.draw-->
+<link rel="stylesheet" href="vendor/leaflet.draw/src/leaflet.draw.css" />
+<script src="vendor/leaflet.draw/src/Leaflet.draw.js"></script>
+<script src="vendor/leaflet.draw/src/Leaflet.Draw.Event.js"></script>
+<script src="vendor/leaflet.draw/src/Toolbar.js"></script>
+<script src="vendor/leaflet.draw/src/Tooltip.js"></script>
+<script src="vendor/leaflet.draw/src/ext/GeometryUtil.js"></script>
+<script src="vendor/leaflet.draw/src/ext/LatLngUtil.js"></script>
+<script src="vendor/leaflet.draw/src/ext/LineUtil.Intersect.js"></script>
+<script src="vendor/leaflet.draw/src/ext/Polygon.Intersect.js"></script>
+<script src="vendor/leaflet.draw/src/ext/Polyline.Intersect.js"></script>
+<script src="vendor/leaflet.draw/src/ext/TouchEvents.js"></script>
+<script src="vendor/leaflet.draw/src/draw/DrawToolbar.js"></script>
+<script src="vendor/leaflet.draw/src/draw/handler/Draw.Feature.js"></script>
+<script src="vendor/leaflet.draw/src/draw/handler/Draw.SimpleShape.js"></script>
+<script src="vendor/leaflet.draw/src/draw/handler/Draw.Polyline.js"></script>
+<script src="vendor/leaflet.draw/src/draw/handler/Draw.Circle.js"></script>
+<script src="vendor/leaflet.draw/src/draw/handler/Draw.Marker.js"></script>
+<script src="vendor/leaflet.draw/src/draw/handler/Draw.Polygon.js"></script>
+<script src="vendor/leaflet.draw/src/draw/handler/Draw.Rectangle.js"></script>
+<script src="vendor/leaflet.draw/src/edit/EditToolbar.js"></script>
+<script src="vendor/leaflet.draw/src/edit/handler/EditToolbar.Edit.js"></script>
+<script src="vendor/leaflet.draw/src/edit/handler/EditToolbar.Delete.js"></script>
+<script src="vendor/leaflet.draw/src/Control.Draw.js"></script>
+<script src="vendor/leaflet.draw/src/edit/handler/Edit.Poly.js"></script>
+<script src="vendor/leaflet.draw/src/edit/handler/Edit.SimpleShape.js"></script>
+<script src="vendor/leaflet.draw/src/edit/handler/Edit.Circle.js"></script>
+<script src="vendor/leaflet.draw/src/edit/handler/Edit.Rectangle.js"></script>
+<script src="vendor/leaflet.draw/src/edit/handler/Edit.Marker.js"></script>
 <!-- own work -->
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/responsive.css">
@@ -23,45 +58,49 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
 <div id="page">
     <div id="right">
         <div id="sidebar">
-            <div id="filterwrapper" style="float:left;clear:both;">
-                <div style="float:left;clear:both;margin-top:10px;">
-                    projects:
-                    <select id="projects"></select>
-                </div>
-                <div style="float:left;clear:both;margin-top:10px;">
-                    publisher:
-                    <select id="creator"></select>
-                </div>
-                <div style="float:left;clear:both;margin-top:10px;">
-                    timespan [start,end]:
-                    <input type="text" id="start" value="-100" size=3></input>
-                    <input type="text" id="end" value="250" size=3></input>
-                </div>
-                <div style="float:left;clear:both;margin-top:10px;">
-                    envelope [latmin, lngmin, latmax, lgnmax]:
-                    <input type="text" id="lat_min" value="0" size=1></input>
-                    <input type="text" id="lng_min" value="0" size=1></input>
-                    <input type="text" id="lat_max" value="40" size=1></input>
-                    <input type="text" id="lng_max" value="40" size=1></input>
-                </div>
-                <div id="load" style="float:left;clear:both;margin-top:10px;">
-                    <button type="button" id="b-home">HOME</button>
-                    <button type="button" id="b-all">load all</button>
-                    <button type="button" id="b-project">load project</button>
-                    <button type="button" id="b-creator">load creator</button>
-                    <button type="button" id="b-timespan">load timespan</button>
-                    <button type="button" id="b-envelope">load envelope</button>
-                    <button type="button" id="b-butswitch"></button>
-                    <select id="langswitch"></select>
-                </div>
+            <h3>Load All</h3>
+            <div>
+                Load all data.
+                <button type="button" id="b-all">load all</button>
+            </div>
+            <h3>Filter by Project</h3>
+            <div>
+                <select id="projects"></select>
+                <button type="button" id="b-project">load project</button>
+            </div>
+            <h3>Filter by Creator</h3>
+            <div>
+                <select id="creator"></select>
+                <button type="button" id="b-creator">load creator</button>
+            </div>
+            <h3>Filter by Timespan</h3>
+            <div>
+                <label for="year"></label>
+                <input type="text" id="year" readonly style="border:0; font-weight:bold;">
+                <div id="slider-time-range"></div>
+                <button type="button" id="b-timespan">load timespan</button>
+            </div>
+            <h3>Filter by Envelope</h3>
+            <div>
+                <div id='map'></div>
+                envelope [latmin, lngmin, latmax, lgnmax]:
+                <input type="text" id="lat_min" value="0" size=1></input>
+                <input type="text" id="lng_min" value="0" size=1></input>
+                <input type="text" id="lat_max" value="40" size=1></input>
+                <input type="text" id="lng_max" value="40" size=1></input>
+                <button type="button" id="b-envelope">load envelope</button>
             </div>
         </div>
-        <div id="navigation">navigation</div>
+        <div id="navigation">
+            <button type="button" id="b-home">HOME</button>
+            <button type="button" id="b-butswitch" hidden></button>
+            <select id="langswitch" hidden></select>
+        </div>
     </div>
     <div id="left">
         <div id="header">
             <div id="header-title" style="float:left;">
-                <p style="font-size: 30px;font-weight: 700;color: black;padding:15px;">LabelingSystem+ Explorer</p>
+                <p id="header-info" style="font-size: 30px;font-weight: 700;color: black;padding:15px;"></p>
             </div>
         </div>
         <div id="content" class="nano">
