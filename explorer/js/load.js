@@ -44,9 +44,12 @@
                     filters += " " + item + ":" + filterCopy[item];
                 }
                 if (filters!=="") {
-                    $("#header-info").html("labels for " + filters);
+                    if (filters.includes("lat_min")) {
+                        filters = "envelope";
+                    }
+                    $("#header-info").html(response.length + " label(s) for " + filters);
                 } else {
-                    $("#header-info").html("all labels");
+                    $("#header-info").html("all label(s) (" + response.length + ")");
                 }
                 // init nanoscroller
                 $(".nano").nanoScroller();
@@ -90,9 +93,12 @@
                     filters += " " + item + ":" + filterCopy[item];
                 }
                 if (filters!=="") {
-                    $("#header-info").html("datasets for " + filters);
+                    if (filters.includes("lat_min")) {
+                        filters = "envelope";
+                    }
+                    $("#header-info").html(response.length + " dataset(s) for " + filters);
                 } else {
-                    $("#header-info").html("all datasets");
+                    $("#header-info").html("all dataset(s) (" + response.length + ")");
                 }
                 // init nanoscroller
                 $(".nano").nanoScroller();

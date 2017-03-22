@@ -11,6 +11,7 @@
 a {
   text-decoration: none;
   cursor: pointer;
+  color: blue;
 }
 html {
   height: 100%;
@@ -172,5 +173,4 @@ h3 {
   /* width: 100% - 2*padding - border */
 }
 
-#map { height: 400px; width:100%; }
-#map2 { height: 280px; width:100%; }
+#map { height: 250px; width:100%; float:left;}

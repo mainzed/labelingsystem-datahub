@@ -13,6 +13,19 @@ var loadFooter = function() {
     $("#footer").append(div);
 }
 
+var getEnvelope = function(lat_min, lng_min, lat_max, lng_max) {
+    filter = {};
+    filter.lat_min = lat_min;
+    filter.lng_min = lng_min;
+    filter.lat_max = lat_max;
+    filter.lng_max = lng_max;
+    if (mode==="labels") {
+        getLabels();
+    } else {
+        getDatasets();
+    }
+}
+
 $(document).ready(function() {
 
     var init = function() {
@@ -35,16 +48,41 @@ $(document).ready(function() {
         });
         $("#year").val("begin:" + $("#slider-time-range").slider("values", 0) + " end:" + $("#slider-time-range").slider("values", 1));
         // init mapid
-        map = L.map('map').setView([51.505, -0.09], 3);
+        map = L.map('map').setView([41.373793, 45.311555], 2);
         L.tileLayer('http://{s}.tiles.mapbox.com/v3/isawnyu.map-knmctlkh/{z}/{x}/{y}.png', {
-			maxZoom: 15,
-            attribution: "see here..."
-            /*attribution: "Tiles &copy; <a href='http://mapbox.com/' target='_blank'>MapBox</a> | " +
-					"Data &copy; <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> and contributors, CC-BY-SA |" +
-					" Tiles and Data &copy; 2013 <a href='http://www.awmc.unc.edu' target='_blank'>AWMC</a>" +
-					" <a href='http://creativecommons.org/licenses/by-nc/3.0/deed.en_US' target='_blank'>CC-BY-NC 3.0</a>"*/
+			maxZoom: 15
         }).addTo(map);
-        var marker = L.marker([51.505, -0.09]).addTo(map);
+        // set points
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: searchURL,
+            data: {"geojson":true},
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.info(textStatus);
+            },
+            success: function(response) {
+                try {
+                    response = JSON.parse(response);
+                } catch (e) {}
+
+                var geojsonMarkerOptions = {
+                    radius: 6,
+                    fillColor: "#ff7800",
+                    color: "#000000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 1
+                };
+                L.geoJSON(response, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.circleMarker(latlng, geojsonMarkerOptions);
+                    }
+                }).addTo(map);
+            }
+        });
+        // set attribution
+        $("#map-attribution").html("Tiles &copy; <a href='http://mapbox.com/' target='_blank'>MapBox</a> | Data &copy; <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> and contributors, CC-BY-SA | Tiles and Data &copy; 2013 <a href='http://www.awmc.unc.edu' target='_blank'>AWMC</a><a href='http://creativecommons.org/licenses/by-nc/3.0/deed.en_US' target='_blank'>CC-BY-NC 3.0</a>")
         // set leaflet draw
         var drawnItems = new L.FeatureGroup();
         var editableLayers = new L.FeatureGroup();
@@ -75,14 +113,14 @@ $(document).ready(function() {
         var drawControl = new L.Control.Draw(options);
         map.addControl(drawControl);
         map.on(L.Draw.Event.CREATED, function (e) {
-            var type = e.layerType,
-            layer = e.layer;
-            editableLayers.addLayer(layer);
-			//var upperright = e.layer._latlngs[0].lat + ";" + e.layer._latlngs[0].lng;
-			//var upperleft = e.layer._latlngs[1].lat + ";" + e.layer._latlngs[1].lng;
-			//var lowerleft = e.layer._latlngs[2].lat + ";" + e.layer._latlngs[2].lng;
-			//var lowerright = e.layer._latlngs[3].lat + ";" + e.layer._latlngs[3].lng;
-			console.log("latlng=" + e.layer._latlngs.lat + ";" + e.layer._latlngs.lng);
+            editableLayers.addLayer(e.layer);
+            console.log(e.layer._latlngs);
+			/*var upperright = e.layer._latlngs[0].lat + ";" + e.layer._latlngs[0].lng;
+		    var upperleft = e.layer._latlngs[1].lat + ";" + e.layer._latlngs[1].lng;
+			var lowerleft = e.layer._latlngs[2].lat + ";" + e.layer._latlngs[2].lng;
+			var lowerright = e.layer._latlngs[3].lat + ";" + e.layer._latlngs[3].lng;*/
+            //getEnvelope(0, 0, 40, 40);
+            getEnvelope(e.layer._latlngs[0][0].lat, e.layer._latlngs[0][0].lng, e.layer._latlngs[0][1].lat, e.layer._latlngs[0][2].lng);
 		});
         // load accordion
         $("#sidebar").accordion({collapsible: true, heightStyle: "content", autoHeight: false });
