@@ -50,54 +50,57 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
 <link rel="stylesheet" href="css/responsive.css">
 <script src="js/config.js"></script>
 <script src="js/buttons.js"></script>
+<script src="js/filter.js"></script>
 <script src="js/load.js"></script>
 <script src="js/init.js"></script>
 </head>
 
 <body>
 <div id="page">
+    <div id="navigation">
+        <div id="b-labels" hidden></div>
+        <div id="b-objects"></div>
+        <div id="b-projects"></div>
+    </div>
     <div id="right">
-        <div id="home">
-            <button type="button" id="b-home">HOME</button>
-        </div>
-        <div id="sidebar">
-            <h3>Load All</h3>
-            <div>
-                Load all data.
-                <button type="button" id="b-all">load all</button>
+        <div id="filter">
+            <div id="filter-select">
+                <div id="filterheader"><img src="img/icon-funnel.png" style="height:25px"></div>
+                <div id="filter-project" class="filter-select">filter by project</div>
+                <div id="filter-creator" class="filter-select">filter by creator</div>
+                <div id="filter-timespan" class="filter-select">filter by timespan</div>
+                <div id="filter-envelope" class="filter-select">filter by envelope</div>
             </div>
-            <h3>Filter by Project</h3>
-            <div>
-                <select id="projects"></select>
-                <button type="button" id="b-project">load project</button>
+            <div id="filter-properties">
+                <div id="filter-properties-wrapper" class="wrapper" hidden>
+                    <div id="filterheader-properties"></div>
+                    <div id="filter-project-properties" class="filter-properties" hidden>
+                        <select id="projects"></select>
+                        <button type="button" id="b-project">load project</button>
+                    </div>
+                    <div id="filter-creator-properties" class="filter-properties" hidden>
+                        <select id="creator"></select>
+                        <button type="button" id="b-creator">load creator</button>
+                    </div>
+                    <div id="filter-timespan-properties" class="filter-properties" hidden>
+                        <label for="year"></label>
+                        <input type="text" id="year" readonly style="border:0; font-weight:bold;">
+                        <div id="slider-time-range"></div>
+                        <button type="button" id="b-timespan">load timespan</button>
+                    </div>
+                    <div id="filter-envelope-properties" class="filter-properties" hidden>
+                        <div id='map'></div>
+                        <div id="map-attribution"></div>
+                        <button type="button" id="b-envelope" hidden></button>
+                    </div>
+                </div>
+                <div id="filter-lang-wrapper" class="wrapper">
+                    <div id="filterheader-properties-language">select language</div>
+                    <div id="filter-language-properties" class="filter-properties">
+                        <select id="langswitch"></select>
+                    </div>
+                </div>
             </div>
-            <h3>Filter by Creator</h3>
-            <div>
-                <select id="creator"></select>
-                <button type="button" id="b-creator">load creator</button>
-            </div>
-            <h3>Filter by Timespan</h3>
-            <div>
-                <label for="year"></label>
-                <input type="text" id="year" readonly style="border:0; font-weight:bold;">
-                <div id="slider-time-range"></div>
-                <button type="button" id="b-timespan">load timespan</button>
-            </div>
-            <h3>Filter by Envelope</h3>
-            <div>
-                <div id='map'></div>
-                <div id="map-attribution"></div>
-                <!--envelope [latmin, lngmin, latmax, lgnmax]:
-                <input type="text" id="lat_min" value="0" size=1></input>
-                <input type="text" id="lng_min" value="0" size=1></input>
-                <input type="text" id="lat_max" value="40" size=1></input>
-                <input type="text" id="lng_max" value="40" size=1></input>
-                <button type="button" id="b-envelope">load envelope</button>-->
-            </div>
-        </div>
-        <div id="navigation">
-            <button type="button" id="b-butswitch" hidden></button>
-            <select id="langswitch" hidden></select>
         </div>
     </div>
     <div id="left">
@@ -109,8 +112,8 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
         <div id="content" class="nano">
             <div id="contentcontent" class="nano-content"></div>
         </div>
-        <div id="footer"></div>
     </div>
+    <div id="footer">Label Explorer - build 23/03/2017</div>
 </div>
 </body>
 

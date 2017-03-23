@@ -1,15 +1,19 @@
 /* desktop size */
 @media all and (min-width: 1400px) {
-    .label {width: calc(100% / 4 - 1*3px);}
-    .object {width: calc(100% / 4 - 1*3px);}
-    #left {width:75% !important;}
-    #right {width:25% !important;}
+    .label {width: calc(100% / 4 - 1*3.1px);}
+    .object {width: calc(100% / 4 - 1*3.1px);}
+    .project {width: calc(100% / 2 - 1*3.1px);}
+    #left {width:calc(70% - 30px) !important;}
+    #right {width:calc(30% - 30px) !important;}
+    #navigation {width:60px !important;}
 }
 
 /* laptop size */
 @media not all and (min-width: 1400px) {
     .label {width: calc(100% / 3 - 1*3px);}
     .object {width: calc(100% / 3 - 1*3px);}
-    #left {width:70% !important;}
-    #right {width:30% !important;}
+    .project {width: calc(100% / 2 - 1*3.1px);}
+    #left {width:calc(65% - 30px) !important;}
+    #right {width:calc(35% - 30px) !important;}
+    #navigation {width:60px !important;}
 }

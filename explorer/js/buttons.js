@@ -1,87 +1,80 @@
 $(document).ready(function() {
 
-    $('#b-home').on('click', function() {
-        $("#b-butswitch").hide();
-        $("#langswitch").hide();
-        loadLandingPage();
+    $('#b-labels').on('click', function() {
+        $("#filter-lang-wrapper").show();
+        $("#b-labels").hide();
+        $("#b-objects").show();
+        $("#b-projects").show();
+        mode = "labels";
+        getLabels();
     });
 
-    $('#b-butswitch').on('click', function() {
-        if (mode==="labels") { // get objects
-            $("#langswitch").hide();
-            mode = "objects";
-            getDatasets();
-        } else if (mode==="objects") { // get labels
-            $("#langswitch").show();
-            mode = "labels";
-            getLabels();
-        }
+    $('#b-objects').on('click', function() {
+        $("#filter-lang-wrapper").hide();
+        $("#b-labels").show();
+        $("#b-objects").hide();
+        $("#b-projects").show();
+        mode = "objects";
+        getDatasets();
     });
 
-    $('#b-all').on('click', function() {
-        filter = {};
-        if (mode==="labels") {
-            getLabels();
-        } else {
-            getDatasets();
-        }
+    $('#b-projects').on('click', function() {
+        $("#filter-lang-wrapper").hide();
+        $("#b-labels").show();
+        $("#b-objects").show();
+        $("#b-projects").hide();
+        mode = "projects";
+        getProjects();
     });
 
     $('#b-timespan').on('click', function() {
         filter = {};
+        setLanguageFilter();
         filter.start = $("#slider-time-range").slider("values", 0);
         filter.end = $("#slider-time-range").slider("values", 1);
-        if (mode==="labels") {
-            getLabels();
-        } else {
-            getDatasets();
-        }
-    });
-
-    $('#b-envelope').on('click', function() {
-        filter = {};
-        filter.lat_min = $("#lat_min").val();
-        filter.lng_min = $("#lng_min").val();
-        filter.lat_max = $("#lat_max").val();
-        filter.lng_max = $("#lng_max").val();
-        if (mode==="labels") {
-            getLabels();
-        } else {
-            getDatasets();
-        }
+        loadItems();
     });
 
     $('#b-project').on('click', function() {
         filter = {};
+        setLanguageFilter();
         filter.project = $("#projects option:selected").val();
-        if (mode==="labels") {
-            getLabels();
-        } else {
-            getDatasets();
-        }
+        loadItems();
+    });
+
+    $('#b-envelope').on('click', function() {
+        setLanguageFilter();
+        loadItems();
     });
 
     $('#b-creator').on('click', function() {
         filter = {};
+        setLanguageFilter();
         filter.creator = $("#creator option:selected").val();
-        if (mode==="labels") {
-            getLabels();
-        } else {
-            getDatasets();
-        }
+        loadItems();
     });
 
-    // on language change
     $('#langswitch').on('change', function() {
+        setLanguageFilter();
+        loadItems();
+    });
+
+    var loadItems = function() {
+        if (mode==="labels") {
+            getLabels();
+        } else if (mode==="objects") {
+            getDatasets();
+        } else {
+            getProjects();
+        }
+    }
+
+    var setLanguageFilter = function() {
         if ($("#langswitch").val().length !== 0) {
             filter.lang = $("#langswitch").val();
         } else {
             delete filter["lang"];
         }
-        if (mode==="labels") {
-            getLabels();
-        } else {
-            getDatasets();
-        }
-    });
+    }
+
 });

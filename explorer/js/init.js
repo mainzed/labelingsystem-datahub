@@ -1,41 +1,13 @@
-var loadLandingPage = function() {
-    $("#contentcontent").empty();
-    var div = "<div id='landingpage'>";
-    div += "<p style='font-size:30px;font-weight: 700;color:black;'>This is the landing page.</p>";
-    div += "</div>";
-    $("#contentcontent").append(div);
-    $(".nano").nanoScroller();
-}
-
-var loadFooter = function() {
-    $("#footer").empty();
-    var div = "<p>Labeling System+ Lucy Edition - build 22/03/2017</p>";
-    $("#footer").append(div);
-}
-
-var getEnvelope = function(lat_min, lng_min, lat_max, lng_max) {
-    filter = {};
-    filter.lat_min = lat_min;
-    filter.lng_min = lng_min;
-    filter.lat_max = lat_max;
-    filter.lng_max = lng_max;
-    if (mode==="labels") {
-        getLabels();
-    } else {
-        getDatasets();
-    }
-}
-
 $(document).ready(function() {
 
     var init = function() {
-        $("#b-butswitch").html("datasets view");
+        $("#b-butswitch").html("d");
         loadProjects();
         loadPublisher();
         loadLanguages();
-        loadLandingPage();
-        loadFooter();
-        $("#header-info").html("Labeling System DataHub Explorer");
+        //loadLandingPage();
+        getLabels();
+        $("#header-info").html("Label Explorer");
         // init time slider
         $("#slider-time-range").slider({
             range: true,
@@ -84,8 +56,8 @@ $(document).ready(function() {
         // set attribution
         $("#map-attribution").html("Tiles &copy; <a href='http://mapbox.com/' target='_blank'>MapBox</a> | Data &copy; <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> and contributors, CC-BY-SA | Tiles and Data &copy; 2013 <a href='http://www.awmc.unc.edu' target='_blank'>AWMC</a><a href='http://creativecommons.org/licenses/by-nc/3.0/deed.en_US' target='_blank'>CC-BY-NC 3.0</a>")
         // set leaflet draw
-        var drawnItems = new L.FeatureGroup();
-        var editableLayers = new L.FeatureGroup();
+        drawnItems = new L.FeatureGroup();
+        editableLayers = new L.FeatureGroup();
         map.addLayer(editableLayers);
         map.addLayer(drawnItems);
 		L.drawLocal.draw.toolbar.buttons.rectangle = 'Draw a boundingbox for selection';
@@ -114,12 +86,6 @@ $(document).ready(function() {
         map.addControl(drawControl);
         map.on(L.Draw.Event.CREATED, function (e) {
             editableLayers.addLayer(e.layer);
-            console.log(e.layer._latlngs);
-			/*var upperright = e.layer._latlngs[0].lat + ";" + e.layer._latlngs[0].lng;
-		    var upperleft = e.layer._latlngs[1].lat + ";" + e.layer._latlngs[1].lng;
-			var lowerleft = e.layer._latlngs[2].lat + ";" + e.layer._latlngs[2].lng;
-			var lowerright = e.layer._latlngs[3].lat + ";" + e.layer._latlngs[3].lng;*/
-            //getEnvelope(0, 0, 40, 40);
             getEnvelope(e.layer._latlngs[0][0].lat, e.layer._latlngs[0][0].lng, e.layer._latlngs[0][1].lat, e.layer._latlngs[0][2].lng);
 		});
         // load accordion
@@ -187,5 +153,15 @@ $(document).ready(function() {
 
     // init page
     init();
+
+    var getEnvelope = function(lat_min, lng_min, lat_max, lng_max) {
+        filter = {};
+        filter.lat_min = lat_min;
+        filter.lng_min = lng_min;
+        filter.lat_max = lat_max;
+        filter.lng_max = lng_max;
+        console.log(filter);
+        $('#b-envelope').click();
+    }
 
 });
