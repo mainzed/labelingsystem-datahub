@@ -5,9 +5,11 @@ import com.esri.core.geometry.OperatorWithin;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.SpatialReference;
 import exceptions.Logging;
+import exceptions.RdfException;
 import exceptions.ResourceNotAvailableException;
 import exceptions.SparqlParseException;
 import exceptions.SparqlQueryException;
+import exceptions.TransformRdfToApiJsonException;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,6 +34,7 @@ import org.eclipse.rdf4j.repository.RepositoryException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import rdf.RDF;
 import rdf.RDF4J_20;
 import v1.utils.config.ConfigProperties;
@@ -44,6 +47,7 @@ public class SearchResource {
 	@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 	public Response getDatasetsBySearch(
 			@QueryParam("labels") boolean labels,
+			@QueryParam("projects") boolean projects,
 			@QueryParam("lang") String lang,
 			@QueryParam("project") String project,
 			@QueryParam("creator") String creator,
@@ -131,7 +135,11 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels, lang, outArray);
+				if (labels) {
+					outArray = getLabels(labels, lang, outArray);
+				} else {
+					outArray = getProjects(projects, outArray);
+				}
 			} else if (creator != null) { // get datasets for a publisher
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -203,7 +211,11 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels, lang, outArray);
+				if (labels) {
+					outArray = getLabels(labels, lang, outArray);
+				} else {
+					outArray = getProjects(projects, outArray);
+				}
 			} else if (concept != null) { // get datasets for a specific concept
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -274,7 +286,11 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels, lang, outArray);
+				if (labels) {
+					outArray = getLabels(labels, lang, outArray);
+				} else {
+					outArray = getProjects(projects, outArray);
+				}
 			} else if (resource != null) { // get datasets for a specific resource related to a concept
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				// query labeling system of concepts related to this resource
@@ -356,7 +372,11 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels, lang, outArray);
+				if (labels) {
+					outArray = getLabels(labels, lang, outArray);
+				} else {
+					outArray = getProjects(projects, outArray);
+				}
 			} else if (start != null && end != null) { // get datasets for a timespan
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -430,7 +450,11 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels, lang, outArray);
+				if (labels) {
+					outArray = getLabels(labels, lang, outArray);
+				} else {
+					outArray = getProjects(projects, outArray);
+				}
 			} else if (lat_min != null && lng_min != null && lat_max != null && lng_max != null) { // get datasets for envelope
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -525,7 +549,12 @@ public class SearchResource {
 					}
 				}
 				// labels output if requested
-				outArray = getLabels(labels, lang, outArray2);
+				// labels output if requested
+				if (labels) {
+					outArray = getLabels(labels, lang, outArray2);
+				} else {
+					outArray = getProjects(projects, outArray2);
+				}
 			} else if (languages) {
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -659,7 +688,7 @@ public class SearchResource {
 				// cretae geojson
 				geoJSON.put("type", "FeatureCollection");
 				JSONArray features = new JSONArray();
-				for (int i=0; i<lat.size(); i++) {
+				for (int i = 0; i < lat.size(); i++) {
 					JSONObject feature = new JSONObject();
 					feature.put("type", "Feature");
 					JSONObject geometry = new JSONObject();
@@ -745,7 +774,11 @@ public class SearchResource {
 					outArray.add(tmp);
 				}
 				// labels output if requested
-				outArray = getLabels(labels, lang, outArray);
+				if (labels) {
+					outArray = getLabels(labels, lang, outArray);
+				} else {
+					outArray = getProjects(projects, outArray);
+				}
 			}
 			if (!geoJSON.isEmpty()) {
 				return Response.ok(geoJSON).header("Content-Type", "application/json;charset=UTF-8").build();
@@ -822,6 +855,80 @@ public class SearchResource {
 			}
 			outArray = sortedJsonArray;
 		}
+		return outArray;
+	}
+
+	private static JSONArray getProjects(boolean projects, JSONArray outArray) throws IOException, RepositoryException, MalformedQueryException, QueryEvaluationException, SparqlQueryException, SparqlParseException, ResourceNotAvailableException, RdfException, ParseException, TransformRdfToApiJsonException {
+		if (projects && !outArray.isEmpty()) {
+			HashSet<String> project = new HashSet();
+			for (Object tmp : outArray) {
+				JSONObject outObj = (JSONObject) tmp;
+				project.add((String) outObj.get("project"));
+			}
+			// get labels from labeling system
+			outArray.clear();
+			// get project
+			RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
+			String query = rdf.getPREFIXSPARQL();
+			query += "SELECT ?s ?p ?o WHERE { "
+					+ "?s ?p ?o . "
+					+ "?s a lsdh:Project . "
+					+ "?s dcterms:identifier ?identifier . "
+					+ "FILTER ( ";
+			for (String item : project) {
+				query += " ?identifier=\"" + item + "\" || ";
+			}
+			query = query.substring(0, query.length() - 3);
+			query += ") ";
+			query += "}";
+			List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+			List<String> s = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "s");
+			List<String> p = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
+			List<String> o = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
+			if (result.size() < 1) {
+				throw new ResourceNotAvailableException("resource is not available");
+			}
+			for (int i = 0; i < s.size(); i++) {
+				rdf.setModelTriple(s.get(i), p.get(i), o.get(i));
+			}
+			JSONObject jsonObject = (JSONObject) new JSONParser().parse(rdf.getModel("RDF/JSON"));
+			Set keys = jsonObject.keySet();
+			Iterator a = keys.iterator();
+			while (a.hasNext()) {
+				String key = (String) a.next();
+				JSONObject tmpObject = (JSONObject) jsonObject.get(key);
+				JSONArray idArray = (JSONArray) tmpObject.get(rdf.getPrefixItem("dcterms:identifier"));
+				JSONObject idObject = (JSONObject) idArray.get(0);
+				String h = (String) idObject.get("value");
+				JSONObject tmpObject2 = new JSONObject();
+				tmpObject2.put(key, tmpObject);
+				String hh = tmpObject2.toString();
+				JSONObject tmp = Transformer.project_GET(hh, h);
+				outArray.add(tmp);
+			}
+		}
+		// sort array
+		JSONArray sortedJsonArray = new JSONArray();
+		List<JSONObject> jsonValues = new ArrayList();
+		for (int i = 0; i < outArray.size(); i++) {
+			jsonValues.add((JSONObject) outArray.get(i));
+		}
+		Collections.sort(jsonValues, new Comparator<JSONObject>() {
+			private static final String KEY_NAME = "title";
+
+			@Override
+			public int compare(JSONObject a, JSONObject b) {
+				String valA = new String();
+				String valB = new String();
+				valA = (String) a.get(KEY_NAME);
+				valB = (String) b.get(KEY_NAME);
+				return valA.compareTo(valB);
+			}
+		});
+		for (int i = 0; i < outArray.size(); i++) {
+			sortedJsonArray.add(jsonValues.get(i));
+		}
+		outArray = sortedJsonArray;
 		return outArray;
 	}
 
