@@ -48,7 +48,7 @@ $(document).ready(function() {
         $("#filter-creator-properties").hide();
         $("#filter-timespan-properties").hide();
         $("#filter-envelope-properties").hide();
-        $("#filterheader-properties").html("project");
+        $("#filterheader-properties").html("filter properties");
         // label selection?
         if (mode==="labels") {
             $("#filter-lang-wrapper").show();
@@ -70,7 +70,7 @@ $(document).ready(function() {
         $("#filter-creator-properties").show();
         $("#filter-timespan-properties").hide();
         $("#filter-envelope-properties").hide();
-        $("#filterheader-properties").html("creator");
+        $("#filterheader-properties").html("filter properties");
         // label selection?
         if (mode==="labels") {
             $("#filter-lang-wrapper").show();
@@ -92,7 +92,7 @@ $(document).ready(function() {
         $("#filter-creator-properties").hide();
         $("#filter-timespan-properties").show();
         $("#filter-envelope-properties").hide();
-        $("#filterheader-properties").html("timespan");
+        $("#filterheader-properties").html("filter properties");
         // label selection?
         if (mode==="labels") {
             $("#filter-lang-wrapper").show();
@@ -115,7 +115,7 @@ $(document).ready(function() {
         $("#filter-creator-properties").hide();
         $("#filter-timespan-properties").hide();
         $("#filter-envelope-properties").show();
-        $("#filterheader-properties").html("envelope");
+        $("#filterheader-properties").html("filter properties");
         // label selection?
         if (mode==="labels") {
             $("#filter-lang-wrapper").show();

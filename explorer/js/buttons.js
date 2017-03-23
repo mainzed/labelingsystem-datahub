@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     $('#b-labels').on('click', function() {
         $("#filter-lang-wrapper").show();
-        $("#b-labels").hide();
+        $("#b-labels").removeClass("b-labels-notactive").addClass("b-labels-active");
         $("#b-objects").show();
         $("#b-projects").show();
         mode = "labels";
@@ -11,7 +11,7 @@ $(document).ready(function() {
 
     $('#b-objects').on('click', function() {
         $("#filter-lang-wrapper").hide();
-        $("#b-labels").show();
+        $("#b-labels").removeClass("b-labels-notactive").addClass("b-labels-active");
         $("#b-objects").hide();
         $("#b-projects").show();
         mode = "objects";
@@ -20,7 +20,7 @@ $(document).ready(function() {
 
     $('#b-projects').on('click', function() {
         $("#filter-lang-wrapper").hide();
-        $("#b-labels").show();
+        $("#b-labels").removeClass("b-labels-notactive").addClass("b-labels-active");
         $("#b-objects").show();
         $("#b-projects").hide();
         mode = "projects";
