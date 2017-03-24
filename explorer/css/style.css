@@ -318,6 +318,7 @@ select {
   margin-right: auto;
   margin-top: 20px;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 .b-labels-active {
   background-image: url("../img/icon-label-active.png");
@@ -333,6 +334,7 @@ select {
   margin-right: auto;
   margin-top: 20px;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 .b-projects-active {
   background-image: url("../img/icon-project-active.png");
@@ -348,6 +350,7 @@ select {
   margin-right: auto;
   margin-top: 20px;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 .b-objects-active {
   background-image: url("../img/icon-object-active.png");
