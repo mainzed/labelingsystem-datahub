@@ -34,7 +34,7 @@ Enjoy!
 
 ## Demo
 
-* [API Demo Server](http://ls-dev.i3mainz.hs-mainz.de/datahub/explorer)
+* [API Demo Server](http://ls-dev.i3mainz.hs-mainz.de/explorer)
 
 ## Config
 
