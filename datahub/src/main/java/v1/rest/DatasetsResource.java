@@ -596,72 +596,162 @@ public class DatasetsResource {
 	@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
 	public Response postDataset(String json) throws IOException, JDOMException, ConfigException, ParserConfigurationException, TransformerException {
 		try {
-			// get dataset
-			JSONObject jsonObject = (JSONObject) new JSONParser().parse(json);
-			String datasetBody = (String) jsonObject.get("dataset");
-			// validate
-			String token = ValidateJSONObject.validateDataset(json);
-			// set identifier
-			String itemID = HashID.getHASHID();
-			// create triples
-			json = Transformer.dataset_POST(json, itemID);
-			String triples = createDataset(itemID, token);
-			// input triples
-			RDF4J_20.inputRDFfromRDFJSONString(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), json);
-			RDF4J_20.SPARQLupdate(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), triples);
-			// get result als json
-			RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
-			String query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { lsdh-d:" + itemID + " ?p ?o }";
-			List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
-			List<String> predicates = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
-			List<String> objects = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
-			if (result.size() < 1) {
-				throw new ResourceNotAvailableException("resource " + itemID + " is not available");
+			// get dataset object or array
+			JSONObject jsonObject = new JSONObject();
+			JSONArray jsonArray = new JSONArray();
+			boolean jsonObjectBool = true;
+			JSONObject outObject = new JSONObject();
+			JSONArray outArray = new JSONArray();
+			try {
+				jsonObject = (JSONObject) new JSONParser().parse(json);
+				jsonObjectBool = true;
+			} catch (Exception e1) {
+				try {
+					jsonArray = (JSONArray) new JSONParser().parse(json);
+					jsonObjectBool = false;
+				} catch (Exception e2) {
+					throw new IllegalArgumentException("not a JSONObject or JSONArray");
+				}
 			}
-			for (int i = 0; i < predicates.size(); i++) {
-				rdf.setModelTriple("lsdh-d:" + itemID, predicates.get(i), objects.get(i));
+			// post data
+			if (jsonObjectBool) {
+				String datasetBody = (String) jsonObject.get("dataset");
+				// validate
+				String token = ValidateJSONObject.validateDataset(json);
+				// set identifier
+				String itemID = HashID.getHASHID();
+				// create triples
+				json = Transformer.dataset_POST(json, itemID);
+				String triples = createDataset(itemID, token);
+				// input triples
+				RDF4J_20.inputRDFfromRDFJSONString(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), json);
+				RDF4J_20.SPARQLupdate(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), triples);
+				// get result als json
+				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
+				String query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { lsdh-d:" + itemID + " ?p ?o }";
+				List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+				List<String> predicates = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
+				List<String> objects = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
+				if (result.size() < 1) {
+					throw new ResourceNotAvailableException("resource " + itemID + " is not available");
+				}
+				for (int i = 0; i < predicates.size(); i++) {
+					rdf.setModelTriple("lsdh-d:" + itemID, predicates.get(i), objects.get(i));
+				}
+				String out = Transformer.dataset_GET(rdf.getModel("RDF/JSON"), itemID).toJSONString();
+				outObject = (JSONObject) new JSONParser().parse(out);
+				RDF rdf2 = new RDF(ConfigProperties.getPropertyParam("host"));
+				String query2 = rdf2.getPREFIXSPARQL() + "SELECT * WHERE { <" + datasetBody + "> ?p ?o }";
+				List<BindingSet> result2 = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query2);
+				List<String> predicates2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "p");
+				List<String> objects2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "o");
+				if (result2.size() < 1) {
+					throw new ResourceNotAvailableException("resource " + itemID + " is not available");
+				}
+				for (int i = 0; i < predicates2.size(); i++) {
+					rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
+				}
+				String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+				JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
+				outObject.put("title", out2Object.get("title"));
+				if (out2Object.get("description") != null) {
+					outObject.put("description", out2Object.get("description"));
+				}
+				if (out2Object.get("depiction") != null) {
+					outObject.put("depiction", out2Object.get("depiction"));
+				}
+				if (out2Object.get("coverage") != null) {
+					outObject.put("coverage", out2Object.get("coverage"));
+				}
+				if (out2Object.get("lat") != null) {
+					outObject.put("lat", out2Object.get("lat"));
+				}
+				if (out2Object.get("lng") != null) {
+					outObject.put("lng", out2Object.get("lng"));
+				}
+				if (out2Object.get("temporal") != null) {
+					outObject.put("temporal", out2Object.get("temporal"));
+				}
+				if (out2Object.get("begin") != null) {
+					outObject.put("begin", out2Object.get("begin"));
+				}
+				if (out2Object.get("end") != null) {
+					outObject.put("end", out2Object.get("end"));
+				}
+			} else {
+				for (Object obj : jsonArray) {
+					JSONObject tmp = (JSONObject) obj;
+					String datasetBody = (String) tmp.get("dataset");
+					// validate
+					String token = ValidateJSONObject.validateDataset(json);
+					// set identifier
+					String itemID = HashID.getHASHID();
+					// create triples
+					json = Transformer.dataset_POST(json, itemID);
+					String triples = createDataset(itemID, token);
+					// input triples
+					RDF4J_20.inputRDFfromRDFJSONString(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), json);
+					RDF4J_20.SPARQLupdate(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), triples);
+					/*
+					// get result als json
+					RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
+					String query = rdf.getPREFIXSPARQL() + "SELECT * WHERE { lsdh-d:" + itemID + " ?p ?o }";
+					List<BindingSet> result = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query);
+					List<String> predicates = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
+					List<String> objects = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
+					if (result.size() < 1) {
+						throw new ResourceNotAvailableException("resource " + itemID + " is not available");
+					}
+					for (int i = 0; i < predicates.size(); i++) {
+						rdf.setModelTriple("lsdh-d:" + itemID, predicates.get(i), objects.get(i));
+					}
+					String out = Transformer.dataset_GET(rdf.getModel("RDF/JSON"), itemID).toJSONString();
+					outObject = (JSONObject) new JSONParser().parse(out);
+					RDF rdf2 = new RDF(ConfigProperties.getPropertyParam("host"));
+					String query2 = rdf2.getPREFIXSPARQL() + "SELECT * WHERE { <" + datasetBody + "> ?p ?o }";
+					List<BindingSet> result2 = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query2);
+					List<String> predicates2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "p");
+					List<String> objects2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "o");
+					if (result2.size() < 1) {
+						throw new ResourceNotAvailableException("resource " + itemID + " is not available");
+					}
+					for (int i = 0; i < predicates2.size(); i++) {
+						rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
+					}
+					String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
+					JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
+					outObject.put("title", out2Object.get("title"));
+					if (out2Object.get("description") != null) {
+						outObject.put("description", out2Object.get("description"));
+					}
+					if (out2Object.get("depiction") != null) {
+						outObject.put("depiction", out2Object.get("depiction"));
+					}
+					if (out2Object.get("coverage") != null) {
+						outObject.put("coverage", out2Object.get("coverage"));
+					}
+					if (out2Object.get("lat") != null) {
+						outObject.put("lat", out2Object.get("lat"));
+					}
+					if (out2Object.get("lng") != null) {
+						outObject.put("lng", out2Object.get("lng"));
+					}
+					if (out2Object.get("temporal") != null) {
+						outObject.put("temporal", out2Object.get("temporal"));
+					}
+					if (out2Object.get("begin") != null) {
+						outObject.put("begin", out2Object.get("begin"));
+					}
+					if (out2Object.get("end") != null) {
+						outObject.put("end", out2Object.get("end"));
+					}*/
+				}
 			}
-			String out = Transformer.dataset_GET(rdf.getModel("RDF/JSON"), itemID).toJSONString();
-			JSONObject outObject = (JSONObject) new JSONParser().parse(out);
-			RDF rdf2 = new RDF(ConfigProperties.getPropertyParam("host"));
-			String query2 = rdf2.getPREFIXSPARQL() + "SELECT * WHERE { <" + datasetBody + "> ?p ?o }";
-			List<BindingSet> result2 = RDF4J_20.SPARQLquery(ConfigProperties.getPropertyParam("repository"), ConfigProperties.getPropertyParam("ts_server"), query2);
-			List<String> predicates2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "p");
-			List<String> objects2 = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result2, "o");
-			if (result2.size() < 1) {
-				throw new ResourceNotAvailableException("resource " + itemID + " is not available");
+			if (!outObject.isEmpty()) {
+				return Response.status(Response.Status.CREATED).entity(outObject.toJSONString()).build();
+			} else {
+				return Response.status(Response.Status.CREATED).entity(outArray.toJSONString()).build();
 			}
-			for (int i = 0; i < predicates2.size(); i++) {
-				rdf2.setModelTriple(datasetBody, predicates2.get(i), objects2.get(i));
-			}
-			String out2 = Transformer.target_GET(rdf2.getModel("RDF/JSON"), datasetBody).toJSONString();
-			JSONObject out2Object = (JSONObject) new JSONParser().parse(out2);
-			outObject.put("title", out2Object.get("title"));
-			if (out2Object.get("description") != null) {
-				outObject.put("description", out2Object.get("description"));
-			}
-			if (out2Object.get("depiction") != null) {
-				outObject.put("depiction", out2Object.get("depiction"));
-			}
-			if (out2Object.get("coverage") != null) {
-				outObject.put("coverage", out2Object.get("coverage"));
-			}
-			if (out2Object.get("lat") != null) {
-				outObject.put("lat", out2Object.get("lat"));
-			}
-			if (out2Object.get("lng") != null) {
-				outObject.put("lng", out2Object.get("lng"));
-			}
-			if (out2Object.get("temporal") != null) {
-				outObject.put("temporal", out2Object.get("temporal"));
-			}
-			if (out2Object.get("begin") != null) {
-				outObject.put("begin", out2Object.get("begin"));
-			}
-			if (out2Object.get("end") != null) {
-				outObject.put("end", out2Object.get("end"));
-			}
-			return Response.status(Response.Status.CREATED).entity(outObject.toJSONString()).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.DatasetsResource"))
 					.header("Content-Type", "application/json;charset=UTF-8").build();
