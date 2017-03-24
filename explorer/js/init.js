@@ -54,7 +54,7 @@ $(document).ready(function() {
             }
         });
         // set attribution
-        $("#map-attribution").html("Tiles &copy; <a href='http://mapbox.com/' target='_blank'>MapBox</a> | Data &copy; <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> and contributors, CC-BY-SA | Tiles and Data &copy; 2013 <a href='http://www.awmc.unc.edu' target='_blank'>AWMC</a><a href='http://creativecommons.org/licenses/by-nc/3.0/deed.en_US' target='_blank'>CC-BY-NC 3.0</a>")
+        $("#map-attribution").html("map attribution: "+"Tiles &copy; <a href='http://mapbox.com/' target='_blank'>MapBox</a> | Data &copy; <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> and contributors, CC-BY-SA | Tiles and Data &copy; 2013 <a href='http://www.awmc.unc.edu' target='_blank'>AWMC</a><a href='http://creativecommons.org/licenses/by-nc/3.0/deed.en_US' target='_blank'>CC-BY-NC 3.0</a>")
         // set leaflet draw
         drawnItems = new L.FeatureGroup();
         editableLayers = new L.FeatureGroup();

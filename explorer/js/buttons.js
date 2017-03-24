@@ -1,28 +1,31 @@
 $(document).ready(function() {
 
     $('#b-labels').on('click', function() {
-        $("#filter-lang-wrapper").show();
+        //$("#filter-lang-wrapper").show();
+        $("#filter-lang-wrapper").removeClass("disablediv");
         $("#b-labels").removeClass("b-labels-notactive").addClass("b-labels-active");
-        $("#b-objects").show();
-        $("#b-projects").show();
+        $("#b-objects").removeClass("b-objects-active").addClass("b-objects-notactive");
+        $("#b-projects").removeClass("b-projects-active").addClass("b-projects-notactive");
         mode = "labels";
         getLabels();
     });
 
     $('#b-objects').on('click', function() {
-        $("#filter-lang-wrapper").hide();
-        $("#b-labels").removeClass("b-labels-notactive").addClass("b-labels-active");
-        $("#b-objects").hide();
-        $("#b-projects").show();
+        //$("#filter-lang-wrapper").show();
+        $("#filter-lang-wrapper").addClass("disablediv");
+        $("#b-labels").removeClass("b-labels-active").addClass("b-labels-notactive");
+        $("#b-objects").removeClass("b-objects-notactive").addClass("b-objects-active");
+        $("#b-projects").removeClass("b-projects-active").addClass("b-projects-notactive");
         mode = "objects";
         getDatasets();
     });
 
     $('#b-projects').on('click', function() {
-        $("#filter-lang-wrapper").hide();
-        $("#b-labels").removeClass("b-labels-notactive").addClass("b-labels-active");
-        $("#b-objects").show();
-        $("#b-projects").hide();
+        //$("#filter-lang-wrapper").show();
+        $("#filter-lang-wrapper").addClass("disablediv");
+        $("#b-labels").removeClass("b-labels-active").addClass("b-labels-notactive");
+        $("#b-objects").removeClass("b-objects-active").addClass("b-objects-notactive");
+        $("#b-projects").removeClass("b-projects-notactive").addClass("b-projects-active");
         mode = "projects";
         getProjects();
     });

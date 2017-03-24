@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <!-- info: http://www.farb-tabelle.de/de/farbtabelle.htm -->
-<title>Labeling System DataHub Explorer</title>
+<title>Label Explorer</title>
 <!-- vendor -->
 <script src="vendor/js/jquery-3.2.0.min.js"></script>
 <!-- https://github.com/jamesflorentino/nanoScrollerJS
@@ -58,9 +58,9 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
 <body>
 <div id="page">
     <div id="navigation">
-        <div id="b-labels" hidden></div>
-        <div id="b-objects"></div>
-        <div id="b-projects"></div>
+        <div id="b-labels" class="b-labels-active"></div>
+        <div id="b-objects" class="b-objects-notactive"></div>
+        <div id="b-projects" class="b-projects-notactive"></div>
     </div>
     <div id="right">
         <div id="filter">
@@ -72,6 +72,12 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                 <div id="filter-envelope" class="filter-select">filter data by envelope</div>
             </div>
             <div id="filter-properties">
+                <div id="filter-lang-wrapper" class="wrapper">
+                    <div id="filterheader-properties-language">select language</div>
+                    <div id="filter-language-properties" class="filter-properties-language">
+                        <select id="langswitch"></select>
+                    </div>
+                </div>
                 <div id="filter-properties-wrapper" class="wrapper" hidden>
                     <div id="filterheader-properties"></div>
                     <div id="filter-project-properties" class="filter-properties" hidden>
@@ -94,17 +100,11 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                         <button type="button" id="b-envelope" hidden></button>
                     </div>
                 </div>
-                <div id="filter-lang-wrapper" class="wrapper">
-                    <div id="filterheader-properties-language">select language</div>
-                    <div id="filter-language-properties" class="filter-properties">
-                        <select id="langswitch"></select>
-                    </div>
-                </div>
-                <div id="filter-results-wrapper" class="wrapper">
-                    <div id="header-title" style="float:left;">
-                        <p id="header-info" style="font-size: 30px;font-weight: 700;color: black;padding:15px;"></p>
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div id="filter-results-wrapper">
+            <div id="header-title" style="float:left;">
+                <p id="header-info" style="font-size: 15px;font-weight: 300;color: black;padding-top:25px;padding-left:25px;font-style:italic;"></p>
             </div>
         </div>
     </div>
@@ -115,7 +115,7 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
             <div id="contentcontent" class="nano-content"></div>
         </div>
     </div>
-    <div id="footer">Label Explorer - build 23/03/2017</div>
+    <div id="footer">Label Explorer - build 24/03/2017</div>
 </div>
 </body>
 
