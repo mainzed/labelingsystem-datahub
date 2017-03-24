@@ -5,13 +5,13 @@
   font-size: 16px;
   margin: 0;
   padding: 0;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: Roboto, sans-serif;
   letter-spacing: 0.02em;
 }
 a {
   text-decoration: underline;
   cursor: pointer;
-  color: white;
+  color: #ffffff;
   font-size: inherit;
 }
 html {
@@ -22,27 +22,38 @@ body {
 }
 select {
     width: 100%;
-    padding: 8px;
-		height: 50px;
-		border-radius: 4px;
-		border: 1px solid #555;
+    padding: 4px;
+		height: 30px;
+		border-radius: 0px;
+		border: 1px solid #1a1f2b;
 		font-size: 14px;
-		line-height: 1.2;
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		background: url("../img/down.png") no-repeat right #d0e4f2;
-		background-position: right 10px top 12px;
+		background-position: right 10px top 6px;
 	}
 	select option {
-		padding: 3px;
+		padding: 4px;
 		background-color: #d0e4f2;
 		font-size: 14px;
+	}
+  button {
+    margin-top: 10px;
+    padding: 6px;
+		background-color: #4a6491;
+		font-size: 14px;
+    color: #d0e4f2;
+		cursor: pointer;
+    border: 0px solid #1a1f2b;
+		font-weight: 400;
+		-webkit-appearance: none;
+		-moz-appearance: none;
 	}
 .label {
   float:left;
   height:100px;
   background: #4a6491;
-  color: white;
+  color: #d0e4f2;
   margin-top: 3px;
   margin-left: 3px;
 }
@@ -67,7 +78,7 @@ select {
   float:left;
   height:350px;
   background: #4a6491;
-  color: white;
+  color: #d0e4f2;
   margin-top: 3px;
   margin-left: 3px;
 }
@@ -117,7 +128,7 @@ select {
   /*width: calc(100% / 3 - 2*10px);*/
   height:200px;
   background: #4a6491;
-  color: white;
+  color: #d0e4f2;
   margin-top: 3px;
   margin-left: 3px;
 }
@@ -138,9 +149,9 @@ select {
 #right {
     background-color: #d0e4f2;
     float:right;
-    padding: 10px;
-    width: calc(30% - 30px - 2*10px);
-    height:calc(100% - 20px - 2*10px - 2*10px);
+    padding: 3px;
+    width: calc(30% - 30px - 2*3px);
+    height:calc(100% - 20px - 2*10px - 2*3px);
 }
 
 #navigation {
@@ -168,10 +179,9 @@ select {
 }
 
 .wrapper {
-  margin-top: 10px;
+  margin-top: 5px;
   float:left;
   width:calc(100%);
-  border-bottom: 1px dotted grey;
 }
 
 #filter-select {
@@ -185,7 +195,7 @@ select {
 }
 
 #filterheader {
-  background-color: #1a1f2b;
+  background-color: #30395c;
   text-align: center;
   height: 40px;
   width: 100%;
@@ -193,66 +203,70 @@ select {
   width:calc(100%);
   cursor: pointer;
   line-height: 50px;
+  color: #d0e4f2;
 }
 #filterheader-properties-language {
-  background-color: #1a1f2b;
+  background-color: #30395c;
   float: left;
-  color: white;
-  width:calc(100% - 15px);
-  height: 40px;
-  line-height: 35px;
-  font-weight: 700;
-  padding-left: 15px;
+  color: #d0e4f2;
+  width:calc(100%);
+  height: 35px;
+  line-height: 32px;
+  font-weight: 400;
+  text-align:center;
 }
 #filterheader-properties {
-  background-color: #1a1f2b;
+  background-color: #30395c;
   float: left;
-  color: white;
-  width:calc(100% - 15px);
-  height: 40px;
-  line-height: 35px;
-  font-weight: 700;
-  padding-left: 15px;
+  color: #d0e4f2;
+  width:calc(100%);
+  height: 35px;
+  line-height: 32px;
+  font-weight: 400;
+  text-align:center;
 }
 .filter-select {
-  background-color: #85a5cc;
+  background-color: #4a6491;
   float: left;
   clear:both;
-  color: #1a1f2b;
+  color: #d0e4f2;
   width:calc(100%);
-  height: 40px;
+  height: 30px;
   cursor: pointer;
-  border-bottom: 1px dotted grey;
-  line-height: 35px;
+  border-top: 1px solid #d0e4f2;
+  line-height: 27px;
+  letter-spacing: 0.05em;
+  font-weight: 300;
+  font-size:15px;
+  padding-top:2px;
+  padding-bottom:2px;
   text-align: center;
-  font-weight: 700;
 }
 .filter-select-notactive {
   background-color: #85a5cc;
   float: left;
   clear:both;
-  color: grey;
   width:calc(100%);
   height: 40px;
   cursor: pointer;
-  border-bottom: 1px dotted grey;
+  border-bottom: 1px dotted #1a1f2b;
 }
 .filter-properties-language {
   background-color: #85a5cc;
   float: left;
   clear:both;
   color: #1a1f2b;
-  width:calc(100% - 2*20px);
-  padding:20px;
+  width:calc(100% - 2*10px);
+  padding:10px;
 }
 .filter-properties {
   background-color: #85a5cc;
   float: left;
   clear:both;
   color: #1a1f2b;
-  width:calc(100% - 2*20px);
+  width:calc(100% - 2*10px);
   height: 300px;
-  padding:20px;
+  padding:10px;
 }
 
 #header {
@@ -304,10 +318,10 @@ select {
 #map-attribution {float:left; width:100%; font-size: 12px; margin-top:12px; font-style: italic;}
 
 .nano-slider {
-  width: 5px !important;
+  width: 6px !important;
 }
 .nano-pane {
-  right: 3px !important;
+  right: 1px !important;
 }
 
 #b-labels {
@@ -374,4 +388,10 @@ select {
   background-color: #85a5cc;
   width: 100%;
   height: calc(10%);
+}
+
+#year {
+  background-color:transparent;
+  border:none;
+  padding-bottom:20px;
 }

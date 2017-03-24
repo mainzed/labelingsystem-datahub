@@ -1,13 +1,10 @@
 $(document).ready(function() {
 
     var init = function() {
-        $("#b-butswitch").html("d");
         loadProjects();
         loadPublisher();
         loadLanguages();
-        //loadLandingPage();
         getLabels();
-        $("#header-info").html("Label Explorer");
         // init time slider
         $("#slider-time-range").slider({
             range: true,

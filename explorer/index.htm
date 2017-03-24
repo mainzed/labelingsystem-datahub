@@ -65,7 +65,7 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
     <div id="right">
         <div id="filter">
             <div id="filter-select">
-                <div id="filterheader"><img src="img/icon-funnel.png" style="height:25px"></div>
+                <div id="filterheader"><div id="funnel" style="font-style:italic;float:left;"><img src="img/icon-funnel.png" style="height:25px"></div><div id="header-info" style="font-style:italic;float:left;"></div></div>
                 <div id="filter-project" class="filter-select">filter data by project</div>
                 <div id="filter-creator" class="filter-select">filter data by creator</div>
                 <div id="filter-timespan" class="filter-select">filter data by timespan</div>
@@ -82,17 +82,17 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                     <div id="filterheader-properties"></div>
                     <div id="filter-project-properties" class="filter-properties" hidden>
                         <select id="projects"></select>
-                        <button type="button" id="b-project">load project</button>
+                        <button type="button" id="b-project">load data</button>
                     </div>
                     <div id="filter-creator-properties" class="filter-properties" hidden>
                         <select id="creator"></select>
-                        <button type="button" id="b-creator">load creator</button>
+                        <button type="button" id="b-creator">load data</button>
                     </div>
                     <div id="filter-timespan-properties" class="filter-properties" hidden>
-                        <label for="year"></label>
-                        <input type="text" id="year" readonly style="border:0; font-weight:bold;">
+
+                        <input type="text" id="year" readonly>
                         <div id="slider-time-range"></div>
-                        <button type="button" id="b-timespan">load timespan</button>
+                        <button type="button" id="b-timespan">load data</button>
                     </div>
                     <div id="filter-envelope-properties" class="filter-properties" hidden>
                         <div id='map'></div>
@@ -100,11 +100,6 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                         <button type="button" id="b-envelope" hidden></button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div id="filter-results-wrapper">
-            <div id="header-title" style="float:left;">
-                <p id="header-info" style="font-size: 15px;font-weight: 300;color: black;padding-top:25px;padding-left:25px;font-style:italic;"></p>
             </div>
         </div>
     </div>

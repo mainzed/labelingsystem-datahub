@@ -898,19 +898,19 @@ body .ui-tooltip {
 	font-size: 1em;
 }
 .ui-widget.ui-widget-content {
-	border: 1px solid #c5c5c5;
+	/*border: 1px solid #c5c5c5;*/
 }
 .ui-widget-content {
-	border: 1px solid #dddddd;
-	background: #ffffff;
+	border: 1px solid #d0e4f2;
+	background: #d0e4f2;
 	color: #333333;
 }
 .ui-widget-content a {
 	/*color: #333333;*/
 }
 .ui-widget-header {
-	border: 1px solid #dddddd;
-	background: #e9e9e9;
+	border: 1px solid #4a6491;
+	background: #4a6491;
 	color: #333333;
 	font-weight: bold;
 }
@@ -932,7 +932,7 @@ html .ui-button.ui-state-disabled:active {
 	border: 1px solid #c5c5c5;
 	background: #f6f6f6;
 	font-weight: 700;
-	color: #454545;
+	color: #1a1f2b;
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -1291,7 +1291,7 @@ a.ui-button:active,
 .ui-corner-bottom,
 .ui-corner-left,
 .ui-corner-bl {
-	border-bottom-left-radius: 3px;
+	/*border-bottom-left-radius: 3px;*/
 }
 .ui-corner-all,
 .ui-corner-bottom,
