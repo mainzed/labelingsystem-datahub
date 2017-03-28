@@ -32,7 +32,7 @@ public class ResourcesDump {
 			out.put("file", dumpFile);
 			return Response.ok(out).header("Content-Type", "application/json;charset=UTF-8").build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.Resources"))
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.ResourcesDump"))
 					.header("Content-Type", "application/json;charset=UTF-8").build();
 		}
 	}
