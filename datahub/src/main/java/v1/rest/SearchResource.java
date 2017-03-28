@@ -14,8 +14,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,8 +48,6 @@ public class SearchResource {
 	public Response getDatasetsBySearch(
 			@QueryParam("labels") boolean labels,
 			@QueryParam("projects") boolean projects,
-			@QueryParam("resources") boolean resources,
-			@QueryParam("resourcesfull") boolean resourcesfull,
 			@QueryParam("lang") String lang,
 			@QueryParam("project") String project,
 			@QueryParam("creator") String creator,
@@ -709,8 +705,6 @@ public class SearchResource {
 					features.add(feature);
 				}
 				geoJSON.put("features", features);
-			} else if (resources) {
-				outArray = getResources(resourcesfull);
 			} else {
 				RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
 				String query = rdf.getPREFIXSPARQL();
@@ -935,42 +929,6 @@ public class SearchResource {
 			sortedJsonArray.add(jsonValues.get(i));
 		}
 		outArray = sortedJsonArray;
-		return outArray;
-	}
-
-	private static JSONArray getResources(boolean resourcesfull) throws IOException, RepositoryException, MalformedQueryException, QueryEvaluationException, SparqlQueryException, SparqlParseException, ResourceNotAvailableException, RdfException, ParseException, TransformRdfToApiJsonException {
-		JSONArray outArray = new JSONArray();
-		//RDF rdf = new RDF(ConfigProperties.getPropertyParam("host"));
-		// query labeling system of concepts related to this resource
-		String query = "SELECT ?resource WHERE { "
-				+ "?concept ?p ?resource . "
-				+ "FILTER (?p=<http://www.w3.org/2004/02/skos/core#closeMatch> || ?p=<http://www.w3.org/2004/02/skos/core#exactMatch> || ?p=<http://www.w3.org/2004/02/skos/core#relatedMatch> || ?p=<http://www.w3.org/2004/02/skos/core#broadMatch> || ?p=<http://www.w3.org/2004/02/skos/core#narrowMatch>) "
-				+ "}";
-		List<BindingSet> result = RDF4J_20.SPARQLquery("labelingsystem", ConfigProperties.getPropertyParam("ts_server"), query);
-		HashSet<String> resources = RDF4J_20.getValuesFromBindingSet_UNIQUESET(result, "resource");
-		for (String item : resources) {
-			if (!resourcesfull) {
-				outArray.add(item);
-			} else {
-				String url_string = "http://ls-dev.i3mainz.hs-mainz.de/api/v1/resourceinfo?uri=" + item;
-				URL url = new URL(url_string);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setReadTimeout(5000);
-				int status = conn.getResponseCode();
-				if (status == 200) {
-					BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-					String inputLine;
-					StringBuilder response = new StringBuilder();
-					while ((inputLine = br.readLine()) != null) {
-						response.append(inputLine);
-					}
-					br.close();
-					// fill objects
-					JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.toString());
-					outArray.add(jsonObject);
-				}
-			}
-		}
 		return outArray;
 	}
 
