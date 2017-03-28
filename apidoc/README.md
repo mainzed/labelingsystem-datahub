@@ -26,7 +26,7 @@
     7. [get geojson for objects](#get-geojson-for-objects)
 4. [Dump](#dump)
     1. [create dump](#create-dump)
-    2. [get dump list](#get-dump-list)
+    2. [get dump list](#get-dump-list-html-page)
 5. [Resources Dump](#resources-dump)
     1. [create resources dump](#create-resources-dump)
     2. [get resources dump](#get-resources-dump)
