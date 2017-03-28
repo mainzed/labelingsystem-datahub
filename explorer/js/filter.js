@@ -42,6 +42,7 @@ $(document).ready(function() {
         $("#filter-timespan-properties").hide();
         $("#filter-envelope-properties").hide();
         $("#filter-resourcetype-properties").hide();
+        $("#filterheader-properties").html("no filter selected");
     });
     $('#filter-project').on('click', function() {
         // filterheader
