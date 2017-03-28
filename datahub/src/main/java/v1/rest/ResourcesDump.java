@@ -20,8 +20,8 @@ import org.json.simple.parser.JSONParser;
 import rdf.RDF4J_20;
 import v1.utils.config.ConfigProperties;
 
-@Path("/resources")
-public class Resources {
+@Path("/resourcesdump")
+public class ResourcesDump {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
