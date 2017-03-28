@@ -389,7 +389,7 @@
 
 ### create resources dump
 
-` GET http://localhost:8084/datahub/dump/repository/datahub`
+` GET http://localhost:8084/datahub/resourcesdump`
 
 ```json
 {
@@ -399,4 +399,26 @@
 
 ### get resources dump
 
-` GET http://localhost:8084/dump-res/resources-latest.json`
+` GET http://localhost:8084/datahub/resources`
+
+```json
+[
+    {
+    	"narrowerTerms": [],
+    	"scheme": "Art and Architecture Thesaurus",
+    	"description": "Commodities, merchandise, or materials brought into one country from another for use, sale, reprocessing, exchange, or export.",
+    	"broaderTerms": [{
+    		"label": "<object genres by location, context or origin>",
+    		"uri": "http:\/\/vocab.getty.edu\/aat\/300180705"
+    	}],
+    	"label": "imports",
+    	"lang": "en",
+    	"type": "getty",
+    	"uri": "http:\/\/vocab.getty.edu\/aat\/300252720",
+    	"quality": "high",
+    	"group": "common reference thesauri (CH)"
+    },
+    { resource },
+    { ... }
+]
+```
