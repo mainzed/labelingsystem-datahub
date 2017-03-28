@@ -1,7 +1,6 @@
 package v1.rest;
 
 import exceptions.Logging;
-import v1.utils.dump.LSDump;
 import v1.utils.config.ConfigProperties;
 import v1.utils.dump.Dump;
 import java.io.BufferedReader;
@@ -13,17 +12,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import org.apache.commons.io.filefilter.FileFileFilter;
@@ -95,95 +91,6 @@ public class DumpResource {
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.DumpResource"))
 					.header("Content-Type", "application/json;charset=UTF-8").build();
-		}
-	}
-
-	@GET
-	@Path("/status")
-	public Response getStatus(@QueryParam("mode") String mode) {
-		try {
-			status();
-			JSONObject outObject = new JSONObject();
-			outObject.put("message", out);
-			return Response.ok(outObject).header("Content-Type", "application/json;charset=UTF-8").build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.DumpResource"))
-					.header("Content-Type", "application/json;charset=UTF-8").build();
-		}
-	}
-
-	@POST
-	@Path("/start")
-	public Response startDumping() {
-		try {
-			fileDir = ConfigProperties.getPropertyParam("dump_server");
-			filePath = ConfigProperties.getPropertyParam("dump_web");
-			downloadLink = ConfigProperties.getPropertyParam("ts_server") + "/repositories/" + ConfigProperties.getPropertyParam("repository") + "/statements?Accept=text/plain";
-			size_url = ConfigProperties.getPropertyParam("ts_server") + "/repositories/" + ConfigProperties.getPropertyParam("repository") + "/size";
-			tmpDirPath = fileDir + "tmpDir_1" + "/";
-			tmpDirPath2 = fileDir + "tmpDir_2" + "/";
-			dumping = true;
-			start();
-			JSONObject outObject = new JSONObject();
-			outObject.put("message", out);
-			return Response.ok(outObject).header("Content-Type", "application/json;charset=UTF-8").build();
-		} catch (Exception e) {
-			stop();
-			dumping = false;
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.DumpResource"))
-					.header("Content-Type", "application/json;charset=UTF-8").build();
-		}
-	}
-
-	@POST
-	@Path("/stop")
-	public Response stopDumping() {
-		try {
-			stop();
-			JSONObject outObject = new JSONObject();
-			outObject.put("message", out);
-			return Response.ok(outObject).header("Content-Type", "application/json;charset=UTF-8").build();
-		} catch (Exception e) {
-			stop();
-			dumping = false;
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Logging.getMessageJSON(e, "v1.rest.DumpResource"))
-					.header("Content-Type", "application/json;charset=UTF-8").build();
-		}
-	}
-
-	public void start() throws InterruptedException, IOException {
-		(new Thread(new LSDump())).start();
-		long currentTime = System.currentTimeMillis();
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
-		Date resultdate = new Date(currentTime);
-		System.out.println("started at: " + sdf.format(resultdate));
-		status();
-	}
-
-	public void status() throws InterruptedException, IOException {
-		if (dumping) {
-			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
-			Date resultdate = new Date(startTime);
-			if (lastDumpTime.equals("") || lastDump.equals("")) {
-				out = "started at: " + sdf.format(resultdate);
-			} else {
-				out = "started at: " + sdf.format(resultdate) + ", last dump at: " + lastDumpTime + ", last dump: " + lastDump;
-			}
-		} else {
-			out = "dumping not started";
-		}
-	}
-
-	public void stop() {
-		if (dumping) {
-			long currentTime = System.currentTimeMillis();
-			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy HH:mm:ss");
-			Date resultdate = new Date(currentTime);
-			System.out.println("stopped at: " + sdf.format(resultdate));
-			dumping = false;
-			out = "stopped at: " + sdf.format(resultdate);
-		} else {
-			out = "dumping not started";
 		}
 	}
 
