@@ -13,6 +13,8 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
 <!-- https://jqueryui.com/ -->
 <script src="vendor/js/jquery-ui-1.12.1.min.js"></script>
 <link rel="stylesheet" href="css/jquery-ui.css">
+<!-- spinjs -->
+<script src="vendor/js/spin.min-2.3.2.js"></script>
 <!-- leafletjs -->
 <script src="vendor/js/leaflet-1.0.3.js"></script>
 <link rel="stylesheet" href="css/leaflet.css">
@@ -58,9 +60,10 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
 <body>
 <div id="page">
     <div id="navigation">
-        <div id="b-labels" class="b-labels-active"></div>
-        <div id="b-objects" class="b-objects-notactive"></div>
-        <div id="b-projects" class="b-projects-notactive"></div>
+        <div id="b-labels" class="disablediv"></div>
+        <div id="b-objects"></div>
+        <div id="b-projects"></div>
+        <div id="b-resources"></div>
     </div>
     <div id="right">
         <div id="filter">
@@ -70,16 +73,19 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                 <div id="filter-creator" class="filter-select">filter data by creator</div>
                 <div id="filter-timespan" class="filter-select">filter data by timespan</div>
                 <div id="filter-envelope" class="filter-select">filter data by envelope</div>
+                <div id="filter-resourcetype" class="filter-select disablediv">filter data by resource type</div>
             </div>
             <div id="filter-properties">
-                <div id="filter-lang-wrapper" class="wrapper">
-                    <div id="filterheader-properties-language">select language</div>
-                    <div id="filter-language-properties" class="filter-properties-language">
+                <div id="filter-lang-wrapper">
+                    <div id="filterheader-properties-language">filter by language</div>
+                    <div id="filter-language-properties">
                         <select id="langswitch"></select>
                     </div>
                 </div>
-                <div id="filter-properties-wrapper" class="wrapper" hidden>
-                    <div id="filterheader-properties"></div>
+                <div id="filter-properties-wrapper">
+                    <div id="filterheader-properties">no filter selected</div>
+                    <div id="filter-no-properties" class="filter-properties">
+                    </div>
                     <div id="filter-project-properties" class="filter-properties" hidden>
                         <select id="projects"></select>
                         <button type="button" id="b-project">load data</button>
@@ -89,7 +95,6 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                         <button type="button" id="b-creator">load data</button>
                     </div>
                     <div id="filter-timespan-properties" class="filter-properties" hidden>
-
                         <input type="text" id="year" readonly>
                         <div id="slider-time-range"></div>
                         <button type="button" id="b-timespan">load data</button>
@@ -99,18 +104,20 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                         <div id="map-attribution"></div>
                         <button type="button" id="b-envelope" hidden></button>
                     </div>
+                    <div id="filter-resourcetype-properties" class="filter-properties" hidden>
+                        <select id="resourcetype"></select>
+                        <button type="button" id="b-resourcetype">load data</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div id="left">
-        <!--<div id="header">
-        </div>-->
         <div id="content" class="nano">
             <div id="contentcontent" class="nano-content"></div>
         </div>
     </div>
-    <div id="footer">Label Explorer - build 24/03/2017</div>
+    <div id="footer">Label Explorer - build 28/03/2017</div>
 </div>
 </body>
 

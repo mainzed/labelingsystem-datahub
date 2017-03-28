@@ -121,8 +121,8 @@ var getProjects = function() {
             $("#contentcontent").empty();
             for (var obj in response) {
                 var div = "<div id='"+response[obj].id+"' class='project'>";
-                div += "<div class='objvalue'>"+response[obj].title+"</div>";
-                div += "<div class='objproperties'>";
+                div += "<div class='projectvalue'>"+response[obj].title+"</div>";
+                div += "<div class='projectproperties'>";
                 div += "description: "+response[obj].description;
                 div += "<br>";
                 div += "datasets: "+response[obj].datasets;
@@ -153,6 +153,65 @@ var getProjects = function() {
             } else {
                 $("#header-info").html("all project(s) (" + response.length + ")");
             }
+            // init nanoscroller
+            $(".nano").nanoScroller();
+        }
+    });
+}
+
+var getResources = function() {
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: resourcesURL,
+        data: (function(){
+            return filter;
+        })(),
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.info(textStatus);
+        },
+        success: function(response) {
+            try {
+                response = JSON.parse(response);
+            } catch (e) {}
+            var seltype = $("#resourcetype option:selected").val();
+            var displayedResources = [];
+            if (seltype!=="") {
+                for (var item in resources) {
+                    if (resources[item].type===seltype) {
+                        displayedResources.push(resources[item]);
+                    }
+                }
+            } else {
+                displayedResources = resources;
+            }
+            // sort array
+            displayedResourcesCopy = sortArrayByValue(displayedResources,"label","uri");
+            // create divs
+            $("#contentcontent").empty();
+            for (var obj in displayedResourcesCopy) {
+                var div = "<div id='"+displayedResourcesCopy[obj].uri+"' class='resource'>";
+                var sublabel = displayedResourcesCopy[obj].label.substring(0,20);
+                if (displayedResourcesCopy[obj].label.length > 20) {
+                    sublabel += " [...]";
+                }
+                div += "<div class='resourcevalue'>"+sublabel+"</div>";
+                div += "<div class='resourcetype'>";
+                div += "type: "+displayedResourcesCopy[obj].type;
+                div += "</div>";
+                div += "<div class='resourceproperties'>";
+                var subdescription = displayedResourcesCopy[obj].description.substring(0,200);
+                if (displayedResourcesCopy[obj].description.length > 200) {
+                    subdescription += " [...]";
+                }
+                div += "description: "+subdescription;
+                div += "</div>";
+                div += "</div>";
+                $("#contentcontent").append(div);
+            }
+            // output in header
+            var filters = $("#resourcetype option:selected").text();
+            $("#header-info").html(displayedResourcesCopy.length + " resources for " + filters);
             // init nanoscroller
             $(".nano").nanoScroller();
         }

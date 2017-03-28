@@ -1,33 +1,76 @@
 $(document).ready(function() {
 
     $('#b-labels').on('click', function() {
-        //$("#filter-lang-wrapper").show();
         $("#filter-lang-wrapper").removeClass("disablediv");
-        $("#b-labels").removeClass("b-labels-notactive").addClass("b-labels-active");
-        $("#b-objects").removeClass("b-objects-active").addClass("b-objects-notactive");
-        $("#b-projects").removeClass("b-projects-active").addClass("b-projects-notactive");
+        $("#b-labels").addClass("disablediv");
+        $("#b-objects").removeClass("disablediv");
+        $("#b-projects").removeClass("disablediv");
+        $("#b-resources").removeClass("disablediv");
+        $("#filter-project").removeClass("disablediv");
+        $("#filter-creator").removeClass("disablediv");
+        $("#filter-timespan").removeClass("disablediv");
+        $("#filter-envelope").removeClass("disablediv");
+        $("#filter-resourcetype").addClass("disablediv");
         mode = "labels";
+        $("#contentcontent").empty();
+        var target = document.getElementById('contentcontent');
+        var spinner = new Spinner(optsSpin).spin(target);
         getLabels();
     });
 
     $('#b-objects').on('click', function() {
-        //$("#filter-lang-wrapper").show();
         $("#filter-lang-wrapper").addClass("disablediv");
-        $("#b-labels").removeClass("b-labels-active").addClass("b-labels-notactive");
-        $("#b-objects").removeClass("b-objects-notactive").addClass("b-objects-active");
-        $("#b-projects").removeClass("b-projects-active").addClass("b-projects-notactive");
+        $("#b-labels").removeClass("disablediv");
+        $("#b-objects").addClass("disablediv");
+        $("#b-projects").removeClass("disablediv");
+        $("#b-resources").removeClass("disablediv");
+        $("#filter-project").removeClass("disablediv");
+        $("#filter-creator").removeClass("disablediv");
+        $("#filter-timespan").removeClass("disablediv");
+        $("#filter-envelope").removeClass("disablediv");
+        $("#filter-resourcetype").addClass("disablediv");
         mode = "objects";
+        $("#contentcontent").empty();
+        var target = document.getElementById('contentcontent');
+        var spinner = new Spinner(optsSpin).spin(target);
         getDatasets();
     });
 
     $('#b-projects').on('click', function() {
+        $("#filter-lang-wrapper").addClass("disablediv");
+        $("#b-labels").removeClass("disablediv");
+        $("#b-objects").removeClass("disablediv");
+        $("#b-projects").addClass("disablediv");
+        $("#b-resources").removeClass("disablediv");
+        $("#filter-project").removeClass("disablediv");
+        $("#filter-creator").removeClass("disablediv");
+        $("#filter-timespan").removeClass("disablediv");
+        $("#filter-envelope").removeClass("disablediv");
+        $("#filter-resourcetype").addClass("disablediv");
+        mode = "projects";
+        $("#contentcontent").empty();
+        var target = document.getElementById('contentcontent');
+        var spinner = new Spinner(optsSpin).spin(target);
+        getProjects();
+    });
+
+    $('#b-resources').on('click', function() {
         //$("#filter-lang-wrapper").show();
         $("#filter-lang-wrapper").addClass("disablediv");
-        $("#b-labels").removeClass("b-labels-active").addClass("b-labels-notactive");
-        $("#b-objects").removeClass("b-objects-active").addClass("b-objects-notactive");
-        $("#b-projects").removeClass("b-projects-notactive").addClass("b-projects-active");
-        mode = "projects";
-        getProjects();
+        $("#b-labels").removeClass("disablediv");
+        $("#b-objects").removeClass("disablediv");
+        $("#b-projects").removeClass("disablediv");
+        $("#b-resources").addClass("disablediv");
+        $("#filter-project").addClass("disablediv");
+        $("#filter-creator").addClass("disablediv");
+        $("#filter-timespan").addClass("disablediv");
+        $("#filter-envelope").addClass("disablediv");
+        $("#filter-resourcetype").removeClass("disablediv");
+        mode = "resources";
+        $("#contentcontent").empty();
+        var target = document.getElementById('contentcontent');
+        var spinner = new Spinner(optsSpin).spin(target);
+        getResources();
     });
 
     $('#b-timespan').on('click', function() {
@@ -62,13 +105,57 @@ $(document).ready(function() {
         loadItems();
     });
 
+    $('#b-resourcetype').on('click', function() {
+        loadItems();
+        /*
+        var seltype = $("#resourcetype option:selected").val();
+        var displayedResources = [];
+        if (seltype!=="") {
+            for (var item in resources) {
+                if (resources[item].type===seltype) {
+                    displayedResources.push(resources[item]);
+                }
+            }
+        } else {
+            displayedResources = resources;
+        }
+        // sort array
+        displayedResourcesCopy = sortArrayByValue(displayedResources,"label","uri");
+        // create divs
+        $("#contentcontent").empty();
+        for (var obj in displayedResourcesCopy) {
+            var div = "<div id='"+displayedResourcesCopy[obj].uri+"' class='resource'>";
+            var sublabel = displayedResourcesCopy[obj].label.substring(0,20);
+            if (displayedResourcesCopy[obj].label.length > 20) {
+                sublabel += " [...]";
+            }
+            div += "<div class='resourcevalue'>"+sublabel+"</div>";
+            div += "<div class='resourcetype'>";
+            div += "type: "+displayedResourcesCopy[obj].type;
+            div += "</div>";
+            div += "<div class='resourceproperties'>";
+            var subdescription = displayedResourcesCopy[obj].description.substring(0,200);
+            if (displayedResourcesCopy[obj].description.length > 200) {
+                subdescription += " [...]";
+            }
+            div += "description: "+subdescription;
+            div += "</div>";
+            div += "</div>";
+            $("#contentcontent").append(div);
+        }
+        // init nanoscroller
+        $(".nano").nanoScroller();*/
+    });
+
     var loadItems = function() {
         if (mode==="labels") {
             getLabels();
         } else if (mode==="objects") {
             getDatasets();
-        } else {
+        } else if (mode==="projects") {
             getProjects();
+        } else if (mode==="resources") {
+            getResources();
         }
     }
 

@@ -1,9 +1,12 @@
 $(document).ready(function() {
 
     var init = function() {
+        // fill filterdata
         loadProjects();
         loadPublisher();
         loadLanguages();
+        loadResourceTypes();
+        // load labels
         getLabels();
         // init time slider
         $("#slider-time-range").slider({
@@ -91,7 +94,7 @@ $(document).ready(function() {
 
     var loadProjects = function() {
         $.ajax({
-            async: false,
+            async: true,
             type: 'GET',
             url: projectsURL,
             error: function(jqXHR, textStatus, errorThrown) {
@@ -110,7 +113,7 @@ $(document).ready(function() {
 
     var loadPublisher = function() {
         $.ajax({
-            async: false,
+            async: true,
             type: 'GET',
             url: projectsURL,
             error: function(jqXHR, textStatus, errorThrown) {
@@ -129,7 +132,7 @@ $(document).ready(function() {
 
     var loadLanguages = function() {
         $.ajax({
-            async: false,
+            async: true,
             type: 'GET',
             url: searchURL,
             data: {"languages":true},
@@ -144,6 +147,61 @@ $(document).ready(function() {
                 for (var lang in response) {
                     $("#langswitch").append($("<option />").val(response[lang].value).text(response[lang].name));
                 }
+            }
+        });
+    }
+
+    var loadResourceTypes = function() {
+        $.ajax({
+            async: true,
+            type: 'GET',
+            url: resourcesURL,
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.info(textStatus);
+            },
+            success: function(response) {
+                try {
+                    response = JSON.parse(response);
+                } catch (e) {}
+                resources = response;
+                // get unique type values and sort
+                var tmpArray = [];
+                for (var resource in response) {
+                    tmpArray.push(response[resource].type);
+                }
+                tmpArray = $.unique(tmpArray);
+                tmpArray = tmpArray.sort();
+                // query for full name
+                $.ajax({
+                    async: true,
+                    type: 'GET',
+                    url: retcatURL,
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.info(textStatus);
+                    },
+                    success: function(response) {
+                        try {
+                            response = JSON.parse(response);
+                        } catch (e) {}
+                        // set full name
+                        var selectArray = [];
+                        for (var i=0; i<tmpArray.length; i++) {
+                            for (var j=0; j<response.length; j++) {
+                                if (tmpArray[i]===response[j].type) {
+                                    var tmpObject = {};
+                                    tmpObject.name = response[j].name;
+                                    tmpObject.type = response[j].type;
+                                    selectArray.push(tmpObject);
+                                }
+                            }
+                        }
+                        selectArray = sortArrayByValue(selectArray,"name","type");
+                        $("#resourcetype").append($("<option />").val("").text("all types"));
+                        for (var type in selectArray) {
+                            $("#resourcetype").append($("<option />").val(selectArray[type].type).text(selectArray[type].name));
+                        }
+                    }
+                });
             }
         });
     }

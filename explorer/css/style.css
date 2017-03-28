@@ -23,31 +23,31 @@ body {
 select {
     width: 100%;
     padding: 4px;
-		height: 30px;
-		border-radius: 0px;
-		border: 1px solid #1a1f2b;
-		font-size: 14px;
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		background: url("../img/down.png") no-repeat right #d0e4f2;
-		background-position: right 10px top 6px;
+	height: 30px;
+	border-radius: 0px;
+	border: 1px solid #1a1f2b;
+	font-size: 14px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background: url("../img/down.png") no-repeat right #d0e4f2;
+	background-position: right 10px top 6px;
 	}
 	select option {
-		padding: 4px;
+	padding: 4px;
 		background-color: #d0e4f2;
-		font-size: 14px;
+	font-size: 14px;
 	}
   button {
     margin-top: 10px;
     padding: 6px;
-		background-color: #4a6491;
-		font-size: 14px;
+	background-color: #4a6491;
+	font-size: 14px;
     color: #d0e4f2;
-		cursor: pointer;
+	cursor: pointer;
     border: 0px solid #1a1f2b;
-		font-weight: 400;
-		-webkit-appearance: none;
-		-moz-appearance: none;
+	font-weight: 400;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 	}
 .label {
   float:left;
@@ -132,6 +132,60 @@ select {
   margin-top: 3px;
   margin-left: 3px;
 }
+.projectvalue {
+  float:left;
+  margin-left: 20px;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  width: auto;
+}
+.projectproperties {
+  clear:both;
+  float: left;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 15px;
+  font-size:12px;
+  font-style: italic;
+  font-weight: 300;
+}
+.resource {
+  float:left;
+  height:200px;
+  background: #4a6491;
+  color: #d0e4f2;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+.resourcevalue {
+  float:left;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  width: auto;
+}
+.resourcetype {
+    clear:both;
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 15px;
+    font-size:12px;
+    font-weight: 700;
+}
+.resourceproperties {
+    clear:both;
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 15px;
+    font-size:12px;
+    font-style: italic;
+    font-weight: 300;
+}
 
 #page {
     width:100%;
@@ -142,16 +196,13 @@ select {
 #left {
     background-color: red;
     float:left;
-    width:65%;
     height:calc(100% - 20px - 2*10px);
 }
 
 #right {
     background-color: #d0e4f2;
     float:right;
-    padding: 3px;
-    width: calc(30% - 30px - 2*3px);
-    height:calc(100% - 20px - 2*10px - 2*3px);
+    height:calc(100% - 20px - 2*10px);
 }
 
 #navigation {
@@ -175,23 +226,24 @@ select {
   float: left;
   color: #333333;
   width:calc(100%);
-  height: calc(90%);
+  height:calc(100%);
 }
 
-.wrapper {
+/*.wrapper {
   margin-top: 5px;
   float:left;
   width:calc(100%);
-}
+}*/
 
 #filter-select {
   float: left;
   width:calc(100%);
 }
 #filter-properties {
-  clear:both;
+  clear: both;
   float: left;
   width:calc(100%);
+  height:calc(100% - 215px)
 }
 
 #filterheader {
@@ -251,23 +303,14 @@ select {
   cursor: pointer;
   border-bottom: 1px dotted #1a1f2b;
 }
-.filter-properties-language {
+/*.filter-properties-language {
   background-color: #85a5cc;
   float: left;
   clear:both;
   color: #1a1f2b;
   width:calc(100% - 2*10px);
   padding:10px;
-}
-.filter-properties {
-  background-color: #85a5cc;
-  float: left;
-  clear:both;
-  color: #1a1f2b;
-  width:calc(100% - 2*10px);
-  height: 300px;
-  padding:10px;
-}
+}*/
 
 #header {
   background-color: #d0e4f2;
@@ -333,12 +376,7 @@ select {
   margin-top: 20px;
   margin-bottom: 20px;
   cursor: pointer;
-}
-.b-labels-active {
   background-image: url("../img/icon-label-active.png");
-}
-.b-labels-notactive {
-  background-image: url("../img/icon-label-notactive.png");
 }
 #b-projects {
   height: 35px;
@@ -349,12 +387,7 @@ select {
   margin-top: 20px;
   margin-bottom: 20px;
   cursor: pointer;
-}
-.b-projects-active {
   background-image: url("../img/icon-project-active.png");
-}
-.b-projects-notactive {
-  background-image: url("../img/icon-project-notactive.png");
 }
 #b-objects {
   height: 35px;
@@ -365,12 +398,18 @@ select {
   margin-top: 20px;
   margin-bottom: 20px;
   cursor: pointer;
-}
-.b-objects-active {
   background-image: url("../img/icon-object-active.png");
 }
-.b-objects-notactive {
-  background-image: url("../img/icon-object-notactive.png");
+#b-resources {
+  height: 35px;
+  width: 35px;
+  background-size: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  background-image: url("../img/icon-resource-active.png");
 }
 
 .disablediv {
@@ -379,8 +418,41 @@ select {
 }
 
 #filter-properties {
-    background-color: transparent;
-    height: calc(100% - 20px - 2*10px - 115px - 20px - 2*10px);
+    height: calc(100% - 215px);
+}
+
+.filter-properties {
+  background-color: #85a5cc;
+  float: left;
+  clear:both;
+  color: #1a1f2b;
+  width:calc(100% - 2*10px);
+  height: calc(100% - 35px - 2*10px);
+  padding:10px;
+}
+
+
+#filter-lang-wrapper {
+    float:left;
+    width: calc(100%);
+}
+
+#filter-language-properties {
+  background-color: #85a5cc;
+  float: left;
+  clear:both;
+  color: #1a1f2b;
+  width:calc(100% - 2*10px);
+  padding:10px;
+  height: 40px;
+}
+
+#filter-properties-wrapper {
+    background-color: orange;
+    height: calc(100% - 95px);
+    float:left;
+    clear:both;
+    width:calc(100%);
 }
 
 #filter-results-wrapper {
