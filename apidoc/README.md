@@ -21,6 +21,9 @@
         1. [get datasets by concept URI](#get-datasets-by-concept-uri)
         2. [get datasets by any resource as URI related to a concept](#get-datasets-by-any-resource-as-uri-related-to-a-concept)
     4. [show labels not objects](#show-labels-not-objects)
+    5. [show projects not objects](#show-projects-not-objects)
+    6. [get used label languages](#get-used-label-languages)
+    7. [get geojson for objects](#get-geojson-for-objects)
 
 
 ---------------------------------------
@@ -293,4 +296,69 @@
 	{ label },
 	{ ... }
 ]
+```
+
+### show projects not objects
+
+`param: projects [boolean]` in combination with all other params
+
+` GET http://localhost:8084/datahub/search?projects=true`
+
+```json
+[
+	{
+        "license":"http://creativecommons.org/licenses/by/4.0/",
+        "creator":"Römisch-Germanisches Zentralmuseum Mainz",
+        "publisher":"http://rgzm.de",
+        "description":"Roman coins of NAVIS database.",
+        "id":"4MDrEzxgG82v",
+        "dump":"http://rgzm.de/navis/dump.rdf",
+        "datasets":5,
+        "title":"Roman Coins of NAVIS",
+        "sparql":"http://rgzm.de/navis/sparql"
+    },
+	{ project },
+	{ ... }
+]
+```
+
+### get used label languages
+
+`param: languages [boolean]`
+
+` GET http://localhost:8084/datahub/search?languages=true`
+
+```json
+[
+	{
+        "name":"German",
+        "value":"de"
+    },
+	{ language },
+	{ ... }
+]
+```
+
+### get get geojson for objects
+
+`param: geojson [boolean]`
+
+` GET http://localhost:8084/datahub/search?geojson=true`
+
+```json
+{
+	"type": "FeatureCollection",
+	"features": [
+        {
+		    "geometry": {
+			    "coordinates": [12.51133, 41.89193],
+                "type": "Point"
+		    },
+			"type": "Feature",
+            "properties": {}
+	    },
+        { language },
+        { ... }
+    ]
+}
 ```
