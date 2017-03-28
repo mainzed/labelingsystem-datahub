@@ -24,6 +24,12 @@
     5. [show projects not objects](#show-projects-not-objects)
     6. [get used label languages](#get-used-label-languages)
     7. [get geojson for objects](#get-geojson-for-objects)
+4. [Dump](#dump)
+    1. [create dump](#create-dump)
+    2. [get dump list](#get-dump-list)
+5. [Resources Dump](#resources-dump)
+    1. [create resources dump](#create-resources-dump)
+    2. [get resources dump](#get-resources-dump)
 
 
 ---------------------------------------
@@ -357,8 +363,40 @@
 			"type": "Feature",
             "properties": {}
 	    },
-        { language },
+        { geojson },
         { ... }
     ]
 }
 ```
+
+## Dump
+
+### create dump
+
+` GET http://localhost:8084/datahub/dump/repository/datahub`
+
+```json
+{
+	"file": "1490691376939_datahub.tar.gz"
+}
+```
+
+### get dump list (HTML page)
+
+` GET http://localhost:8084/datahub/dump/`
+
+## Resources Dump
+
+### create resources dump
+
+` GET http://localhost:8084/datahub/dump/repository/datahub`
+
+```json
+{
+	"file": "resources-latest.json"
+}
+```
+
+### get resources dump
+
+` GET http://localhost:8084/dump-res/resources-latest.json`
