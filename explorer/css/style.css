@@ -51,7 +51,7 @@ select {
 	}
 .label {
   float:left;
-  height:100px;
+  height:45px;
   background: #4a6491;
   color: #d0e4f2;
   margin-top: 3px;
@@ -61,8 +61,8 @@ select {
   float:left;
   margin-left: 20px;
   margin-top: 10px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 500;
   width: auto;
 }
 .labelproperties {
@@ -196,22 +196,22 @@ select {
 #left {
     background-color: red;
     float:left;
-    height:calc(100% - 10px - 2*5px);
+    height:calc(100%);
 }
 
 #right {
     background-color: #d0e4f2;
     float:right;
-    height:calc(100% - 10px - 2*5px);
+    height:calc(100%);
 }
 
 #navigation {
   background-color: #1a1f2b;
   float: left;
-  height: calc(100% - 10px - 2*5px);
+  height: calc(100%);
 }
 
-#footer {
+/*#footer {
   background-color: #1a1f2b;
   float: left;
   font-size: 10px;
@@ -223,7 +223,7 @@ select {
   height:10px;
   line-height: 12px;
   text-align: center;
-}
+}*/
 
 #sidebar {
   background-color: #ffffff;
@@ -377,11 +377,18 @@ select {
   right: 1px !important;
 }
 
+#b-empty {
+  float:left;
+  height: calc(100% - 50px);
+  width: calc(100%);
+ }
 #b-home {
-  height: 20px;
-  width: 20px;
-  margin-top: 58px;
+  clear:both;
+  position: relative;
+  height: 50px;
+  width: calc(100% - 3px);
   margin-left: 3px;
+  cursor: pointer;
  }
 
  #search {
@@ -392,6 +399,7 @@ select {
  }
  #searchString {
     border: none;
+    outline-width: 0;
     color: #d0e4f2;
     background: 0 0;
     font-size: 24px;

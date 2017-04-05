@@ -17,27 +17,23 @@ var getLabels = function() {
             } catch (e) {}
             // create divs
             $("#contentcontent").empty();
-            for (var obj in response) {
+            /*for (var obj in response) {
                 var div = "<div id='"+response[obj].uri+"' class='label'>";
                 div += "<span class='labelvalue'>"+response[obj].value+"</span>";
                 div += "<span class='labelproperties'>language: "+response[obj].lang+"<br>datasets: "+response[obj].datasets+"</span>";
                 div += "</div>";
                 $("#contentcontent").append(div);
-            }
-            // output in header
-            var filterCopy = filter;
-            delete filterCopy["labels"];
-            var filters = "";
-            for (var item in filterCopy) {
-                filters += " " + item + ":" + filterCopy[item];
-            }
-            if (filters!=="") {
-                if (filters.includes("lat_min")) {
-                    filters = "envelope";
+            }*/
+            for (var obj in response) {
+                var sublabellength = 18;
+                var sublabel = response[obj].value.substring(0,sublabellength);
+                if (response[obj].value.length > sublabellength) {
+                    sublabel += " [...]";
                 }
-                $("#header-info").html(response.length + " label(s) for " + filters);
-            } else {
-                $("#header-info").html("all label(s) (" + response.length + ")");
+                var div = "<div id='"+response[obj].uri+"' class='label'>";
+                div += "<span class='labelvalue'>"+sublabel+"&nbsp;("+response[obj].lang+")</span>";
+                div += "</div>";
+                $("#contentcontent").append(div);
             }
             // init nanoscroller
             $(".nano").nanoScroller();
@@ -78,21 +74,6 @@ var getDatasets = function() {
                 div += "</div>";
                 div += "</div>";
                 $("#contentcontent").append(div);
-            }
-            // output in header
-            var filterCopy = filter;
-            delete filterCopy["labels"];
-            var filters = "";
-            for (var item in filterCopy) {
-                filters += " " + item + ":" + filterCopy[item];
-            }
-            if (filters!=="") {
-                if (filters.includes("lat_min")) {
-                    filters = "envelope";
-                }
-                $("#header-info").html(response.length + " dataset(s) for " + filters);
-            } else {
-                $("#header-info").html("all dataset(s) (" + response.length + ")");
             }
             // init nanoscroller
             $(".nano").nanoScroller();
@@ -137,21 +118,6 @@ var getProjects = function() {
                 div += "</div>";
                 div += "</div>";
                 $("#contentcontent").append(div);
-            }
-            // output in header
-            var filterCopy = filter;
-            delete filterCopy["projects"];
-            var filters = "";
-            for (var item in filterCopy) {
-                filters += " " + item + ":" + filterCopy[item];
-            }
-            if (filters!=="") {
-                if (filters.includes("lat_min")) {
-                    filters = "envelope";
-                }
-                $("#header-info").html(response.length + " project(s) for " + filters);
-            } else {
-                $("#header-info").html("all project(s) (" + response.length + ")");
             }
             // init nanoscroller
             $(".nano").nanoScroller();
@@ -209,9 +175,6 @@ var getResources = function() {
                 div += "</div>";
                 $("#contentcontent").append(div);
             }
-            // output in header
-            var filters = $("#resourcetype option:selected").text();
-            $("#header-info").html(displayedResourcesCopy.length + " resources for " + filters);
             // init nanoscroller
             $(".nano").nanoScroller();
         }

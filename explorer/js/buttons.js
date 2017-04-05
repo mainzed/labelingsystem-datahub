@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+    $('#b-home').on('click', function() {
+        location.reload();
+    });
+
     $('#b-labels').on('click', function() {
         $("#filter-lang-wrapper").removeClass("disablediv");
         $("#b-labels").addClass("disablediv");
