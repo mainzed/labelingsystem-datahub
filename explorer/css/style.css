@@ -60,9 +60,9 @@ select {
 .labelvalue {
   float:left;
   margin-left: 20px;
-  margin-top: 10px;
-  font-size: 18px;
-  font-weight: 500;
+  margin-top: 11px;
+  font-size: 16px;
+  font-weight: 400;
   width: calc(85% - 20px);
 }
 .labellang {
@@ -259,6 +259,20 @@ select {
     color: #d0e4f2;
     cursor: pointer;
 }
+.labelfilter {
+    float:left;
+    background-color:#4a6491;
+    width: calc(50%);
+    height: 30px;
+    font-weight: 300;
+    text-align: center;
+    font-size: 15px;
+    line-height: 28px;
+    color: #d0e4f2;
+    cursor: pointer;
+}
+
+
 #filter-select {
   float: left;
   width:calc(100%);
@@ -273,7 +287,7 @@ select {
 #filterheader {
   background-color: #30395c;
   text-align: center;
-  height: 40px;
+  height: 50px;
   width: 100%;
   float: left;
   width:calc(100%);
@@ -380,7 +394,7 @@ select {
 
 #b-empty {
   float:left;
-  height: calc(100% - 50px);
+  height: 15px;
   width: calc(100%);
  }
 #b-home {

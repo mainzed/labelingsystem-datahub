@@ -80,6 +80,26 @@ $(document).ready(function() {
         getResources();
     });
 
+    $('#b-labelconnected').on('click', function() {
+        $("#b-labelall").removeClass("disablediv");
+        $("#b-labelconnected").addClass("disablediv");
+        $("#contentcontent").empty();
+        $("#searchString").val("").focus();
+        var target = document.getElementById('contentcontent');
+        var spinner = new Spinner(optsSpin).spin(target);
+        getLabels();
+    });
+
+    $('#b-labelall').on('click', function() {
+        $("#b-labelconnected").removeClass("disablediv");
+        $("#b-labelall").addClass("disablediv");
+        $("#contentcontent").empty();
+        $("#searchString").val("").focus();
+        var target = document.getElementById('contentcontent');
+        var spinner = new Spinner(optsSpin).spin(target);
+        getAllLabels();
+    });
+
     $('#b-timespan').on('click', function() {
         filter = {};
         setLanguageFilter();

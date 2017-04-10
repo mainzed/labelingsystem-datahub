@@ -4,6 +4,7 @@ var HOST = "http://ls-dev.i3mainz.hs-mainz.de";
 var resourcesURL = HOST + "/datahub/resources";
 var searchURL = HOST + "/datahub/search";
 var projectsURL = HOST + "/datahub/projects";
+var allLabelsURL = HOST + "/datahub/labels";
 var retcatURL = HOST + "/api/v1/retcat";
 var map;
 var drawnItems;

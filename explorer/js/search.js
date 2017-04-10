@@ -6,7 +6,6 @@ $(document).ready(function() {
         if (val!=="") {
             // hide all
             for (var item in loadJSON) {
-                console.log($("#"+loadJSON[item].id));
                 $("#"+loadJSON[item].id).hide();
             }
             // show by value in search box
@@ -41,6 +40,8 @@ $(document).ready(function() {
                 $("#"+loadJSON[item].id).show();
             }
         }
+        // init nanoscroller
+        $(".nano").nanoScroller();
     });
 
 });

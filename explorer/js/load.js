@@ -2,7 +2,7 @@ var getLabels = function() {
     filter.labels = true;
     console.info(mode, filter);
     $.ajax({
-        async: false,
+        async: true,
         type: 'GET',
         url: searchURL,
         data: (function(){
@@ -20,7 +20,7 @@ var getLabels = function() {
             // create divs
             $("#contentcontent").empty();
             for (var obj in response) {
-                var sublabellength = 14;
+                var sublabellength = 18;
                 var sublabel = response[obj].value.substring(0,sublabellength);
                 if (response[obj].value.length > sublabellength) {
                     sublabel += " [...]";
@@ -33,6 +33,41 @@ var getLabels = function() {
             }
             // reset filter
             delete filter['labels'];
+            // init nanoscroller
+            $(".nano").nanoScroller();
+        }
+    });
+}
+
+var getAllLabels = function() {
+    console.info(mode, filter);
+    $.ajax({
+        async: true,
+        type: 'GET',
+        url: allLabelsURL,
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.info(textStatus);
+        },
+        success: function(response) {
+            try {
+                response = JSON.parse(response);
+            } catch (e) {}
+            // set global active json
+            loadJSON = response;
+            // create divs
+            $("#contentcontent").empty();
+            for (var obj in response) {
+                var sublabellength = 18;
+                var sublabel = response[obj].value.substring(0,sublabellength);
+                if (response[obj].value.length > sublabellength) {
+                    sublabel += " [...]";
+                }
+                var div = "<div id='"+response[obj].id+"' class='label'>";
+                div += "<span class='labelvalue'>"+sublabel+"</span>";
+                div += "<span class='labellang'>"+response[obj].lang+"</span>";
+                div += "</div>";
+                $("#contentcontent").append(div);
+            }
             // init nanoscroller
             $(".nano").nanoScroller();
         }
@@ -171,6 +206,9 @@ var getResources = function() {
                 div += "<div class='resourcevalue'>"+sublabel+"</div>";
                 div += "<div class='resourcetype'>";
                 div += "type: "+displayedResourcesCopy[obj].type;
+                div += "</div>";
+                div += "<div class='resourcetype'>";
+                div += "type: "+displayedResourcesCopy[obj].uri;
                 div += "</div>";
                 div += "<div class='resourceproperties'>";
                 var subdescription = displayedResourcesCopy[obj].description.substring(0,200);
