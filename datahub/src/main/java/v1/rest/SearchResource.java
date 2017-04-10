@@ -819,6 +819,8 @@ public class SearchResource {
 			for (int i = 0; i < uris.size(); i++) {
 				JSONObject labelObj = new JSONObject();
 				labelObj.put("uri", uris.get(i));
+				String[] splituri = uris.get(i).split("/");
+				labelObj.put("id",splituri[splituri.length-1]);
 				labelObj.put("value", pls.get(i).split("@")[0].replace("\"", ""));
 				labelObj.put("lang", pls.get(i).split("@")[1]);
 				// count appearance of uri in datahub
