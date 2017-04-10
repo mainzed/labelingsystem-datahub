@@ -11,8 +11,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import v1.utils.config.ConfigProperties;
+import v1.utils.randomid.HashID;
 
 @Path("/resources")
 public class Resources {
@@ -35,6 +37,11 @@ public class Resources {
 				br.close();
 				// fill objects
 				outArray = (JSONArray) new JSONParser().parse(response.toString());
+				// set id
+				for (Object item : outArray) {
+					JSONObject tmp = (JSONObject) item;
+					tmp.put("id", HashID.getHASHID());
+				}
 			}
 			return Response.ok(outArray.toJSONString()).header("Content-Type", "application/json;charset=UTF-8").build();
 		} catch (Exception e) {
