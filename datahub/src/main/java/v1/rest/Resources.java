@@ -21,7 +21,7 @@ public class Resources {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-	public Response createReseourcesDump() {
+	public Response getReseources() {
 		JSONArray outArray = new JSONArray();
 		try {
 			String url_string = ConfigProperties.getPropertyParam("dump_res_web") + "resources-latest.json";
