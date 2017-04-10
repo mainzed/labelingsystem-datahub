@@ -132,6 +132,17 @@ $(document).ready(function() {
         loadItems();
     });
 
+    $('#b-filter-label-language').on('click', function() {
+        $("#filter-properties-wrapper").show();
+        $("#filter-no-properties").hide();
+        $("#filter-language-properties").show();
+        $("#filter-project-properties").hide();
+        $("#filter-creator-properties").hide();
+        $("#filter-timespan-properties").hide();
+        $("#filter-envelope-properties").hide();
+        $("#filter-resourcetype-properties").hide();
+    });
+
     $('#b-resourcetype').on('click', function() {
         loadItems();
         /*

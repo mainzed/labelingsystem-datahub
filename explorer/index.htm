@@ -80,22 +80,21 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
             <div id="filter-select">
                 <div id="b-labelall" class="labelfilter">all labels</div>
                 <div id="b-labelconnected" class="labelfilter disablediv">connected labels</div>
-                <div id="filter-project" class="filter-select">filter data by project</div>
+                <div id="b-filter-label-language" class="filter-select">filter by language</div>
+                <!--<div id="b-filter-label-language-content" class="filter-select-content">not active</div>-->
+                <!--<div id="filter-project" class="filter-select">filter data by project</div>
                 <div id="filter-creator" class="filter-select">filter data by creator</div>
                 <div id="filter-timespan" class="filter-select">filter data by timespan</div>
                 <div id="filter-envelope" class="filter-select">filter data by envelope</div>
-                <div id="filter-resourcetype" class="filter-select disablediv">filter data by resource type</div>
+                <div id="filter-resourcetype" class="filter-select disablediv">filter data by resource type</div>-->
             </div>
             <div id="filter-properties">
-                <div id="filter-lang-wrapper">
-                    <div id="filterheader-properties-language">filter by language</div>
-                    <div id="filter-language-properties">
-                        <select id="langswitch"></select>
-                    </div>
-                </div>
-                <div id="filter-properties-wrapper">
+                <div id="filter-properties-wrapper" hidden>
                     <div id="filterheader-properties">no filter selected</div>
                     <div id="filter-no-properties" class="filter-properties">
+                    </div>
+                    <div id="filter-language-properties" class="filter-properties" hidden>
+                        <select id="langswitch"></select>
                     </div>
                     <div id="filter-project-properties" class="filter-properties" hidden>
                         <select id="projects"></select>
