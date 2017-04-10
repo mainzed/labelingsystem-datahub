@@ -63,17 +63,18 @@ select {
   margin-top: 10px;
   font-size: 18px;
   font-weight: 500;
-  width: auto;
+  width: calc(85% - 20px);
 }
-.labelproperties {
-  clear:both;
-  float: left;
-  margin-left: 20px;
-  margin-top: 15px;
-  font-size:12px;
-  font-style: italic;
+.labellang {
+  float:right;
+  margin-top: 5px;
+  font-size: 14px;
   font-weight: 300;
+  font-style: italic;
+  font-variant:small-caps;
+  width: calc(15% - 20px);
 }
+
 .object {
   float:left;
   height:350px;

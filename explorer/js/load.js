@@ -15,26 +15,24 @@ var getLabels = function() {
             try {
                 response = JSON.parse(response);
             } catch (e) {}
+            // set global active json
+            loadJSON = response;
             // create divs
             $("#contentcontent").empty();
-            /*for (var obj in response) {
-                var div = "<div id='"+response[obj].uri+"' class='label'>";
-                div += "<span class='labelvalue'>"+response[obj].value+"</span>";
-                div += "<span class='labelproperties'>language: "+response[obj].lang+"<br>datasets: "+response[obj].datasets+"</span>";
-                div += "</div>";
-                $("#contentcontent").append(div);
-            }*/
             for (var obj in response) {
-                var sublabellength = 18;
+                var sublabellength = 14;
                 var sublabel = response[obj].value.substring(0,sublabellength);
                 if (response[obj].value.length > sublabellength) {
                     sublabel += " [...]";
                 }
-                var div = "<div id='"+response[obj].uri+"' class='label'>";
-                div += "<span class='labelvalue'>"+sublabel+"&nbsp;("+response[obj].lang+")</span>";
+                var div = "<div id='"+response[obj].id+"' class='label'>";
+                div += "<span class='labelvalue'>"+sublabel+"</span>";
+                div += "<span class='labellang'>"+response[obj].lang+"</span>";
                 div += "</div>";
                 $("#contentcontent").append(div);
             }
+            // reset filter
+            delete filter['labels'];
             // init nanoscroller
             $(".nano").nanoScroller();
         }
@@ -42,7 +40,6 @@ var getLabels = function() {
 }
 
 var getDatasets = function() {
-    filter.labels = false;
     console.info(mode, filter);
     $.ajax({
         async: false,
@@ -58,6 +55,8 @@ var getDatasets = function() {
             try {
                 response = JSON.parse(response);
             } catch (e) {}
+            // set global active json
+            loadJSON = response;
             // create divs
             $("#contentcontent").empty();
             for (var obj in response) {
@@ -98,6 +97,8 @@ var getProjects = function() {
             try {
                 response = JSON.parse(response);
             } catch (e) {}
+            // set global active json
+            loadJSON = response;
             // create divs
             $("#contentcontent").empty();
             for (var obj in response) {
@@ -119,6 +120,8 @@ var getProjects = function() {
                 div += "</div>";
                 $("#contentcontent").append(div);
             }
+            // reset filter
+            delete filter['projects'];
             // init nanoscroller
             $(".nano").nanoScroller();
         }
@@ -126,6 +129,7 @@ var getProjects = function() {
 }
 
 var getResources = function() {
+    console.info(mode, filter);
     $.ajax({
         async: false,
         type: 'GET',
@@ -140,6 +144,7 @@ var getResources = function() {
             try {
                 response = JSON.parse(response);
             } catch (e) {}
+            // if type selected
             var seltype = $("#resourcetype option:selected").val();
             var displayedResources = [];
             if (seltype!=="") {
@@ -152,15 +157,17 @@ var getResources = function() {
                 displayedResources = resources;
             }
             // sort array
-            displayedResourcesCopy = sortArrayByValue(displayedResources,"label","uri");
+            displayedResourcesCopy = sortArrayByValue(displayedResources,"label","id");
+            // set global active json
+            loadJSON = displayedResourcesCopy;
             // create divs
             $("#contentcontent").empty();
             for (var obj in displayedResourcesCopy) {
-                var div = "<div id='"+displayedResourcesCopy[obj].uri+"' class='resource'>";
                 var sublabel = displayedResourcesCopy[obj].label.substring(0,20);
                 if (displayedResourcesCopy[obj].label.length > 20) {
                     sublabel += " [...]";
                 }
+                var div = "<div id='"+displayedResourcesCopy[obj].id+"' class='resource'>";
                 div += "<div class='resourcevalue'>"+sublabel+"</div>";
                 div += "<div class='resourcetype'>";
                 div += "type: "+displayedResourcesCopy[obj].type;

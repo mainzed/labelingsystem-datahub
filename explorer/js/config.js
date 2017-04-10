@@ -10,6 +10,7 @@ var drawnItems;
 var editableLayers;
 var envelope = false;
 var resources;
+var loadJSON;
 
 var optsSpin = {
       lines: 13 // The number of lines to draw

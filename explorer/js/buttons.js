@@ -17,6 +17,7 @@ $(document).ready(function() {
         $("#filter-resourcetype").addClass("disablediv");
         mode = "labels";
         $("#contentcontent").empty();
+        $("#searchString").val("").focus();
         var target = document.getElementById('contentcontent');
         var spinner = new Spinner(optsSpin).spin(target);
         getLabels();
@@ -35,6 +36,7 @@ $(document).ready(function() {
         $("#filter-resourcetype").addClass("disablediv");
         mode = "objects";
         $("#contentcontent").empty();
+        $("#searchString").val("").focus();
         var target = document.getElementById('contentcontent');
         var spinner = new Spinner(optsSpin).spin(target);
         getDatasets();
@@ -53,13 +55,13 @@ $(document).ready(function() {
         $("#filter-resourcetype").addClass("disablediv");
         mode = "projects";
         $("#contentcontent").empty();
+        $("#searchString").val("").focus();
         var target = document.getElementById('contentcontent');
         var spinner = new Spinner(optsSpin).spin(target);
         getProjects();
     });
 
     $('#b-resources').on('click', function() {
-        //$("#filter-lang-wrapper").show();
         $("#filter-lang-wrapper").addClass("disablediv");
         $("#b-labels").removeClass("disablediv");
         $("#b-objects").removeClass("disablediv");
@@ -72,6 +74,7 @@ $(document).ready(function() {
         $("#filter-resourcetype").removeClass("disablediv");
         mode = "resources";
         $("#contentcontent").empty();
+        $("#searchString").val("").focus();
         var target = document.getElementById('contentcontent');
         var spinner = new Spinner(optsSpin).spin(target);
         getResources();
