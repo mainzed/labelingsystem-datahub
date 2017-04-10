@@ -38,6 +38,7 @@ import org.json.simple.parser.ParseException;
 import rdf.RDF;
 import rdf.RDF4J_20;
 import v1.utils.config.ConfigProperties;
+import v1.utils.randomid.HashID;
 import v1.utils.transformer.Transformer;
 
 @Path("/search")
@@ -819,19 +820,18 @@ public class SearchResource {
 			for (int i = 0; i < uris.size(); i++) {
 				JSONObject labelObj = new JSONObject();
 				labelObj.put("uri", uris.get(i));
-				String[] splituri = uris.get(i).split("/");
-				labelObj.put("id",splituri[splituri.length-1]);
+				labelObj.put("id",HashID.getHASHID());
 				labelObj.put("value", pls.get(i).split("@")[0].replace("\"", ""));
 				labelObj.put("lang", pls.get(i).split("@")[1]);
 				// count appearance of uri in datahub
-				int count = 0;
+				/*int count = 0;
 				for (String conceptURI : concepts) {
 					int z = 0;
 					if (conceptURI.equals(uris.get(i))) {
 						count++;
 					}
 				}
-				labelObj.put("datasets", count);
+				labelObj.put("datasets", count);*/
 				outArray.add(labelObj);
 			}
 			// sort array
