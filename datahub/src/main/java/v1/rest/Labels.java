@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.eclipse.rdf4j.query.BindingSet;
@@ -22,10 +23,15 @@ public class Labels {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON + ";charset=UTF-8")
-	public Response getLabels() {
+	public Response getLabels(@QueryParam("lang") String lang) {
 		JSONArray outArray = new JSONArray();
 		try {
-			String query = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> PREFIX ls: <http://labeling.link/docs/ls/core#> SELECT ?uri ?pl WHERE { ?uri skos:prefLabel ?pl . ?uri skos:inScheme ?voc . ?voc ls:hasReleaseType ls:Public . }";
+			String query = "";
+			if (lang != null) {
+				query = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> PREFIX ls: <http://labeling.link/docs/ls/core#> SELECT ?uri ?pl WHERE { ?uri skos:prefLabel ?pl . ?uri skos:inScheme ?voc . ?voc ls:hasReleaseType ls:Public . FILTER(LANGMATCHES(LANG(?pl), \"" + lang + "\")) }";
+			} else {
+				query = "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> PREFIX ls: <http://labeling.link/docs/ls/core#> SELECT ?uri ?pl WHERE { ?uri skos:prefLabel ?pl . ?uri skos:inScheme ?voc . ?voc ls:hasReleaseType ls:Public . }";
+			}
 			List<BindingSet> result = RDF4J_20.SPARQLquery("labelingsystem", ConfigProperties.getPropertyParam("ts_server"), query);
 			List<String> uris = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "uri");
 			List<String> preflabels = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "pl");
