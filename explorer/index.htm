@@ -88,13 +88,13 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                 <div id="filter-envelope" class="filter-select">filter data by envelope</div>
                 <div id="filter-resourcetype" class="filter-select disablediv">filter data by resource type</div>-->
             </div>
-            <div id="filter-properties">
-                <div id="filter-properties-wrapper" hidden>
-                    <div id="filterheader-properties">no filter selected</div>
+            <div id="filter-properties" class="disablediv">
+                    <div id="filterheader-properties">filter properties</div>
                     <div id="filter-no-properties" class="filter-properties">
                     </div>
                     <div id="filter-language-properties" class="filter-properties" hidden>
                         <select id="langswitch"></select>
+                        <button type="button" id="b-language">load data</button>
                     </div>
                     <div id="filter-project-properties" class="filter-properties" hidden>
                         <select id="projects"></select>
@@ -118,7 +118,6 @@ https://jamesflorentino.github.io/nanoScrollerJS/-->
                         <select id="resourcetype"></select>
                         <button type="button" id="b-resourcetype">load data</button>
                     </div>
-                </div>
             </div>
         </div>
     </div>

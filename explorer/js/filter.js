@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#filterheader').on('click', function() {
         // filterheader
-        $("#filterheader").html('<img src="img/icon-funnel.png" style="height:25px">');
+        /*$("#filterheader").html('<img src="img/icon-funnel.png" style="height:25px">');
         // reset filters
         filter = {};
         // setLanguageFilter
@@ -42,7 +42,7 @@ $(document).ready(function() {
         $("#filter-timespan-properties").hide();
         $("#filter-envelope-properties").hide();
         $("#filter-resourcetype-properties").hide();
-        $("#filterheader-properties").html("no filter selected");
+        $("#filterheader-properties").html("no filter selected");*/
     });
     $('#filter-project').on('click', function() {
         // filterheader

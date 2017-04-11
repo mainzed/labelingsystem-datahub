@@ -45,6 +45,9 @@ var getAllLabels = function() {
         async: true,
         type: 'GET',
         url: allLabelsURL,
+        data: (function(){
+            return filter;
+        })(),
         error: function(jqXHR, textStatus, errorThrown) {
             console.info(textStatus);
         },

@@ -143,7 +143,6 @@ $(document).ready(function() {
                 try {
                     response = JSON.parse(response);
                 } catch (e) {}
-                $("#langswitch").append($("<option />").val("").text("all languages"));
                 for (var lang in response) {
                     $("#langswitch").append($("<option />").val(response[lang].value).text(response[lang].name));
                 }

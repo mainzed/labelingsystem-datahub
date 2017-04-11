@@ -87,6 +87,7 @@ $(document).ready(function() {
         $("#searchString").val("").focus();
         var target = document.getElementById('contentcontent');
         var spinner = new Spinner(optsSpin).spin(target);
+        mode = "labels";
         getLabels();
     });
 
@@ -97,6 +98,7 @@ $(document).ready(function() {
         $("#searchString").val("").focus();
         var target = document.getElementById('contentcontent');
         var spinner = new Spinner(optsSpin).spin(target);
+        mode = "alllabels";
         getAllLabels();
     });
 
@@ -127,20 +129,43 @@ $(document).ready(function() {
         loadItems();
     });
 
-    $('#langswitch').on('change', function() {
-        setLanguageFilter();
-        loadItems();
+    $('#b-filter-label-language').on('click', function() {
+        if ($('#b-filter-label-language').attr('class').indexOf("activefilter")!==-1) {
+            // reset
+            $("#filter-no-properties").hide();
+            $("#filter-language-properties").show();
+            $("#filter-properties").removeClass("disablediv");
+            $("#b-filter-label-language").html("filter by language");
+            $("#b-filter-label-language").removeClass("activefilter");
+            delete filter["lang"];
+            if (mode==="labels") {
+                getLabels();
+            } else if (mode==="alllabels") {
+                getAllLabels();
+            }
+        } else {
+            $("#filter-no-properties").hide();
+            $("#filter-language-properties").show();
+            $("#filter-properties").removeClass("disablediv");
+        }
     });
 
-    $('#b-filter-label-language').on('click', function() {
-        $("#filter-properties-wrapper").show();
-        $("#filter-no-properties").hide();
-        $("#filter-language-properties").show();
-        $("#filter-project-properties").hide();
-        $("#filter-creator-properties").hide();
-        $("#filter-timespan-properties").hide();
-        $("#filter-envelope-properties").hide();
-        $("#filter-resourcetype-properties").hide();
+    $('#b-language').on('click', function() {
+        // set language filter
+        filter.lang = $("#langswitch").val();
+        // display filter
+        $("#b-filter-label-language").html($("#b-filter-label-language").html() + ": " + $("#langswitch").val() + "<img src='img/icon-funnel-del.png' height='20px'>");
+        $("#b-filter-label-language").addClass("activefilter");
+        // hide properties
+        $("#filter-language-properties").hide();
+        $("#filter-no-properties").show();
+        $("#filter-properties").addClass("disablediv");
+        // reload
+        if (mode==="labels") {
+            getLabels();
+        } else if (mode==="alllabels") {
+            getAllLabels();
+        }
     });
 
     $('#b-resourcetype').on('click', function() {
@@ -194,14 +219,6 @@ $(document).ready(function() {
             getProjects();
         } else if (mode==="resources") {
             getResources();
-        }
-    }
-
-    var setLanguageFilter = function() {
-        if ($("#langswitch").val().length !== 0) {
-            filter.lang = $("#langswitch").val();
-        } else {
-            delete filter["lang"];
         }
     }
 
